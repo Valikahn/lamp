@@ -5,10 +5,10 @@ sleep 2
 sudo mkdir insentrica_lamp
 
 sudo mv /etc/ssh/sshd_config /root/insentrica_lamp
-wget -O /etc/ssh/sshd_config ###############################conf/sshd_config
+wget -O /etc/ssh/sshd_config https://github.com/Valikahn/LAMP/blob/main/conf/sshd_config/conf/sshd_config
 chmod +x /etc/ssh/sshd_config
 cd ~
-wget #####################conf/LAMP.install-insentrica
+wget https://github.com/Valikahn/LAMP/blob/main/conf/sshd_config/conf/LAMP.install-insentrica
 chmod +x LAMP.install-insentrica
 service ssh reload
 
