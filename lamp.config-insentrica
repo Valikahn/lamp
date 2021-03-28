@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd ~
+sleep 2
+sudo mkdir insentrica_lamp
+
+sudo mv /etc/ssh/sshd_config /root/insentrica_lamp
+wget -O /etc/ssh/sshd_config ###############################conf/sshd_config
+chmod +x /etc/ssh/sshd_config
+cd ~
+wget #####################conf/LAMP.install-insentrica
+chmod +x LAMP.install-insentrica
+service ssh reload
+
+clear
+
+reboot
