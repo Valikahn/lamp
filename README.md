@@ -25,7 +25,7 @@ This program is free software: you can redistribute it and/or modify it under th
 | phpMyAdmin                    | 4.9.7deb1
 | Webmin                        | 1.973
 
-#### Install Git and download "lamp"
+#### Install Git and clone the "lamp" package
 ```
 sudo -i
 sudo apt-get -y install wget git
