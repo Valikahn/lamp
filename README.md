@@ -1,4 +1,4 @@
-LAMP (Linux, Apache, MySQL and PHP) by Valikahn
+## LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 
 Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
 Program v0.1-alpha - Code Name: Anubis<br />
@@ -11,13 +11,16 @@ This program is free software: you can redistribute it and/or modify it under th
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
 ## Installation
+### Install Git and download "lamp"
+* This has been tested on Ubuntu 20.10 (Groovy Gorilla)
 ```
 sudo -i
 sudo apt-get -y install wget git
 git clone https://github.com/Valikahn/lamp.git
 ```
 
-## Execute Script
+### Execute Script
+
 ```
 cd lamp
 chmod +x lamp.install-insentrica
