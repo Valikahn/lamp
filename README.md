@@ -1,9 +1,8 @@
-## LAMP (Linux, Apache, MySQL and PHP) by Valikahn
-
-Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
-Program v0.1-alpha - Code Name: Anubis<br />
-This has been tested on Ubuntu 20.10 (Groovy Gorilla)<br />
-Licensed under the GPLv3 License.<br />
+<div align="center">
+    <a href="https://insentrica.net/" target="_blank">
+        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/main/img/lamp_img.png">
+    </a>
+</div>
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  
@@ -17,6 +16,7 @@ This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin a
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
 * [Script Process](#script-process)
+* [Copyright](#copyright)
 * [Bugs & Issues](#bugs--issues)
 * [Licence](#licence)
 
@@ -71,6 +71,10 @@ The installation process will ask for configuration during setup
 * Enter your MySQL password when prompted.
 * Enter the password that you want to use to log into phpMyAdmin.
 ```
+
+## Copyright
+Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
+Program v0.1-alpha - Code Name: Anubis<br />
 
 ## Bugs & Issues
 Please feel free to report any bugs or issues to us, email to: git@insentrica.net or <a href="https://github.com/Valikahn/Calorie-Intake-Guide/issues">Issues</a> on GitHub.
