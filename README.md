@@ -11,6 +11,9 @@ This program is free software: you can redistribute it and/or modify it under th
 * Github:   https://github.com/Valikahn/lamp
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
+## Script Description
+This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin and Webmin.  There is only 2 sections that require human input listed below in the [Script Process](#script-process) section.
+
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
 * [Script Process](#script-process)
