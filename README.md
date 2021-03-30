@@ -4,12 +4,6 @@
     </a>
 </div>
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- 
-* Website:  https://www.insentrica.net
-* Github:   https://github.com/Valikahn/lamp
-* GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
-
 ## Script Description
 This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin and Webmin.  There is only 2 sections that require human input listed below in the [Script Process](#script-process) section.
 
@@ -77,9 +71,15 @@ Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
 Program v0.1-alpha - Code Name: Anubis<br />
 
 ## Bugs & Issues
-Please feel free to report any bugs or issues to us, email to: git@insentrica.net or <a href="https://github.com/Valikahn/Calorie-Intake-Guide/issues">Issues</a> on GitHub.
+Please feel free to report any bugs or issues to us.
+* Email:  git@insentrica.net 
+* <a href="https://github.com/Valikahn/Calorie-Intake-Guide/issues">Issues</a>:   on GitHub.
+* Website:  https://www.insentrica.net
+* Github:   https://github.com/Valikahn/lamp
 
 ## Licence
-Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
-
 Licensed under the GPLv3 License.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ 
+GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
