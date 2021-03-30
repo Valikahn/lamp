@@ -11,12 +11,18 @@ This program is free software: you can redistribute it and/or modify it under th
 * Github:   https://github.com/Valikahn/lamp
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
+* [Tested Operating Systems](#tested-operating-systems)
+* [Installed Software Module Versions](#installed-software-module-versions)
+* [Script Process](#script-process)
+* [Bugs & Issues](#bugs--issues)
+* [Licence](#licence)
+
 ## Tested Operating Systems
 
 * Ubuntu-20.x (recommend)
 
-## Software Versions
-| Installed Software            | Version
+## Installed Software Module Versions
+| Install Modules               | Version
 |-------------------------------|-------------------------------|
 | Apache                        | 2.4.46 (Ubuntu)
 | PHP                           | 7.4.9
