@@ -14,24 +14,13 @@ This program is free software: you can redistribute it and/or modify it under th
 ## Installation
 This script will install the following:
 
-|-------------------------------|
-| Apache                        |
-| SSL                           |
-| MySQL                         |
-| phpMyAdmin                    |
-| Webmin                        |
-
 | Apache & Additional Modules   |
 |-------------------------------|
-| httpd                         | 
-| apr                           |
-| apr-util                      |
-| nghttp2                       | 
-| openssl                       | 
-| mod_wsgi                      | 
-| mod_security2                 | 
-| mod_jk                        | 
-
+| Apache                        | 
+| SSL                           |
+| MySQL                         |
+| phpMyAdmin                    | 
+| Webmin                        | 
 
 #### Install Git and download "lamp"
 ```
