@@ -21,18 +21,17 @@ This script will install the following:
 | phpMyAdmin                    |
 | Webmin                        |
 
-| Apache & Additional Modules   | Version                                                   |
-|-------------------------------|-----------------------------------------------------------|
-| httpd                         | 2.4.46                                                    |
-| apr                           | 1.7.0                                                     |
-| apr-util                      | 1.6.1                                                     |
-| nghttp2                       | 1.43.0                                                    |
-| openssl                       | 1.1.1k                                                    |
-| mod_wsgi                      | 4.7.1                                                     |
-| mod_security2                 | 2.9.3                                                     |
-| mod_jk                        | 1.2.48                                                    |
+| Apache & Additional Modules   |
+|-------------------------------|
+| httpd                         | 
+| apr                           |
+| apr-util                      |
+| nghttp2                       | 
+| openssl                       | 
+| mod_wsgi                      | 
+| mod_security2                 | 
+| mod_jk                        | 
 
-| Database                      | Version                                                   |
 
 #### Install Git and download "lamp"
 ```
