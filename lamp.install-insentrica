@@ -37,7 +37,7 @@ fi
 ###
 
 clear
-echo -e "LAMP.install-insentrica for Ubuntu"
+echo -e "lamp.install-insentrica for Ubuntu"
 echo -e "Tested on Ubuntu 20.10 (Groovy Gorilla)"
 echo -e "© 2020 - 2021 - Insentrica  |  Valikahn - http://insentrica.net"
 echo
@@ -95,7 +95,7 @@ sudo a2enmod reqtimeout
 sudo systemctl restart apache2
 
 sudo rm /etc/apache2/apache2.conf
-sudo cp lamp/conf/apache2.conf /etc/apache2/apache2.conf
+sudo cp conf/apache2.conf /etc/apache2/apache2.conf
 sudo systemctl restart apache2
 
 clear
@@ -111,7 +111,7 @@ sudo systemctl reload apache2
 ###
 clear
 sudo apt-get -y update
-sudo cp lamp/conf/phpinfo.php /var/www/html/phpinfo.php
+sudo cp conf/phpinfo.php /var/www/html/phpinfo.php
 echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list
 wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
 sudo apt-get -y update
@@ -149,7 +149,7 @@ clear
 sudo apt-get -y install phpmyadmin
 
 sudo rm /etc/apache2/apache2.conf
-sudo cp lamp/conf/apache2phpmyadmin.conf /etc/apache2/apache2.conf
+sudo cp conf/apache2phpmyadmin.conf /etc/apache2/apache2.conf
 
 sudo service mysql restart
 sudo systemctl restart apache2
