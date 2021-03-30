@@ -11,18 +11,19 @@ This program is free software: you can redistribute it and/or modify it under th
 * Github:   https://github.com/Valikahn/lamp
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
+## Tested Operating Systems
+
+* Ubuntu-20.x (recommend)
+
 ## Software Versions
-
-| Apache & Additional Modules   | Version
+| Installed Software            | Version
 |-------------------------------|-------------------------------|
-| Apache                        | 2.4.46 (Ubuntu)               |
-| PHP                           | 7.4.9                         |
-| SSL                           | OpenSSL/1.1.1f                |
-| MySQL                         | 8.0.23-0ubuntu0.20.10.1       |
-| phpMyAdmin                    | 4.9.7deb1                     |
-| Webmin                        | 1.973                         |
-
-
+| Apache                        | 2.4.46 (Ubuntu)
+| PHP                           | 7.4.9
+| SSL                           | OpenSSL/1.1.1f
+| MySQL                         | 8.0.23-0ubuntu0.20.10.1
+| phpMyAdmin                    | 4.9.7deb1
+| Webmin                        | 1.973
 
 #### Install Git and download "lamp"
 ```
