@@ -36,7 +36,6 @@ fi
 # License
 ###
 
-clear
 echo -e "lamp.install-insentrica for Ubuntu"
 echo -e "Tested on Ubuntu 20.10 (Groovy Gorilla)"
 echo -e "© 2020 - 2021 - Insentrica  |  Valikahn - http://insentrica.net"
@@ -107,25 +106,8 @@ sudo a2ensite default-ssl
 sudo systemctl reload apache2
 
 
-# Installing Webmin
-###
-clear
-sudo apt-get -y update
-sudo cp conf/phpinfo.php /var/www/html/phpinfo.php
-echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list
-wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
-sudo apt-get -y update
-sudo apt-get -y install webmin
-
-
 # Install MySQL
 ###
-clear
-echo "During the next installation you will be asked for a MySQL Admin password."
-echo "Please select a password strong enough and do not forget it!"
-echo
-read -p "Press [Enter] to continue..." -n 1
-
 sudo apt-get update && sudo apt-get dist-upgrade
 sudo apt-get -y install mysql-server
 sudo service mysql restart
@@ -155,6 +137,17 @@ sudo service mysql restart
 sudo systemctl restart apache2
 
 
+# Installing Webmin
+###
+clear
+sudo apt-get -y update
+sudo cp conf/phpinfo.php /var/www/html/phpinfo.php
+echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list
+wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
+sudo apt-get -y update
+sudo apt-get -y install webmin
+
+
 # Completed
 ###
 clear
@@ -165,7 +158,9 @@ echo
 # grep 'inet6' instead of 'inet ' for ipv6
 ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
 echo
-echo "Webmin is located at https://$ip:10000"
+echo "Web Address:  https://$ip"
 echo
-echo "phpMyAdmin is located at https://$ip/phpmyadmin"
+echo "Webmin:  https://$ip:10000"
+echo
+echo "phpMyAdmin:  https://$ip/phpmyadmin"
 echo
