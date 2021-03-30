@@ -11,14 +11,14 @@ This program is free software: you can redistribute it and/or modify it under th
 * Github:   https://github.com/Valikahn/lamp
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
-## Installation
-This script will install the following:
+## Software Versions
 
-| Apache & Additional Modules   |
-|-------------------------------|
+| Apache & Additional Modules   | Version
+|-------------------------------|-------------------------------|
 | Apache                        | 
-| SSL                           |
-| MySQL                         |
+| PHP                           |
+| SSL                           | 
+| MySQL                         | 
 | phpMyAdmin                    | 
 | Webmin                        | 
 
@@ -51,3 +51,11 @@ Common Name (e.g. server FQDN or YOUR name) []:
 Email Address []:
 ```
 
+#### phpMyAdmin Configuration
+The installation process will ask for configuration during setup
+```
+* Select Apache2 for the server.
+* Choose YES when asked about whether to configure the database for phpMyAdmin with dbconfig-common.
+* Enter your MySQL password when prompted.
+* Enter the password that you want to use to log into phpMyAdmin.
+```
