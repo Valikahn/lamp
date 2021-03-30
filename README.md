@@ -15,12 +15,14 @@ This program is free software: you can redistribute it and/or modify it under th
 
 | Apache & Additional Modules   | Version
 |-------------------------------|-------------------------------|
-| Apache                        | 
-| PHP                           |
-| SSL                           | 
-| MySQL                         | 
-| phpMyAdmin                    | 
-| Webmin                        | 
+| Apache                        | 2.4.46 (Ubuntu)               |
+| PHP                           | 7.4.9                         |
+| SSL                           | OpenSSL/1.1.1f                |
+| MySQL                         | 8.0.23-0ubuntu0.20.10.1       |
+| phpMyAdmin                    | 4.9.7deb1                     |
+| Webmin                        | 1.973                         |
+
+
 
 #### Install Git and download "lamp"
 ```
@@ -59,3 +61,11 @@ The installation process will ask for configuration during setup
 * Enter your MySQL password when prompted.
 * Enter the password that you want to use to log into phpMyAdmin.
 ```
+
+## Bugs & Issues
+Please feel free to report any bugs or issues to us, email to: git@insentrica.net or <a href="https://github.com/Valikahn/Calorie-Intake-Guide/issues">Issues</a> on GitHub.
+
+## Licence
+Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
+
+Licensed under the GPLv3 License.
