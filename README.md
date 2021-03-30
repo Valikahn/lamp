@@ -2,6 +2,7 @@
 
 Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
 Program v0.1-alpha - Code Name: Anubis<br />
+This has been tested on Ubuntu 20.10 (Groovy Gorilla)<br />
 Licensed under the GPLv3 License.<br />
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -12,7 +13,6 @@ This program is free software: you can redistribute it and/or modify it under th
 
 ## Installation
 #### Install Git and download "lamp"
-* This has been tested on Ubuntu 20.10 (Groovy Gorilla)
 ```
 sudo -i
 sudo apt-get -y install wget git
