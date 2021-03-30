@@ -20,7 +20,7 @@ This script will install the following:
 | MySQL                         |
 | phpMyAdmin                    |
 | Webmin                        |
-|-------------------------------|
+
 
 #### Install Git and download "lamp"
 ```
