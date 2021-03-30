@@ -12,6 +12,16 @@ This program is free software: you can redistribute it and/or modify it under th
 * GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
 ## Installation
+This script will install the following:
+
+|-------------------------------|
+| Apache                        |
+| SSL                           |
+| MySQL                         |
+| phpMyAdmin                    |
+| Webmin                        |
+|-------------------------------|
+
 #### Install Git and download "lamp"
 ```
 sudo -i
@@ -26,3 +36,18 @@ cd lamp
 chmod +x lamp.install-insentrica
 sudo ./lamp.install-insentrica
 ```
+
+## Script Process
+#### SSL Configuration
+After the process has completed installing Apache it will generate an RSA private key.<br />
+You will be promped for the following data:
+```
+Country Name (2 letter code) [AU]:
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:
+Email Address []:
+```
+
