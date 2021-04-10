@@ -49,7 +49,7 @@ sudo ./lamp.install-insentrica
 
 ## Script Process
 #### Apache and FTP Server SSL Configuration
-After the process has completed installing Apache it will generate an RSA private key.<br />
+After the process has completed installing Apache and FTP (vsftpd), it will generate an RSA private key.<br />
 You will be asked to enter some details like country, etc. You don’t have to fill these in. You can just press ENTER for defaults.<br />
 Like below:
 ```
