@@ -30,6 +30,7 @@ This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin a
 | MySQL                         | 8.0.23-0ubuntu0.20.10.1
 | phpMyAdmin                    | 4.9.7deb1
 | Webmin                        | 1.973
+| FTP server (vsftpd)           | 3.0.3
 
 #### Install Git and clone the "lamp" package
 ```
@@ -47,9 +48,10 @@ sudo ./lamp.install-insentrica
 ```
 
 ## Script Process
-#### SSL Configuration
-After the process has completed installing Apache it will generate an RSA private key.<br />
-You will be promped for the following data:
+#### Apache and FTP Server SSL Configuration
+After the process has completed installing Apache and FTP (vsftpd), it will generate an RSA private key.<br />
+You will be asked to enter some details like country, etc. You don’t have to fill these in. You can just press ENTER for defaults.<br />
+Like below:
 ```
 Country Name (2 letter code) [AU]:
 State or Province Name (full name) [Some-State]:

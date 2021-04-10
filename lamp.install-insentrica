@@ -4,7 +4,7 @@ clear
 # LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 #
 # Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
-# Program v0.1-alpha - Code Name: Anubis
+# Program v1.0-alpha - Code Name: Anubis
 # Licensed under the GPLv3 License.
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 # 
@@ -103,6 +103,30 @@ sudo chmod 600 /etc/apache2/apache.pem
 clear
 sudo a2ensite default-ssl
 sudo systemctl reload apache2
+
+
+# Installing FTP server (vsftpd)
+###
+clear
+sudo apt update && sudo apt install vsftpd
+
+sudo ufw allow OpenSSH
+sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 40000:50000/tcp
+sudo ufw allow 990/tcp
+sudo ufw enable
+
+sudo usermod -d /var/www/html $user
+sudo chown $user:$user /var/www/html
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+
+sudo rm /etc/vsftpd.conf
+sudo cp conf/vsftpd.conf /etc/vsftpd.conf
+
+sudo service sshd restart
+sudo systemctl restart vsftpd
 
 
 # Install MySQL
