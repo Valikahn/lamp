@@ -9,6 +9,7 @@ This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin a
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
+* [Install Commands](#install-commands)
 * [Script Process](#script-process)
 * [Copyright](#copyright)
 * [Bugs & Issues](#bugs--issues)
@@ -32,6 +33,7 @@ This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin a
 | Webmin                        | 1.973
 | FTP server (vsftpd)           | 3.0.3
 
+## Install Commands
 #### Install Git and clone the "lamp" package
 ```
 sudo -i
