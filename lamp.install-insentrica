@@ -77,7 +77,7 @@ clear
 sudo dpkg --configure -a
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo apt-get dist-upgrade
+sudo apt-get -y dist-upgrade
 sudo apt-get -y install php libapache2-mod-php
 sudo systemctl restart apache2
 
