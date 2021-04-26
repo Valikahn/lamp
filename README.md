@@ -73,6 +73,11 @@ The installation process will ask for configuration during setup
 * Enter the password that you want to use to log into phpMyAdmin.
 ```
 
+#### Security on PhpMyAdmin Login Interface
+PhpMyAdmin is a web based MySQL database manage application, you will be prompted to secure phpMyAdmin interface with password protect on Linux systems.
+When prompted enter a password twice, this is to prevent anyone not in the www-data or apache group from being able to read the .htpasswd
+
+
 ## Copyright
 Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
 Program v1.0-beta - Code Name: Anubis<br />
