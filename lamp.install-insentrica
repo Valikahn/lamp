@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-conf
+
 # LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 #
 # Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
