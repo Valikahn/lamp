@@ -80,7 +80,7 @@ When prompted enter a password twice, this is to prevent anyone not in the www-d
 
 ## Copyright
 Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
-Program v1.0-beta - Code Name: Anubis<br />
+Program v1.1-alpha - Code Name: Anubis<br />
 
 ## Bugs & Issues
 Please feel free to report any bugs or issues to us.
