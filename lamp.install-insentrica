@@ -29,7 +29,6 @@ fi
 	if [ $ip ]; then
 		echo "Server IP Address: $ip"
 	fi
-	echo
 
 
 # License
