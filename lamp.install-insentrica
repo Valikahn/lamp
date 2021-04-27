@@ -66,7 +66,6 @@ echo "+-------------------------------------------------------------------+"
 echo "  Server IP Address:   $ip                                           "
 echo "  Operating System:  $OS - $ARCH                                     "
 echo "  OS Version:  $VERSION                                              "
-
 echo
 
 # Lets get started
@@ -76,7 +75,9 @@ read val
 
 # did we get an input value?
 if [ "$val" == "" ]; then
-	echo "Nothing was entered by the user"
+	clear
+	echo "Invalid entry by user...Terminating program..."
+	sleep 5
 	
 # was it a y or a yes?
 elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
@@ -244,6 +245,8 @@ elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 
 # treat anything else as a negative response
 else
-   echo "negative response: $val"
+   echo "Closing program..."
+   pause 5
+   clear
    exit
 fi
