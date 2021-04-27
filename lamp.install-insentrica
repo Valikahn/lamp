@@ -26,9 +26,6 @@ fi
 ###
 	# grep 'inet6' instead of 'inet ' for ipv6
 	ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
-	#if [ $ip ]; then
-		#echo "Server IP Address:  $ip"
-	#fi
 
 # Server Version
 ###
@@ -44,10 +41,6 @@ fi
 	if [ -z "$VERSION" ]; then
     VERSION=$(awk '{print $3}' /etc/*-release)
 	fi
-
-#echo $OS
-#echo $ARCH
-#echo $VERSION
 
 
 # License
