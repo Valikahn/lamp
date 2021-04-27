@@ -69,7 +69,7 @@ Email Address []:
 #### Firewall Configuration
 The script will configure the Uncomplicated Firewall after installing the FTP Server (VSFTPD), it will open the following ports/applications:
 ```
-OpenSSH
+22/tcp (OpenSSH)
 80/tcp (HTTP)
 443/tcp (HPPTS)
 10000/tcp (Webmin)
