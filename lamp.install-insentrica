@@ -1,0 +1,250 @@
+#!/bin/bash
+clear
+
+# LAMP (Linux, Apache, MySQL and PHP) by Valikahn
+#
+# Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
+# Program v1.3-alpha - Code Name: Anubis
+# Licensed under the GPLv3 License.
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+# 
+# Website:  https://www.insentrica.net
+# Github:   https://github.com/Valikahn/lamp
+# GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
+#
+
+# Checking if user is root.
+###
+if [ "$(id -u)" != "0" ]; then
+	echo
+	echo "This script must be run as root." 1>&2
+	echo
+	exit 1
+fi
+
+# Server IP Address - Ipv4 only (Server Version).
+###
+	# grep 'inet6' instead of 'inet ' for ipv6
+	ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
+	#if [ $ip ]; then
+		#echo "Server IP Address:  $ip"
+	#fi
+
+# Server Version
+###
+	# Server version variable
+	OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
+	ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+	VERSION=$(awk '/DISTRIB_RELEASE=/' /etc/*-release | sed 's/DISTRIB_RELEASE=//' | sed 's/[.]0/./')
+
+	if [ -z "$OS" ]; then
+    OS=$(awk '{print $1}' /etc/*-release | tr '[:upper:]' '[:lower:]')
+	fi
+
+	if [ -z "$VERSION" ]; then
+    VERSION=$(awk '{print $3}' /etc/*-release)
+	fi
+
+#echo $OS
+#echo $ARCH
+#echo $VERSION
+
+
+# License
+###
+
+echo
+echo "+-------------------------------------------------------------------+"
+echo "| LAMP (Linux, Apache, MySQL and PHP)                               |"
+echo "| Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL             |"
+echo "|-------------------------------------------------------------------|"
+echo "| File Name:   lamp.install-insentrica                              |"
+echo "| Website:  https://www.insentrica.net                              |"
+echo "| Author:  Valikahn <giti@insentrica.net>                           |"
+echo "| © 2020 - 2021 - Insentrica                                        |"
+echo "+-------------------------------------------------------------------+"
+echo "| Server IP Address:   $ip                                          |"
+echo "| Operating System:  $OS - $ARCH                                    |"
+echo "| OS Version:  $VERSION                                             |"
+echo "+-------------------------------------------------------------------+"
+echo
+
+# Lets get started
+###
+echo "Are you happy to proceed? [y,n]"
+read val
+
+# did we get an input value?
+if [ "$val" == "" ]; then
+   echo "Nothing was entered by the user"
+
+# was it a y or a yes?
+elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
+   echo "Positive response: $val"
+
+# treat anything else as a negative response
+else
+   echo "negative response: $val"
+fi
+
+
+# Prompting for system user.
+###
+clear
+con=0
+while [ $con -eq 0 ]; do
+	echo -n "Please type a valid system user: "
+	read -e user
+	uid=$(cat /etc/passwd | grep "$user": | cut -d: -f3)
+
+	if [ -z $(cat /etc/passwd | grep "$user":) ]; then
+		echo
+		echo "This user does not exist!"
+
+	elif [ $uid -lt 999 ]; then
+		echo
+		echo "That user's UID is too low!"
+
+	elif [ $user == nobody ]; then
+		echo
+		echo "You cant use 'nobody' as user!"
+	else
+		con=1
+	fi
+done
+
+homedir=$(cat /etc/passwd | grep "$user": | cut -d: -f6)
+
+
+# Installing Apache
+###
+clear
+sudo dpkg --configure -a
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
+sudo apt-get -y install php libapache2-mod-php
+sudo systemctl restart apache2
+
+
+# SSL
+###
+clear
+sudo a2enmod ssl
+sudo systemctl restart apache2
+sudo a2enmod auth_digest
+sudo systemctl restart apache2
+sudo a2enmod reqtimeout
+sudo systemctl restart apache2
+
+sudo rm /etc/apache2/apache2.conf
+sudo cp syntax/apache2.conf /etc/apache2/apache2.conf
+sudo systemctl restart apache2
+
+clear
+sudo openssl req -new -x509 -days 365 -nodes -newkey rsa:2048 -out /etc/apache2/apache.pem -keyout /etc/apache2/apache.pem
+sudo chmod 600 /etc/apache2/apache.pem
+
+clear
+sudo a2ensite default-ssl
+sudo systemctl reload apache2
+
+
+# Installing FTP server (vsftpd)
+###
+clear
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install vsftpd
+
+sudo ufw allow OpenSSH
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 10000/tcp
+sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 40000:50000/tcp
+sudo ufw allow 990/tcp
+sudo ufw enable
+
+sudo usermod -d /var/www/html $user
+sudo chown $user:$user /var/www/html
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+
+sudo rm /etc/vsftpd.conf
+sudo cp syntax/vsftpd.conf /etc/vsftpd.conf
+
+sudo service sshd restart
+sudo systemctl restart vsftpd
+
+
+# Install MySQL
+###
+sudo apt-get update && sudo apt-get dist-upgrade
+sudo apt-get -y install mysql-server
+sudo service mysql restart
+sudo systemctl restart apache2
+
+
+# Install phpMyAdmin
+###
+clear
+echo "During the installation, phpMyAdmin will walk you through a basic configuration."
+echo "Once the process starts up, follow these steps:"
+echo
+echo "•	Select Apache2 for the server."
+echo "•	Choose YES when asked about whether to configure the database for phpMyAdmin with dbconfig-common."
+echo "•	Enter your MySQL password when prompted."
+echo "•	Enter the password that you want to use to log into phpMyAdmin."
+echo
+read -p "Press [Enter] to continue..." -n 1
+
+clear
+sudo apt-get -y install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
+
+sudo rm /etc/apache2/apache2.conf
+sudo cp syntax/apache2phpmyadmin.conf /etc/apache2/apache2.conf
+
+sudo service mysql restart
+sudo systemctl restart apache2
+
+sudo rm /etc/apache2/sites-available/000-default.conf
+sudo cp syntax/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+htpasswd -c /etc/apache2/.htpasswd $user
+chmod 640 /etc/apache2/.htpasswd
+chgrp www-data /etc/apache2/.htpasswd 
+
+
+# Installing Webmin
+###
+clear
+sudo apt-get -y update
+sudo cp syntax/phpinfo.php /var/www/html/phpinfo.php
+sudo cp syntax/php.ini /var/www/html/php.ini
+echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list
+wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
+sudo apt-get -y update
+sudo apt-get -y install webmin
+
+
+# Completed
+###
+clear
+echo -e "Installation is complete.."
+echo
+
+# Ipv4 only.
+# grep 'inet6' instead of 'inet ' for ipv6
+ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
+echo
+echo "Web Address:  https://$ip"
+echo
+echo "Webmin:  https://$ip:10000"
+echo
+echo "phpMyAdmin:  https://$ip/phpmyadmin"
+echo
+echo "Server rebooting in 1 minute to allow for firewall settings to take effect."
+echo "Please allow this reboot to happen."
+sleep 1m && reboot
