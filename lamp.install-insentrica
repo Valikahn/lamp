@@ -33,9 +33,10 @@ fi
 # Server Version
 ###
 	# Server version variable (lsb_release -d)
-	#vers=$lsb_release -d
-		#echo "Server Version:  $vers"
-		
+	vers=$(lsb_release -d)
+	if [ $vers ]; then
+		echo "Server Version:  $vers"
+	fi
 
 # License
 ###
