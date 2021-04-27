@@ -66,6 +66,34 @@ Organizational Unit Name (eg, section) []:
 Common Name (e.g. server FQDN or YOUR name) []:
 Email Address []:
 ```
+#### Firewall Configuration
+The script will configure the Uncomplicated Firewall after installing the FTP Server (VSFTPD), it will open the following ports/applications:
+```
+OpenSSH
+80/tcp (HTTP)
+443/tcp (HPPTS)
+10000/tcp (Webmin)
+20/tcp (FTP Client)
+21/tcp (FTP Server)
+40000:50000/tcp (Ubuntu Passive Ports)
+990/tcp (SFTP)
+```
+You will be prompted with a confirmation to proceed with operation as below: 
+```
+Command may disrupt existing ssh connections. Proceed with operation (y|n)?
+```
+Press 'y' and press enter to contine with the script.
+
+You can at a later date see what ports are open on the Uncomplicated Firewall (UFW) with the following command in SSH:
+```
+sudo ufw status
+```
+If you want to close a port that is open use the following command in SSH:
+```
+ufw deny [PORT NUMBER]/[TCP or UDP]
+
+For example to close tcp port 80 you would type:  ufw deny 80/tcp
+```
 
 #### phpMyAdmin Configuration
 The installation process will ask for configuration during setup
