@@ -5,7 +5,7 @@
 </div>
 
 ## Script Description
-This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin and Webmin.  There is only 2 sections that require human input listed below in the [Script Process](#script-process) section.
+This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin and Webmin.  There are a few sections that require human input listed below in the [Script Process](#script-process) section, please read this section to ensure you understand what the program is asking of you.
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
