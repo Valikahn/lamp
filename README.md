@@ -17,10 +17,13 @@ This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin a
 
 ## Tested Operating Systems
 
-* Ubuntu 18.x 
-* Ubuntu 18.04.5 LTS (Bionic Beaver)
-* Ubuntu 20.x
-* Ubuntu 20.10 (Groovy Gorilla)
+* Ubuntu 18.x (Bionic Beaver)
+* Ubuntu 20.04.x (Focal Fossa)
+* Ubuntu 20.10.x (Groovy Gorilla)
+
+#### Under Testing
+
+* Ubuntu 21.04.x (Hirsute Hippo)
 
 ## Installed Software Module Versions
 | Install Modules               | Version
