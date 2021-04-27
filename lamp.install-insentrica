@@ -4,7 +4,7 @@ clear
 # LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 #
 # Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
-# Program v1.1-alpha - Code Name: Anubis
+# Program v1.2-alpha - Code Name: Anubis
 # Licensed under the GPLv3 License.
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 # 
@@ -29,6 +29,25 @@ fi
 	if [ $ip ]; then
 		echo "Server IP Address:  $ip"
 	fi
+
+# Server Version
+###
+	# Server version variable
+	OS=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
+	ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+	VERSION=$(awk '/DISTRIB_RELEASE=/' /etc/*-release | sed 's/DISTRIB_RELEASE=//' | sed 's/[.]0/./')
+
+	if [ -z "$OS" ]; then
+    OS=$(awk '{print $1}' /etc/*-release | tr '[:upper:]' '[:lower:]')
+	fi
+
+	if [ -z "$VERSION" ]; then
+    VERSION=$(awk '{print $3}' /etc/*-release)
+	fi
+
+echo $OS
+echo $ARCH
+echo $VERSION
 
 
 # License
