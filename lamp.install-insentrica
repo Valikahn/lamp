@@ -35,9 +35,16 @@ fi
 # License
 ###
 
-echo -e "lamp.install-insentrica for Ubuntu"
-echo -e "Tested on Ubuntu 20.10 (Groovy Gorilla)"
-echo -e "© 2020 - 2021 - Insentrica  |  Valikahn - http://insentrica.net"
+echo
+echo "+-------------------------------------------------------------------+"
+echo "| LAMP (Linux, Apache, MySQL and PHP)                               |"
+echo "| Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL             |"
+echo "|-------------------------------------------------------------------|"
+echo "| File Name:   lamp.install-insentrica                              |"
+echo "| Website:  https://www.insentrica.net                              |"
+echo "| Author:  Valikahn <giti@insentrica.net>                           |"
+echo "| © 2020 - 2021 - Insentrica                                        |"
+echo "+-------------------------------------------------------------------+"
 echo
 read -p "Press [Enter] to continue..." -n 1
 echo
