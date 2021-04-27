@@ -4,7 +4,7 @@ clear
 # LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 #
 # Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
-# Program v1.2-alpha - Code Name: Anubis
+# Program v1.3-alpha - Code Name: Anubis
 # Licensed under the GPLv3 License.
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 # 
@@ -26,9 +26,9 @@ fi
 ###
 	# grep 'inet6' instead of 'inet ' for ipv6
 	ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
-	if [ $ip ]; then
-		echo "Server IP Address:  $ip"
-	fi
+	#if [ $ip ]; then
+		#echo "Server IP Address:  $ip"
+	#fi
 
 # Server Version
 ###
@@ -45,9 +45,9 @@ fi
     VERSION=$(awk '{print $3}' /etc/*-release)
 	fi
 
-echo $OS
-echo $ARCH
-echo $VERSION
+#echo $OS
+#echo $ARCH
+#echo $VERSION
 
 
 # License
@@ -63,9 +63,29 @@ echo "| Website:  https://www.insentrica.net                              |"
 echo "| Author:  Valikahn <giti@insentrica.net>                           |"
 echo "| © 2020 - 2021 - Insentrica                                        |"
 echo "+-------------------------------------------------------------------+"
+echo "| Server IP Address:   $ip                                          |"
+echo "| Operating System:  $OS - $ARCH                                    |"
+echo "| OS Version:  $VERSION                                             |"
+echo "+-------------------------------------------------------------------+"
 echo
-read -p "Press [Enter] to continue..." -n 1
-echo
+
+# Lets get started
+###
+echo "Are you happy to proceed? [y,n]"
+read val
+
+# did we get an input value?
+if [ "$val" == "" ]; then
+   echo "Nothing was entered by the user"
+
+# was it a y or a yes?
+elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
+   echo "Positive response: $val"
+
+# treat anything else as a negative response
+else
+   echo "negative response: $val"
+fi
 
 
 # Prompting for system user.
