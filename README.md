@@ -84,17 +84,6 @@ Command may disrupt existing ssh connections. Proceed with operation (y|n)?
 ```
 Press 'y' and press enter to contine with the script.
 
-You can at a later date see what ports are open on the Uncomplicated Firewall (UFW) with the following command in SSH:
-```
-sudo ufw status
-```
-If you want to close a port that is open use the following command in SSH:
-```
-ufw deny [PORT NUMBER]/[TCP or UDP]
-
-For example to close tcp port 80 you would type:  ufw deny 80/tcp
-```
-
 #### phpMyAdmin Configuration
 The installation process will ask for configuration during setup
 ```
