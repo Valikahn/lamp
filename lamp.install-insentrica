@@ -1,8 +1,7 @@
 #!/bin/bash
 clear
-sudo mkdir rtorrent
-	
-# rutorrent-auto - Auto Install Script by Valikahn
+
+# LAMP (Linux, Apache, MySQL and PHP) by Valikahn
 #
 # Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net>
 # Program v1.4-alpha - Code Name: Anubis
@@ -50,10 +49,10 @@ fi
 
 echo
 echo "+-------------------------------------------------------------------+"
-echo "| rutorrent-auto                                                    |"
-echo "| Auto Install Script by Valikahn						              |"
+echo "| LAMP (Linux, Apache, MySQL and PHP)                               |"
+echo "| Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL             |"
 echo "|-------------------------------------------------------------------|"
-echo "| File Name:   rutorrent.install-insentrica                         |"
+echo "| File Name:   lamp.install-insentrica                              |"
 echo "| Website:  https://www.insentrica.net                              |"
 echo "| Author:  Valikahn <giti@insentrica.net>                           |"
 echo "| © 2020 - 2021 - Insentrica                                        |"
@@ -78,7 +77,7 @@ if [ "$val" == "" ]; then
 elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 
 	# Prompting for system user.
-
+	###
 	clear
 	con=0
 	while [ $con -eq 0 ]; do
@@ -104,7 +103,8 @@ elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 
 	homedir=$(cat /etc/passwd | grep "$user": | cut -d: -f6)
 
-	# Installing dependencies
+
+	# Installing Apache
 	###
 	clear
 	sudo dpkg --configure -a
@@ -113,301 +113,142 @@ elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 	sudo apt-get -y dist-upgrade
 	sudo apt-get -y install php libapache2-mod-php
 	sudo systemctl restart apache2
-	
-	read -p "Press [Enter] to continue..." -n 1
 
-	# Install dependencies
+
+	# SSL
 	###
-	sudo apt-get -y install autoconf build-essential ca-certificates comerr-dev curl dtach htop irssi libcppunit-dev libcurl4
-	read -p "Press [Enter] to continue..." -n 1
 	clear
-	sudo apt-get -y install libterm-readline-gnu-perl libsigc++-2.0-dev libperl-dev libssl-dev libxml2-dev ncurses-base
-	read -p "Press [Enter] to continue..." -n 1
-	clear	
-	sudo apt-get -y install ssl-cert texinfo zlib1g-dev libjson-perl libjson-xs-perl libjson-rpc-perl libhtml-parser-perl
-	read -p "Press [Enter] to continue..." -n 1
-	clear
-	sudo apt-get -y install subversion automake libtool libncurses5-dev ncurses-term ntp patch pkg-config
-	read -p "Press [Enter] to continue..." -n 1
-	clear
-	sudo apt-get -y install libarchive-zip-perl libnet-ssleay-perl screen unrar-free unzip libxml-libxml-perl
-	read -p "Press [Enter] to continue..." -n 1
-		
-	# Installing SSL
-	##
-	clear
-	service apache2 restart
 	sudo a2enmod ssl
+	sudo systemctl restart apache2
 	sudo a2enmod auth_digest
+	sudo systemctl restart apache2
 	sudo a2enmod reqtimeout
-	service apache2 restart
+	sudo systemctl restart apache2
 
 	sudo rm /etc/apache2/apache2.conf
-	sudo cp syntax/torrent/apache2.conf /etc/apache2.conf
-	service apache2 restart
+	sudo cp syntax/apache2.conf /etc/apache2/apache2.conf
+	sudo systemctl restart apache2
 
+	clear
 	sudo openssl req -new -x509 -days 365 -nodes -newkey rsa:2048 -out /etc/apache2/apache.pem -keyout /etc/apache2/apache.pem
 	sudo chmod 600 /etc/apache2/apache.pem
 
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Installing software
-	##
-	clear
-	cd ~
-	cd rtorrent
-	svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc-c
-	curl http://rtorrent.net/downloads/libtorrent-0.13.8.tar.gz | tar xz
-	curl http://rtorrent.net/downloads/rtorrent-0.9.8.tar.gz | tar xz
-
-	read -p "Press [Enter] to continue..." -n 1
-	
-	cd xmlrpc-c
-	./configure --disable-cplusplus
-	make
-	make install
-
-	read -p "Press [Enter] to continue..." -n 1
-	
-	cd ../libtorrent-0.13.8
-	./autogen.sh
-	./configure
-	make -j2
-	sudo make install
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	cd ../rtorrent-0.9.8
-	./autogen.sh
-	./configure --with-xmlrpc-c 
-	make -j2
-	sudo make install
-	sudo ldconfig
-	
-	cd ../
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Creating session directory
-	##
-	clear
-	if [ ! -d "$homedir"/.rtorrent-session ]; then
-		mkdir "$homedir"/.rtorrent-session
-		chown "$user"."$user" "$homedir"/.rtorrent-session
-	else
-		chown "$user"."$user" "$homedir"/.rtorrent-session
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Creating downloads folder
-	##
-	if [ ! -d "$homedir"/Downloads ]; then
-		mkdir "$homedir"/Downloads
-		chown "$user"."$user" "$homedir"/Downloads
-	else
-		chown "$user"."$user" "$homedir"/Downloads
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Creating unpack folder
-	##
-	clear
-	if [ ! -d "$homedir"/Downloads/unpack ]; then
-		mkdir "$homedir"/Downloads/unpack
-		chown "$user"."$user" "$homedir"/Downloads/unpack
-	else
-		chown "$user"."$user" "$homedir"/Downloads/unpack
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Downloading rtorrent.rc file.
-	##
-	clear
-	wget -O $homedir/.rtorrent.rc syntax/torrent/rtorrent.rc
-
-	chown "$user"."$user" $homedir/.rtorrent.rc
-
-	sed -i "s@HOMEDIRHERE@$homedir@g" $homedir/.rtorrent.rc
-
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Installing rutorrent.
-	##
-	clear
-	wget https://github.com/Novik/ruTorrent/archive/refs/tags/v3.10.tar.gz
-	tar -zxvf v3.10.tar.gz
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	if [ -d /var/www/html/rutorrent ]; then
-		rm -r /var/www/html/rutorrent
-	fi
-
-	mv -f rutorrent /var/www/html/
-	rm -v v3.10.tar.gz
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Installing Plugins.
-
-	clear
-	wget http://dl.bintray.com/novik65/generic/plugins-3.6.tar.gz
-	tar -zxvf plugins-3.6.tar.gz
-
-	if [ -d /var/www/html/plugins ]; then
-		rm -r /var/www/html/plugins
-	fi
-
-	mv -f plugins /var/www/html/rutorrent
-	rm -v plugins-3.6.tar.gz
-
-	sudo apt-get -y install libzen0v5 libmediainfo0v5 mediainfo
-
-	sudo apt-get -y dist-upgrade
-	sudo apt-get -y update && upgrade
-	sudo apt-get -y install ffmpeg gstreamer0.10-ffmpeg
-
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Changing permissions for rutorrent and plugins.
-
-	clear
-	chown -R www-data.www-data /var/www/html/rutorrent/
-	chmod -R 775 /var/www/html/rutorrent/
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Check if apache2 has port 80 enabled
-
-	if ! grep --quiet "^Listen 80$" /etc/apache2/ports.conf; then
-		echo "Listen 80" >> /etc/apache2/ports.conf;
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Adding ServerName localhost to apache2.conf
-
-	clear
-	if ! grep --quiet "^ServerName$" /etc/apache2/apache2.conf; then
-		echo "ServerName localhost" >> /etc/apache2/apache2.conf;
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Creating user for webinterface.
-
-	clear
-	clear
-	echo -n "Please type the username for the webinterface, system user not required: "
-	read -e htauser
-
-	while true; do
-		htpasswd -c /var/www/html/rutorrent/.htpasswd "$htauser"
-		if [ $? = 0 ]; then
-			break
-		fi
-	done
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# Creating Apache virtual host
-
-	clear
-	if [ ! -f /etc/apache2/sites-available/rutorrent.conf ]; then
-
-	cat > /etc/apache2/sites-available/rutorrent.conf << EOF
-<VirtualHost *:80>
-
-	ServerAlias *
-
-	DocumentRoot /var/www/html/
-
-	CustomLog /var/log/apache2/rutorrent.log vhost_combined
-
-	ErrorLog /var/log/apache2/rutorrent_error.log
-
-	SCGIMount /RPC2 127.0.0.1:5000
-
-	SSLEngine on
-	SSLCertificateFile /etc/apache2/apache.pem
-
-	<Directory "/var/www/html/rutorrent">
-		AuthName "Tits or GTFO"
-		AuthType Basic
-		Require valid-user
-		AuthUserFile /var/www/html/rutorrent/.htpasswd
-	</Directory>
-</VirtualHost>
-EOF
-
-		a2ensite rutorrent
-	fi
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# SSL Apache2
-
 	clear
 	sudo a2ensite default-ssl
-	service apache2 restart
-	
+	sudo systemctl reload apache2
+
+
+	# Installing FTP server (vsftpd)
+	###
+	clear
+	sudo apt-get -y update
+	sudo apt-get -y upgrade
+	sudo apt-get -y install vsftpd
+
+	sudo ufw allow OpenSSH
+	sudo ufw allow 80/tcp
+	sudo ufw allow 443/tcp
+	sudo ufw allow 10000/tcp
+	sudo ufw allow 20/tcp
+	sudo ufw allow 21/tcp
+	sudo ufw allow 40000:50000/tcp
+	sudo ufw allow 990/tcp
+	sudo ufw enable
+
+	sudo usermod -d /var/www/html $user
+	sudo chown $user:$user /var/www/html
+
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+
+	sudo rm /etc/vsftpd.conf
+	sudo cp syntax/vsftpd.conf /etc/vsftpd.conf
+
+	sudo service sshd restart
+	sudo systemctl restart vsftpd
+
+
+	# Install MySQL
+	###
+	sudo apt-get -y update 
+	sudo apt-get -y dist-upgrade
+	wget -c https://repo.mysql.com//mysql-apt-config_0.8.17-1_all.deb
+	sudo dpkg -i mysql-apt-config_0.8.17-1_all.deb
+	sudo apt-get -y install mysql-server
+	clear
+	sudo mysql_secure_installation
+	sudo service mysql restart
+	sudo systemctl restart apache2
+	sudo systemctl enable mysql
+
+
+	# Install phpMyAdmin
+	###
+	clear
+	echo "During the installation, phpMyAdmin will walk you through a basic configuration."
+	echo "Once the process starts up, follow these steps:"
+	echo
+	echo "•	Select Apache2 for the server."
+	echo "•	Choose YES when asked about whether to configure the database for phpMyAdmin with dbconfig-common."
+	echo "•	Enter your MySQL password when prompted."
+	echo "•	Enter the password that you want to use to log into phpMyAdmin."
+	echo
 	read -p "Press [Enter] to continue..." -n 1
-	
-	# Downloading and installing rtorrent init script.
 
 	clear
-	sudo rm /etc/init.d/rtorrent-init
-	sudo cp syntax/torrent/rtorrent-init /etc/init.d/rtorrent-init
-	chmod +x /etc/init.d/rtorrent-init
-	sed -i "s/USERNAMEHERE/$user/g" /etc/init.d/rtorrent-init
-	update-rc.d rtorrent-init defaults
-	service apache2 restart
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
-	# ruTorrnet config correction
+	sudo apt-get -y install phpmyadmin php-mbstring php-gettext php-zip php-gd php-json php-curl
 
+	sudo rm /etc/apache2/apache2.conf
+	sudo cp syntax/apache2phpmyadmin.conf /etc/apache2/apache2.conf
+
+	sudo service mysql restart
+	sudo systemctl restart apache2
+
+	sudo rm /etc/apache2/sites-available/000-default.conf
+	sudo cp syntax/000-default.conf /etc/apache2/sites-available/000-default.conf
+	
+	
+	# Security on PhpMyAdmin Login Interface
+	###
 	clear
-	sudo rm /var/www/html/rutorrent/conf/config.php
-	sudo cp syntax/torrent/config /var/www/html/rutorrent/conf/config.php
-	
-	read -p "Press [Enter] to continue..." -n 1
-	
+	echo "Security on PhpMyAdmin Login Interface"
+	echo "This is to prevent anyone not in the www-data or apache group from being able to read the .htpasswd"
+	htpasswd -c /etc/apache2/.htpasswd $user
+	chmod 640 /etc/apache2/.htpasswd
+	chgrp www-data /etc/apache2/.htpasswd 
+
+
+	# Installing Webmin
+	###
+	clear
+	sudo apt-get -y update
+	sudo cp syntax/phpinfo.php /var/www/html/phpinfo.php
+	sudo cp syntax/php.ini /var/www/html/php.ini
+	echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list
+	wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add
+	sudo apt-get -y update
+	sudo apt-get -y install webmin
+
+
 	# Completed
-
+	###
 	clear
 	echo -e "Installation is complete.."
-	echo
-
-	echo -e "Done.."
-	echo
-	echo -e "Your downloads is put in the 'Downloads' folder, sessions data in '.rtorrent-session' and
-	rtorrent's configuration file is '.rtorrent.rc', all in your home directory"
-	echo
-	echo -e "If you want to change configuration for rtorrent, such as download folder, port, etc.,
-	you will need to edit the '.rtorrent.rc' file. E.g. 'nano $homedir/.rtorrent.rc'"
-	tput sgr0
 	echo
 
 	# Ipv4 only.
 	# grep 'inet6' instead of 'inet ' for ipv6
 	ip=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d/ -f1 | grep -v "127." | head -n 1)
-	if [ $ip ]; then
-		echo "Visit rutorrent at https://$ip/rutorrent"
-	else
-		echo "Visit rutorrent at https://IP.ADDRESS/rutorrent"
-	fi
-		echo
-		echo "Webmin is located at https://$ip:10000"
-		echo
-		echo "phpMyAdmin is located at https://$ip/phpmyadmin"
 	echo
-	echo -e "© 2015 - IP Unix Path  |  Valikahn - http://ipunixpath.com"
-
-	read -p "Press [Enter] to continue..." -n 1
+	echo "Web Address:  https://$ip"
+	echo
+	echo "Webmin:  https://$ip:10000"
+	echo
+	echo "phpMyAdmin:  https://$ip/phpmyadmin"
+	echo "Login Interface Username:  $user"
+	echo
+	echo "Server rebooting in 1 minute to allow for firewall settings to take effect."
+	echo "Please allow this reboot to happen."
+	sleep 1m && reboot
 
 # Treat anything else as a negative response
 else
