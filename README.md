@@ -81,6 +81,14 @@ Command may disrupt existing ssh connections. Proceed with operation (y|n)?
 ```
 Press 'y' and press enter to contine with the script.
 
+#### SQL Installation Prompt
+During the MySQL installation you will be prompted with the below screen...  Highlight OK and press enter to continue.
+<div align="center">
+    <a href="https://insentrica.net/" target="_blank">
+        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/main/img/config_msql_apt.PNG">
+    </a>
+</div>
+
 #### phpMyAdmin Configuration
 The installation process will ask for configuration during setup
 ```
