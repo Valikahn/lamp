@@ -195,7 +195,7 @@ elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 	read -p "Press [Enter] to continue..." -n 1
 
 	clear
-	sudo apt-get -y install phpmyadmin php-mbstring php-gettext php-zip php-gd php-json php-curl
+	sudo apt-get -y install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
 
 	sudo rm /etc/apache2/apache2.conf
 	sudo cp syntax/apache2phpmyadmin.conf /etc/apache2/apache2.conf
