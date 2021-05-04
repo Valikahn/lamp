@@ -113,7 +113,9 @@ elif [[ "$val" == "y" ]] || [[ "$val" == "yes" ]]; then
 	sudo apt-get -y dist-upgrade
 	sudo apt-get -y install php libapache2-mod-php
 	sudo systemctl restart apache2
-
+	
+	sudo rm /var/www/html/index.html
+	sudo cp web/index.html /var/www/html/index.html
 
 	# SSL
 	###
