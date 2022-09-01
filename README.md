@@ -118,9 +118,9 @@ Program v1.4-alpha - Code Name: Anubis<br />
 
 ## Bugs & Issues
 Please feel free to report any bugs or issues to us.
-* Email:  git@insentrica.net 
+* Email:  
 * Issues:  <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
-* Website:  https://www.insentrica.net
+* Website:  
 * Github:   https://github.com/Valikahn/lamp
 
 ## Licence
