@@ -113,7 +113,7 @@ When prompted enter a password twice, this is to prevent anyone not in the www-d
 
 
 ## Copyright
-Copyright (C) 2020 - 2021 Valikahn <git@insentrica.net><br />
+Copyright (C) 2020 - 2021 Valikahn <br />
 Program v1.4-alpha - Code Name: Anubis<br />
 
 ## Bugs & Issues
