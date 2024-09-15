@@ -5,7 +5,8 @@
 </div>
 
 ## Script Description
-This script is for the installation of Apache, PHP, OpenSSL, MySQL, phpMyAdmin and Webmin.
+LAMP (Linux, Apache, MySQL and PHP)
+Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apache and VSFTPD.
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
@@ -40,8 +41,8 @@ git clone https://github.com/Valikahn/lamp.git
 ## Execute Script
 ```
 cd lamp
-chmod +x lamp.install-insentrica
-sudo ./lamp.install-insentrica
+chmod +x lamp.linux.deb.sh
+sudo ./lamp.linux.deb.sh
 ```
 
 ## Script Process
@@ -60,6 +61,10 @@ sudo ./lamp.install-insentrica
 
 ## Program Information
 Program Version: 24.9.15-alpha<br />
+File Name: lamp.linux.deb.sh
+Author:  Neil Jamieson (Valikahn)
+
+Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"
 
 ## Bugs & Issues
 Please feel free to report any bugs or issues to us.
