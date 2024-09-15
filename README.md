@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://insentrica.net/" target="_blank">
-        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/main/img/lamp_img.png">
+        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/master/img/lamp_img.png">
     </a>
 </div>
 
@@ -75,3 +75,13 @@ Please feel free to report any bugs or issues to us.
 Licensed under the GPLv3 License.
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
+
+## References
+Apache - https://httpd.apache.org/
+MySQL - https://www.mysql.com/
+MySQL Workbench - https://dev.mysql.com/downloads/workbench/
+phpMyAdmin - https://www.phpmyadmin.net/
+Webmin - https://webmin.com/
+ElasticSearch - https://www.elastic.co/kibana
+VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon
+SSL - https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-22-04
