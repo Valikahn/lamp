@@ -289,29 +289,28 @@ apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix 
 apt install -y syslog-ng-core rsyslog 
-apt install -y rar unrar git
+apt install -y rar unrar perl python3 python3-pip
 
 systemctl restart apache2
 
 ###--------------------  CONFIGURE HOST FILE  --------------------###
 ##
-bash -c "cat > /etc/apache2/sites-available/$HST.conf <<EOF
-<VirtualHost *:8080>
-    ServerAdmin webmaster@localhost
-    ServerName $HST
-    ServerAlias www.${hostname}
-    DocumentRoot /var/www/html/${hostname}
-    <Directory "/var/www/html/${hostname}">
-        AllowOverride All
-        Require all granted
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOF"
+#bash -c "cat > /etc/apache2/sites-available/$HST.conf <<EOF
+#<VirtualHost *:8080>
+#    ServerAdmin webmaster@localhost
+#    ServerName $HST
+#    ServerAlias www.${hostname}
+#    DocumentRoot /var/www/html/${hostname}
+#    <Directory "/var/www/html/${hostname}">
+#        AllowOverride All
+#        Require all granted
+#    </Directory>
+#    ErrorLog ${APACHE_LOG_DIR}/error.log
+#    CustomLog ${APACHE_LOG_DIR}/access.log combined
+#</VirtualHost>
+#EOF"
 
-echo "${VHOST}" > /etc/apache2/sites-available/$HST.conf
-sudo a2enmod rewrite
+a2enmod rewrite
 service apache2 restart
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
