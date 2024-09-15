@@ -61,8 +61,8 @@ sudo ./lamp.linux.deb.sh
 
 ## Program Information
 Program Version: 24.9.15-alpha<br />
-File Name: lamp.linux.deb.sh
-Author:  Neil Jamieson (Valikahn)
+File Name: lamp.linux.deb.sh<br />
+Author:  Neil Jamieson (Valikahn)<br />
 
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"
 
@@ -77,11 +77,11 @@ This program is free software: you can redistribute it and/or modify it under th
 GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
 ## References
-Apache - https://httpd.apache.org/
-MySQL - https://www.mysql.com/
-MySQL Workbench - https://dev.mysql.com/downloads/workbench/
-phpMyAdmin - https://www.phpmyadmin.net/
-Webmin - https://webmin.com/
-ElasticSearch - https://www.elastic.co/kibana
-VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon
-SSL - https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-22-04
+Apache - https://httpd.apache.org/<br />
+MySQL - https://www.mysql.com/<br />
+MySQL Workbench - https://dev.mysql.com/downloads/workbench/<br />
+phpMyAdmin - https://www.phpmyadmin.net/<br />
+Webmin - https://webmin.com/<br />
+ElasticSearch - https://www.elastic.co/kibana<br />
+VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
+SSL - https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-22-04<br />
