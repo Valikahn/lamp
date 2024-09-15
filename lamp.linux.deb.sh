@@ -14,7 +14,6 @@ export EDITOR=nano
 ##  Managing a Web Server (maws_h16s35)                                                                                                              ##
 ##																																					 ##
 ##  Author:  Neil Jamison <000705@uhi.ac.uk>	                        																	         ##
-##  © 2024 - 2025 - Neil Jamieson																									              	 ##
 ##																																					 ##
 ##  This bash scrip has been fully tested to work on Ubuntu 24.04 and has been developed to be fully automated once started.                         ##
 ##  This includes the installation and configuration of Apache, phpMyAdmin, Webmin, and FTP/VSFTPD.                                                  ##
@@ -55,9 +54,9 @@ WHITE=$(tput setaf 7)
 
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.9.10"
-BUILD="83"
-REVDATE="11 September 2024"
+SCRIPTVERSION="v24.9.16"
+BUILD="155"
+REVDATE="16 September 2024"
 FILENAME="maws_h16s35-$SCRIPTVERSION.$BUILD.linux.deb.sh"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
@@ -102,6 +101,13 @@ PASSGEN() {
 local genln=$1
 [ -z "$genln" ] && genln=12
 tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
+}
+
+###--------------------  IS PORT IN USE  --------------------###
+##
+IS_PORT_IN_USE() {
+  sudo lsof -i -P -n | grep LISTEN | grep ":$1 " > /dev/null
+  return $?
 }
 
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
@@ -193,13 +199,6 @@ echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
 echo
-echo "The MYSQL_ROOT_PASSWORD will be set as: : ${YELLOW}[  $PSWD  ]${NORMAL}"
-echo "Please remember this password and change at your earliest convenience."
-echo
-#echo "${BOLD}${BLUE}[ PLEASE NOTE ]${NORMAL}  This script does NOT store any password/s or log the password/s entry anywhere!"
-echo
-echo "###-------------------------------------------------------------------------###"
-echo
 sleep 2
 
 CONFIRM_YES_NO
@@ -230,11 +229,16 @@ apt update && apt upgrade -y
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
 apt install apache2 -y
-chown -R www-data:www-data /var/www/html
+mkdir "/var/www/html/$HST"
+touch /etc/apache2/sites-available/$HST.conf
+chown -R www-data:www-data /var/www/
 usermod -aG www-data $USER_NAME
-chown $USER_NAME:$USER_NAME /var/www/html
-chmod -R 775 /var/www/html
-chmod g+s /var/www/html
+chown $USER_NAME:$USER_NAME /var/www/
+chmod -R 775 /var/www/
+chmod g+s /var/www/
+
+cp /var/www/html/index.html /var/www/html/index.html.bak
+cp -r web/* /var/www/html/
 
 ###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
 ##
@@ -253,7 +257,10 @@ systemctl start apache2
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
+#sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PSWD"
+#sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PSWD"
 apt install mysql-server -y
+
 expect -c "
 set timeout 10
 spawn mysql_secure_installation
@@ -280,11 +287,32 @@ systemctl restart mysql
 ##
 apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip
-apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix
+apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix 
 apt install -y syslog-ng-core rsyslog 
-apt install -y rar unrar
+apt install -y rar unrar git
 
 systemctl restart apache2
+
+###--------------------  CONFIGURE HOST FILE  --------------------###
+##
+bash -c "cat > /etc/apache2/sites-available/$HST.conf <<EOF
+<VirtualHost *:8080>
+    ServerAdmin webmaster@localhost
+    ServerName $HST
+    ServerAlias www.${hostname}
+    DocumentRoot /var/www/html/${hostname}
+    <Directory "/var/www/html/${hostname}">
+        AllowOverride All
+        Require all granted
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF"
+
+echo "${VHOST}" > /etc/apache2/sites-available/$HST.conf
+sudo a2enmod rewrite
+service apache2 restart
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
@@ -316,7 +344,7 @@ systemctl start vsftpd
 
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
 echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
 echo "rsa_private_key_file=/etc/ssl/private/vsftpd.key" | tee -a /etc/vsftpd.conf
@@ -327,8 +355,8 @@ systemctl restart vsftpd
 
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
-openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 1024
 
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
 ##
@@ -364,6 +392,30 @@ a2enmod ssl
 a2ensite ssl-website.conf
 systemctl reload apache2
 
+###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
+##
+while true; 
+do
+  NEW_PORT=$((RANDOM % 64512 + 1024))
+  if ! IS_PORT_IN_USE $NEW_PORT; then
+    break
+  fi
+done
+
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+sed -i "/^#Port/c\Port $NEW_PORT" /etc/ssh/sshd_config
+
+if sudo ufw status | grep -q active; then
+  if ! sudo ufw status | grep -q "$NEW_PORT/tcp"; then
+    sudo ufw allow $NEW_PORT/tcp
+    sudo ufw reload
+  fi
+  sudo ufw delete allow 22/tcp
+  sudo ufw reload
+fi
+
+sudo systemctl restart ssh
+
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
 clear
@@ -382,7 +434,11 @@ echo "Password: [SSH Password]"
 echo
 echo "FTP server running with SSL enabled on port 990"
 echo
-echo "You can now reboot the system."
+echo "SSH port has been changed to $NEW_PORT."
+echo "Port 22 has been blocked on the firewall."
+echo "Please ensure you update your connection settings accordingly."
+echo
+echo "You can now reboot the system.  This is advisible!"
 CONFIRM_YES_NO
 reboot
 

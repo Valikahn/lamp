@@ -1,0 +1,17 @@
+body {
+    font-family: "Century Gothic", sans-serif;
+    font-size: 12px; /* Set default font size for the body */
+    line-height: 1.5;
+}
+
+h2 {
+    font-size: 32px; /* Font size for headings */
+}
+
+p {
+    font-size: 16px; /* Font size for paragraphs */
+}
+
+p, h1, h2, h3, div {
+    margin: 0;
+}
