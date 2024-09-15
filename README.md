@@ -77,7 +77,7 @@ This program is free software: you can redistribute it and/or modify it under th
 GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
 
 ## References
-Linux (Ubuntu 24.04.x) - https://ubuntu.com/download/server
+Linux (Ubuntu 24.04.x) - https://ubuntu.com/download/server<br />
 Apache - https://httpd.apache.org/<br />
 MySQL - https://www.mysql.com/<br />
 MySQL Workbench - https://dev.mysql.com/downloads/workbench/<br />
