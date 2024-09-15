@@ -246,6 +246,7 @@ ufw allow 990/tcp
 ufw allow 22/tcp
 ufw allow 10000/tcp
 ufw allow 3306/tcp
+ufw allow 40000:50000/tcp
 ufw reload
 systemctl enable apache2
 systemctl start apache2
@@ -313,7 +314,7 @@ apt install vsftpd -y
 systemctl enable vsftpd
 systemctl start vsftpd
 
-###--------------------  CONFIGURE VSFTP/FTP TO INCLUDE SSL (FTPS)  --------------------###
+###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
