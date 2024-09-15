@@ -1,6 +1,6 @@
 <div align="center">
-    <a href="https://insentrica.net/" target="_blank">
-        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/master/img/lamp_img.png">
+    <a href="https://github.com/Valikahn/lamp" target="_blank">
+        <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/master/web/img/lamp_img.png">
     </a>
 </div>
 
