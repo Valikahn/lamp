@@ -226,19 +226,27 @@ apt --purge autoremove -y
 apt autoclean -y
 apt update && apt upgrade -y
 
+clear
+echo "UPDATE THE HOST"
+CONFIRM_YES_NO
+
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
 apt install apache2 -y
-mkdir "/var/www/html/$HST"
-touch /etc/apache2/sites-available/$HST.conf
-chown -R www-data:www-data /var/www/
+#mkdir "/var/www/html/$HST"
+#touch /etc/apache2/sites-available/$HST.conf
+chown -R www-data:www-data /var/www/html
 usermod -aG www-data $USER_NAME
-chown $USER_NAME:$USER_NAME /var/www/
-chmod -R 775 /var/www/
-chmod g+s /var/www/
+chown $USER_NAME:$USER_NAME /var/www/html
+chmod -R 775 /var/www/html
+chmod g+s /var/www/html
 
 cp /var/www/html/index.html /var/www/html/index.html.bak
 cp -r web/* /var/www/html/
+
+clear
+echo "INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS"
+CONFIRM_YES_NO
 
 ###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
 ##
@@ -254,6 +262,10 @@ ufw allow 40000:50000/tcp
 ufw reload
 systemctl enable apache2
 systemctl start apache2
+
+clear
+echo "ENABLE FIREWALL AND INCLUDE AND PORTS"
+CONFIRM_YES_NO
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
@@ -283,6 +295,10 @@ expect eof
 
 systemctl restart mysql
 
+clear
+echo "INSTALL MYSQL SERVER"
+CONFIRM_YES_NO
+
 ###--------------------  INSTALL PHP / OTHER APPLICATIONS  --------------------###
 ##
 apt update
@@ -292,6 +308,10 @@ apt install -y syslog-ng-core rsyslog
 apt install -y rar unrar perl python3 python3-pip
 
 systemctl restart apache2
+
+clear
+echo "INSTALL PHP / OTHER APPLICATIONS"
+CONFIRM_YES_NO
 
 ###--------------------  CONFIGURE HOST FILE  --------------------###
 ##
@@ -310,8 +330,8 @@ systemctl restart apache2
 #</VirtualHost>
 #EOF"
 
-a2enmod rewrite
-service apache2 restart
+#a2enmod rewrite
+#service apache2 restart
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
@@ -326,6 +346,10 @@ apt-get install phpmyadmin -y
 ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
+clear
+echo "INSTALL PHPMYADMIN"
+CONFIRM_YES_NO
+
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 apt install wget -y
@@ -335,11 +359,19 @@ apt --fix-broken install -y
 systemctl enable webmin
 systemctl start webmin
 
+clear
+echo "INSTALL WEBMIN"
+CONFIRM_YES_NO
+
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
 apt install vsftpd -y
 systemctl enable vsftpd
 systemctl start vsftpd
+
+clear
+echo "INSTALL VSFTPD TO ENABLE FTP ACCESS"
+CONFIRM_YES_NO
 
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
@@ -352,10 +384,18 @@ echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
 systemctl restart vsftpd
 
+clear
+echo "CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)"
+CONFIRM_YES_NO
+
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
 openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 1024
+
+clear
+echo "CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE"
+CONFIRM_YES_NO
 
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
 ##
@@ -385,11 +425,19 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 </VirtualHost>
 EOF"
 
+clear
+echo "CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE"
+CONFIRM_YES_NO
+
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
 ##
 a2enmod ssl
 a2ensite ssl-website.conf
 systemctl reload apache2
+
+clear
+echo "ENABLE APACHE SSL MODULE/CONFIGURATION"
+CONFIRM_YES_NO
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
@@ -414,6 +462,10 @@ if sudo ufw status | grep -q active; then
 fi
 
 sudo systemctl restart ssh
+
+clear
+echo "SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE"
+CONFIRM_YES_NO
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
