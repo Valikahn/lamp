@@ -296,17 +296,12 @@ systemctl restart mysql
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 clear
-wget http://prdownloads.sourceforge.net/webadmin/webmin_2.021_all.deb
-dpkg --install webmin_2.021_all.deb
-yes | apt --fix-broken install -y
-systemctl enable webmin
-systemctl start webmin
+yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+yes | sh setup-repos.sh
+apt-get install -y webmin --install-recommends
+apt-get install -y --install-recommends ./webmin-current.deb
 
-#yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh;
-#yes | bash setup-repos.sh
-#apt install -y --install-recommends webmin
-
-sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
+#sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
