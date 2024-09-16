@@ -21,8 +21,6 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 * Ubuntu 24.04.x (Noble Numbat)
 
 ## Installed Software Module Versions
-| Install Modules               | Version
-|-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
 | PHP                           | 8.3.6
 | SSL                           | OpenSSL/3.0.13
@@ -83,9 +81,7 @@ GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html
 Linux (Ubuntu 24.04.x) - https://ubuntu.com/download/server<br />
 Apache - https://httpd.apache.org/<br />
 MySQL - https://www.mysql.com/<br />
-MySQL Workbench - https://dev.mysql.com/downloads/workbench/<br />
 phpMyAdmin - https://www.phpmyadmin.net/<br />
 Webmin - https://webmin.com/<br />
-ElasticSearch - https://www.elastic.co/kibana<br />
 VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
-SSL - https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-22-04<br />
+OpenSSL - https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
