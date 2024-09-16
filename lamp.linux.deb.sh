@@ -199,8 +199,8 @@ echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
 echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
-echo "$PSWD"
-echo "$MYSQL_ROOT_PASSWORD"
+echo "Password: $PSWD"
+echo "MySQL Root Password: $MYSQL_ROOT_PASSWORD"
 echo
 sleep 2
 
@@ -258,8 +258,6 @@ ufw allow 40000:50000/tcp
 ufw reload
 systemctl enable apache2
 systemctl start apache2
-
-$PSWD
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
