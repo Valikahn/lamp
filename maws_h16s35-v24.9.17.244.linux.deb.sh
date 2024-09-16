@@ -418,10 +418,8 @@ echo "phpMyAdmin Username: phpMyAdmin"
 echo "Password: $PSWD"
 echo
 echo "Access Webmin at https://$IP_ADDRESS:10000"
-echo "Webmin Username: $USER_NAME"
-echo "Password: [SHELL PASSWORD]"
-echo
-echo "Root Password: $ROOT_PASSWORD"
+echo "Webmin Username: root"
+echo "Password: $ROOT_PASSWORD"
 echo
 echo "FTP server running with SSL enabled on port 990"
 echo
