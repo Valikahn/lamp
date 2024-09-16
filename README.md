@@ -23,8 +23,6 @@ Author:  Neil Jamieson (Valikahn)<br />
 * [References](#references)
 
 ## Tested Operating Systems
-test
-
 * Ubuntu 24.04.x (Noble Numbat)
 
 ## Installed Software Module Versions
