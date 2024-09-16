@@ -5,8 +5,7 @@
 </div>
 
 ## Purpose:
-The script automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. <br />
-It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br />
+The script automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br /><br />
 
 Program Version: 24.9.17.244<br />
