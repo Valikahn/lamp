@@ -75,12 +75,12 @@ Firewall Configuration:
 
 Final Output:
 * Provides the user with essential details, such as:
-* * Apache access URLs (HTTP and HTTPS)
-* * phpMyAdmin access details
-* * Webmin login credentials
-* * FTP server details
-* * SSH port change information
-* * Prompts for reboot, as it is recommended after installing and configuring the services.
+** Apache access URLs (HTTP and HTTPS)
+** phpMyAdmin access details
+** Webmin login credentials
+** FTP server details
+** SSH port change information
+** Prompts for reboot, as it is recommended after installing and configuring the services.
 
 
 ## Program Information
