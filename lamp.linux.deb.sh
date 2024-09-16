@@ -246,7 +246,6 @@ cp -r web/* /var/www/html/
 ###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
 ##
 clear
-echo "y" | ufw enable
 ufw allow in "Apache Full"
 ufw allow 80/tcp
 ufw allow 443/tcp
@@ -255,7 +254,7 @@ ufw allow 22/tcp
 ufw allow 10000/tcp
 ufw allow 3306/tcp
 ufw allow 40000:50000/tcp
-ufw reload
+echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
 
@@ -302,7 +301,6 @@ clear
 apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
-apt install -y wget apt-transport-https software-properties-common >/dev/null 2>&1
 apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
 
 systemctl restart apache2
@@ -311,20 +309,21 @@ systemctl restart mysql
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 clear
-wget -qO - http://www.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg
-echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository buster contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
-
 apt update -y
-apt install -y webmin >/dev/null 2>&1
+apt install -y wget apt-transport-https software-properties-common >/dev/null 2>&1
+echo "deb https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
+wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+apt-get -y install -f
+
 systemctl enable webmin
 systemctl start webmin
 
-sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
+#sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
 clear
-apt install 2.202 -y >/dev/null 2>&1
+apt install -y vsftpd >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
 
@@ -406,7 +405,7 @@ if ufw status | grep -q active; then
   ufw reload
 fi
 
-sudo systemctl restart ssh
+systemctl restart ssh
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
