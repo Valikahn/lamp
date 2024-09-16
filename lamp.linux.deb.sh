@@ -198,8 +198,9 @@ echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
 echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
-echo "Password: $PSWD"
-echo "Root Password: $ROOT_PASSWORD"
+echo
+echo "Once the script has completed deployment, output infomration will be provided."
+echo "This is important as once the screen is cleared or rebooted the data will be lost!"
 echo
 sleep 2
 
