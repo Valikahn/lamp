@@ -51,10 +51,10 @@ Password Generation:
 * Generates random passwords for various services (MySQL root, phpMyAdmin user, etc.) using a random string generator function.
 
 System Data Collection:
-Detects the operating system (either RedHat/CentOS or Debian/Ubuntu) and collects key host information such as distribution version, hostname, and IP address. If the OS is unsupported, the script exits.
+* Detects the operating system (either RedHat/CentOS or Debian/Ubuntu) and collects key host information such as distribution version, hostname, and IP address. If the OS is unsupported, the script exits.
 
-* User Confirmation:
-Prompts the user for confirmation before proceeding with the setup.
+User Confirmation:
+* Prompts the user for confirmation before proceeding with the setup.
 
 Software Installation:
 * Apache Web Server: Installs Apache and sets appropriate permissions for the /var/www/html directory.
