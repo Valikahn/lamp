@@ -116,6 +116,7 @@ COLLECTING_SYSTEM_DATA() {
 DIST=$nil
 PSUEDONAME=$nil
 PSWD=$(PASSGEN)
+MYSQL_ROOT_PASSWORD=$(PASSGEN)
 echo -n "Collecting Host/System Data..."
 
 ## RHEL 
@@ -199,6 +200,7 @@ echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
 echo "$PSWD"
+echo "$MYSQL_ROOT_PASSWORD"
 echo
 sleep 2
 
@@ -229,7 +231,8 @@ apt update && apt upgrade -y
 
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
-apt install apache2 -y
+apt install -y apache2
+apt install -y php
 #mkdir "/var/www/html/$HST"
 #touch /etc/apache2/sites-available/$HST.conf
 chown -R www-data:www-data /var/www/html
@@ -256,47 +259,38 @@ ufw reload
 systemctl enable apache2
 systemctl start apache2
 
+$PSWD
+
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
-apt install mysql-server -y
-systemctl enable mysql
-systemctl start mysql
+apt update
+DEBIAN_FRONTEND=noninteractive sudo apt install -y mysql-server
+sudo systemctl enable mysql
+sudo systemctl start mysql
 
+# Run SQL commands to set root password, remove insecure defaults, and create phpMyAdmin user
 sudo mysql --user=root <<_EOF_
-ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$PSWD';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$MYSQL_ROOT_PASSWORD';
 DELETE FROM mysql.user WHERE User='';
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
 FLUSH PRIVILEGES;
+
+CREATE USER 'phpMyAdmin'@'localhost' IDENTIFIED BY '$PSWD';
+GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 _EOF_
 
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PSWD"
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PSWD"
-sudo mysql_secure_installation <<EOF
-
-y
-$PSWD
-$PSWD
-y
-y
-y
-y
-EOF
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
+DEBIAN_FRONTEND=noninteractive sudo apt install -y phpmyadmin
+sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+sudo systemctl restart apache2
 
-apt-get install phpmyadmin -y
-ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-systemctl restart apache2
-systemctl restart mysql
-
-###--------------------  INSTALL PHP / OTHER APPLICATIONS  --------------------###
+###--------------------  INSTALL DEPENDENCIES  --------------------###
 ##
 apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip
