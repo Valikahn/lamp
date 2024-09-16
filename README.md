@@ -72,7 +72,6 @@ Program designed, developed, and tested while at university studying Computer Sc
 ## Bugs & Issues
 Please feel free to report any bugs or issues to us.
 * Issues:  <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
-* Github:   https://github.com/Valikahn/lamp
 
 ## Licence
 Licensed under the GPLv3 License.

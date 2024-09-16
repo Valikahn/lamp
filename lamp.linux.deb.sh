@@ -234,8 +234,6 @@ apt update && apt upgrade -y
 clear
 apt install -y apache2 >/dev/null 2>&1
 apt install -y php >/dev/null 2>&1
-#mkdir "/var/www/html/$HST"
-#touch /etc/apache2/sites-available/$HST.conf
 chown -R www-data:www-data /var/www/html
 usermod -aG www-data $USER_NAME
 chown $USER_NAME:$USER_NAME /var/www/html
@@ -269,7 +267,6 @@ DEBIAN_FRONTEND=noninteractive sudo apt install -y mysql-server
 sudo systemctl enable mysql
 sudo systemctl start mysql
 
-# Run SQL commands to set root password, remove insecure defaults, and create phpMyAdmin user
 sudo mysql --user=root <<_EOF_
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$MYSQL_ROOT_PASSWORD';
 DELETE FROM mysql.user WHERE User='';
@@ -383,7 +380,7 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 >/dev/null 2>&1
 clear
 a2enmod ssl
 a2ensite ssl-website.conf
-sudo a2enmod rewrite
+a2enmod rewrite
 systemctl reload apache2
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
@@ -400,13 +397,13 @@ done
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 sed -i "/^#Port/c\Port $NEW_PORT" /etc/ssh/sshd_config
 
-if sudo ufw status | grep -q active; then
-  if ! sudo ufw status | grep -q "$NEW_PORT/tcp"; then
-    sudo ufw allow $NEW_PORT/tcp
-    sudo ufw reload
+if ufw status | grep -q active; then
+  if ! ufw status | grep -q "$NEW_PORT/tcp"; then
+    ufw allow $NEW_PORT/tcp
+    ufw reload
   fi
-  sudo ufw delete allow 22/tcp
-  sudo ufw reload
+  ufw delete allow 22/tcp
+  ufw reload
 fi
 
 sudo systemctl restart ssh
