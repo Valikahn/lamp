@@ -99,7 +99,7 @@ fi
 ##
 PASSGEN() {
 local genln=$1
-[ -z "$genln" ] && genln=12
+[ -z "$genln" ] && genln=16
 tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
 }
 
@@ -182,7 +182,6 @@ echo
 echo "###-------------------------------------------------------------------------###"
 echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
-echo "Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL"
 echo "Managing a Web Server (maws_h16s35)"
 echo
 echo "Author:  Neil Jamieson <000705@uhi.ac.uk>"
@@ -284,9 +283,16 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
-DEBIAN_FRONTEND=noninteractive sudo apt install -y phpmyadmin
-sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-sudo systemctl restart apache2
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
+
+apt-get install phpmyadmin -y
+ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+systemctl restart apache2
+systemctl restart mysql
 
 ###--------------------  INSTALL DEPENDENCIES  --------------------###
 ##
