@@ -106,7 +106,7 @@ tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
 ###--------------------  IS PORT IN USE  --------------------###
 ##
 IS_PORT_IN_USE() {
-  sudo lsof -i -P -n | grep LISTEN | grep ":$1 " > /dev/null
+  lsof -i -P -n | grep LISTEN | grep ":$1 " > /dev/null
   return $?
 }
 
@@ -202,6 +202,8 @@ echo
 echo "Once the script has completed deployment, output infomration will be provided."
 echo "This is important as once the screen is cleared or rebooted the data will be lost!"
 echo
+echo "###-------------------------------------------------------------------------###"
+echo
 sleep 2
 
 CONFIRM_YES_NO
@@ -247,11 +249,11 @@ cp -r web/* /var/www/html/
 ##
 clear
 apt update
-DEBIAN_FRONTEND=noninteractive sudo apt install -y mysql-server
-sudo systemctl enable mysql
-sudo systemctl start mysql
+DEBIAN_FRONTEND=noninteractive apt install -y mysql-server
+systemctl enable mysql
+systemctl start mysql
 
-sudo mysql --user=root <<_EOF_
+mysql --user=root <<_EOF_
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$MYSQL_ROOT_PASSWORD';
 DELETE FROM mysql.user WHERE User='';
 DROP DATABASE IF EXISTS test;
@@ -263,17 +265,17 @@ GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 _EOF_
 
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
 clear
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 apt-get install -y phpmyadmin >/dev/null 2>&1
 ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
@@ -396,7 +398,7 @@ ufw allow 990/tcp
 ufw allow 10000/tcp
 ufw allow 3306/tcp
 ufw allow 40000:50000/tcp
-sudo ufw reload
+ufw reload
 echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
