@@ -264,7 +264,6 @@ systemctl start mysql
 
 sudo mysql --user=root <<_EOF_
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$PSWD';
-FLUSH PRIVILEGES;
 DELETE FROM mysql.user WHERE User='';
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
@@ -273,7 +272,6 @@ _EOF_
 
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PSWD"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PSWD"
-
 sudo mysql_secure_installation <<EOF
 
 y
@@ -308,10 +306,6 @@ apt install -y rar unrar perl python3 python3-pip
 systemctl restart apache2
 systemctl restart mysql
 
-clear
-echo "INSTALL PHP / OTHER APPLICATIONS" 
-CONFIRM_YES_NO
-
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 sudo apt install wget apt-transport-https software-properties-common -y
@@ -332,10 +326,6 @@ apt install vsftpd -y
 systemctl enable vsftpd
 systemctl start vsftpd
 
-clear
-echo "INSTALL VSFTPD TO ENABLE FTP ACCESS"
-CONFIRM_YES_NO
-
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
@@ -346,10 +336,6 @@ echo "ssl_tlsv1=YES" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
 systemctl restart vsftpd
-
-clear
-echo "CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)"
-CONFIRM_YES_NO
 
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
 ##
@@ -379,18 +365,10 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 </VirtualHost>
 EOF"
 
-clear
-echo "CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE"
-CONFIRM_YES_NO
-
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-
-clear
-echo "CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE"
-CONFIRM_YES_NO
 
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
 ##
@@ -398,10 +376,6 @@ a2enmod ssl
 a2ensite ssl-website.conf
 sudo a2enmod rewrite
 systemctl reload apache2
-
-clear
-echo "ENABLE APACHE SSL MODULE/CONFIGURATION"
-CONFIRM_YES_NO
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
@@ -426,10 +400,6 @@ if sudo ufw status | grep -q active; then
 fi
 
 sudo systemctl restart ssh
-
-clear
-echo "SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE"
-CONFIRM_YES_NO
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
