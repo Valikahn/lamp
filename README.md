@@ -21,6 +21,8 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 * Ubuntu 24.04.x (Noble Numbat)
 
 ## Installed Software Module Versions
+| Install Modules               | Version
+|-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
 | PHP                           | 8.3.6
 | SSL                           | OpenSSL/3.0.13
