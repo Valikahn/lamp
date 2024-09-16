@@ -49,7 +49,7 @@ sudo ./lamp.linux.deb.sh
 ```
 
 ## Script Process
-1. UPDATE THE HOST
+UPDATE THE HOST
 ```
 pro_attached=$(echo "$PRO_STATUS" | jq '.account')
     if [[ $pro_attached != "null" ]]; then
@@ -67,18 +67,165 @@ apt-get -o Dpkg::Options::="--force-confdef" \
 apt --purge autoremove -y
 apt autoclean -y
 ```
-2. INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS
-3. INSTALL MYSQL SERVER
-4. INSTALL PHPMYADMIN
-5. INSTALL DEPENDENCIES
-6. INSTALL WEBMIN
-7. INSTALL VSFTPD TO ENABLE FTP ACCESS
-8. CONFIGURE VSFTP/FTP TO INCLUDE SSL (FTPS)
-9. CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE
-10. CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE
-11. ENABLE APACHE SSL MODULE/CONFIGURATION
-12. SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE
-13. ENABLE FIREWALL AND ALLOW PORTS
+INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS
+```
+apt install -y apache2
+apt install -y php
+chown -R www-data:www-data /var/www/html
+usermod -aG www-data $USER_NAME
+chmod -R 775 /var/www/html
+chmod g+s /var/www/html
+
+cp /var/www/html/index.html /var/www/html/index.html.bak
+cp -r web/* /var/www/html/
+```
+INSTALL MYSQL SERVER
+```
+apt update
+DEBIAN_FRONTEND=noninteractive apt install -y mysql-server
+systemctl enable mysql
+systemctl start mysql
+
+mysql --user=root <<_EOF_
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$MYSQL_ROOT_PASSWORD';
+DELETE FROM mysql.user WHERE User='';
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
+FLUSH PRIVILEGES;
+
+CREATE USER 'phpMyAdmin'@'localhost' IDENTIFIED BY '$PSWD';
+GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+_EOF_
+
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
+```
+INSTALL PHPMYADMIN
+```
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
+
+apt-get install -y phpmyadmin >/dev/null 2>&1
+ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+systemctl restart apache2
+systemctl restart mysql
+```
+INSTALL DEPENDENCIES
+```
+apt update
+apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
+apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
+apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
+
+systemctl restart apache2
+systemctl restart mysql
+```
+INSTALL WEBMIN
+```
+yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+yes | sh setup-repos.sh
+apt-get install -y webmin --install-recommends
+apt-get install -y --install-recommends ./webmin-current.deb
+```
+INSTALL VSFTPD TO ENABLE FTP ACCESS
+```
+apt install -y vsftpd >/dev/null 2>&1
+systemctl enable vsftpd
+systemctl start vsftpd
+```
+CONFIGURE VSFTP/FTP TO INCLUDE SSL (FTPS)
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
+echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
+echo "rsa_private_key_file=/etc/ssl/private/vsftpd.key" | tee -a /etc/vsftpd.conf
+echo "ssl_tlsv1=YES" | tee -a /etc/vsftpd.conf
+echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
+echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
+systemctl restart vsftpd
+```
+CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE
+```
+bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
+<VirtualHost *:443>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    ServerName $HST
+    ServerAlias $IP_ADDRESS
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+    SSLCertificateChainFile /etc/ssl/certs/dhparam.pem
+
+    <FilesMatch '\.(cgi|shtml|phtml|php)$'>
+        SSLOptions +StdEnvVars
+    </FilesMatch>
+
+    <Directory /usr/lib/cgi-bin>
+        SSLOptions +StdEnvVars
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF"
+```
+CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST" >/dev/null 2>&1
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 >/dev/null 2>&1
+```
+ENABLE APACHE SSL MODULE/CONFIGURATION
+```
+a2enmod ssl
+a2ensite ssl-website.conf
+a2enmod rewrite
+systemctl reload apache2
+```
+SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE
+```
+while true; 
+do
+  NEW_PORT=$((RANDOM % 64512 + 1024))
+  if ! IS_PORT_IN_USE $NEW_PORT; then
+    break
+  fi
+done
+
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+sed -i "/^#Port/c\Port $NEW_PORT" /etc/ssh/sshd_config
+
+if ufw status | grep -q active; then
+  if ! ufw status | grep -q "$NEW_PORT/tcp"; then
+    ufw allow $NEW_PORT/tcp
+    ufw reload
+  fi
+  ufw delete allow 22/tcp
+  ufw reload
+fi
+```
+ENABLE FIREWALL AND ALLOW PORTS
+```
+ufw allow in "Apache Full"
+ufw allow https
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow 990/tcp
+ufw allow 10000/tcp
+ufw allow 3306/tcp
+ufw allow 40000:50000/tcp
+ufw reload
+echo "y" | ufw enable
+systemctl enable apache2
+systemctl start apache2
+systemctl restart ssh
+```
 
 ## Program Information
 Program Version: 24.9.17.244<br />

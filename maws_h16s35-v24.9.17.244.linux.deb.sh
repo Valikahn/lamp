@@ -403,7 +403,6 @@ ufw reload
 echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
-
 systemctl restart ssh
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
