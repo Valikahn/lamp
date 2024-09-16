@@ -375,7 +375,7 @@ CONFIRM_YES_NO
 
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
-openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
 echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
 echo "rsa_private_key_file=/etc/ssl/private/vsftpd.key" | tee -a /etc/vsftpd.conf
@@ -390,8 +390,8 @@ CONFIRM_YES_NO
 
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
-openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
-openssl dhparam -out /etc/ssl/certs/dhparam.pem 1024
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 clear
 echo "CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE"
@@ -424,6 +424,8 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOF"
+
+23039
 
 clear
 echo "CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE"
