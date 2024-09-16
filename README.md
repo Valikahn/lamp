@@ -5,7 +5,7 @@
 </div>
 
 ## Script Description
-LAMP (Linux, Apache, MySQL and PHP)<br />
+# LAMP (Linux, Apache, MySQL and PHP)<br />
 Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apache and VSFTPD.<br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
