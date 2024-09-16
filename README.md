@@ -7,15 +7,22 @@
 ## Script Description
 LAMP (Linux, Apache, MySQL and PHP)
 Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apache and VSFTPD.
+Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"
 
 ## Purpose:
+Program Version: 24.9.17.244<br />
+File Name: maws_h16s35-v24.9.17.244.linux.deb.sh<br />
+Author:  Neil Jamieson (Valikahn)<br />
+
 The script automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. 
 It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
+* [Features and Components](*features-and-components*)
+* [Key Advantages](*key-advantages*)
+* [Usage](*usage*)
 * [Install Commands](#install-commands)
-* [Script Process](#script-process)
 * [Bugs & Issues](#bugs--issues)
 * [Licence](#licence)
 * [References](#references)
@@ -73,25 +80,32 @@ SSL Certificates:
 Firewall Configuration:
 * Configures ufw (Uncomplicated Firewall) to allow necessary ports for Apache, HTTPS, FTP, MySQL, Webmin, and a dynamically generated SSH port (randomly selected to improve security).
 
-Final Output:
-* Provides the user with essential details, such as:
-** Apache access URLs (HTTP and HTTPS)
-** phpMyAdmin access details
-** Webmin login credentials
-** FTP server details
-** SSH port change information
-** Prompts for reboot, as it is recommended after installing and configuring the services.
+## Key Advantages:
+* Fully Automated: Once executed, the script handles everything from software installation to firewall configuration, reducing the need for manual intervention.
+* Security Enhancements: The script automatically sets up SSL certificates for both Apache and FTP services and changes the default SSH port to a random high number, enhancing system security.
+* Convenient Access: After installation, tools like Webmin and phpMyAdmin provide a GUI-based method to manage the server and databases, respectively.
 
+## Usage:
+* The script is suitable for users who want to deploy a web server with minimal effort on an Ubuntu system. It simplifies the process by integrating several services into one automated setup.
 
-## Program Information
-Program Version: 24.9.17.244<br />
-File Name: maws_h16s35-v24.9.17.244.linux.deb.sh<br />
-Author:  Neil Jamieson (Valikahn)<br />
+## Install Commands
+Install Git and clone the "lamp" package
+```
+sudo apt-get -y install wget git
+git clone https://github.com/Valikahn/lamp.git
+```
 
-Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"
+## Execute Script
+Change directory -->  Make shell file executable -->  sudu run the script
+Thats it - there is only one interaction required (y/n)
+```
+cd lamp
+chmod +x maws_h16s35-v24.9.17.244.linux.deb.sh
+sudo ./maws_h16s35-v24.9.17.244.linux.deb.sh
+```
 
 ## Bugs & Issues
-Please feel free to report any bugs or issues to us.
+Please let me know if there is any bugs or issues with this script.
 * Issues:  <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
 
 ## Licence
