@@ -50,6 +50,23 @@ sudo ./lamp.linux.deb.sh
 
 ## Script Process
 1. UPDATE THE HOST
+```
+pro_attached=$(echo "$PRO_STATUS" | jq '.account')
+    if [[ $pro_attached != "null" ]]; then
+        echo "Ubuntu Pro is attached. Detaching and purging the client."
+        pro detach --assume-yes
+        apt-get purge ubuntu-pro-client -y
+    fi
+
+apt update && apt upgrade -y
+apt-get -o Dpkg::Options::="--force-confdef" \
+              -o Dpkg::Options::="--force-confold" \
+              apt dist-upgrade -y
+			  dpkg --configure -a
+
+apt --purge autoremove -y
+apt autoclean -y
+```
 2. INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS
 3. INSTALL MYSQL SERVER
 4. INSTALL PHPMYADMIN
