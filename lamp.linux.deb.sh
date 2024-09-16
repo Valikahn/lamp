@@ -230,6 +230,7 @@ apt update && apt upgrade -y
 
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
+clear
 apt install -y apache2 >/dev/null 2>&1
 apt install -y php >/dev/null 2>&1
 #mkdir "/var/www/html/$HST"
@@ -245,6 +246,7 @@ cp -r web/* /var/www/html/
 
 ###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
 ##
+clear
 echo "y" | ufw enable
 ufw allow in "Apache Full"
 ufw allow 80/tcp
@@ -260,6 +262,7 @@ systemctl start apache2
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
+clear
 apt update
 DEBIAN_FRONTEND=noninteractive sudo apt install -y mysql-server
 sudo systemctl enable mysql
@@ -283,6 +286,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
+clear
 echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
 echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | sudo debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
@@ -296,6 +300,7 @@ systemctl restart mysql
 
 ###--------------------  INSTALL DEPENDENCIES  --------------------###
 ##
+clear
 apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
@@ -307,9 +312,7 @@ systemctl restart mysql
 
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
-PSWD="YourWebminPassword"
-WEBMIN_USER="your_new_user"
-
+clear
 wget -qO - http://www.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg
 echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
 
@@ -319,16 +322,17 @@ systemctl enable webmin
 systemctl start webmin
 
 sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
-sudo /usr/share/webmin/changepass.pl /etc/webmin $USER_NAME "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
-apt install vsftpd -y >/dev/null 2>&1
+clear
+apt install 2.202 -y >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
 
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
+clear
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
 echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
@@ -340,6 +344,7 @@ systemctl restart vsftpd
 
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
 ##
+clear
 bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 <VirtualHost *:443>
     ServerAdmin webmaster@localhost
@@ -368,22 +373,21 @@ EOF"
 
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
+clear
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST" >/dev/null 2>&1
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 >/dev/null 2>&1
 
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
 ##
+clear
 a2enmod ssl
 a2ensite ssl-website.conf
 sudo a2enmod rewrite
 systemctl reload apache2
 
-clear
-echo "ENABLE APACHE SSL MODULE/CONFIGURATION"
-CONFIRM_YES_NO
-
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
+clear
 while true; 
 do
   NEW_PORT=$((RANDOM % 64512 + 1024))
@@ -420,7 +424,7 @@ echo "Password: $PSWD"
 echo
 echo "Access Webmin at https://$IP_ADDRESS:10000 or https://$HST:10000"
 echo "Webmin Username: $USER_NAME"
-echo "Password: $PSWD"
+echo "Password: [SHELL PASSWORD]"
 echo
 echo "Root Password: $ROOT_PASSWORD"
 echo

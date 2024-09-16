@@ -12,9 +12,9 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 * [Installed Software Module Versions](#installed-software-module-versions)
 * [Install Commands](#install-commands)
 * [Script Process](#script-process)
-* [Copyright](#copyright)
 * [Bugs & Issues](#bugs--issues)
 * [Licence](#licence)
+* [References](#references)
 
 ## Tested Operating Systems
 
@@ -23,13 +23,16 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 ## Installed Software Module Versions
 | Install Modules               | Version
 |-------------------------------|-------------------------------|
-| Apache                        | #.#.# (Ubuntu)
-| PHP                           | #.#.#
-| SSL                           | OpenSSL/#.#.#a
-| MySQL                         | #.#.#-0ubuntu0.20.10.1
-| phpMyAdmin                    | #####
-| Webmin                        | #####
-| FTP server (vsftpd)           | #####
+| Apache                        | 2.4.58
+| PHP                           | 8.3.6
+| SSL                           | OpenSSL/3.0.13
+| MySQL                         | 8.4
+| phpMyAdmin                    | 5.2.1
+| Webmin                        | 2.202 
+| FTP server (vsftpd)           | 3.0.5
+
+Please note that the above versions are the minimal versions that will be installed and may vary.
+This deployment is not pulling specific versions but looking for the latest versions available.
 
 ## Install Commands
 Install Git and clone the "lamp" package
