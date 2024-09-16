@@ -116,7 +116,7 @@ COLLECTING_SYSTEM_DATA() {
 DIST=$nil
 PSUEDONAME=$nil
 PSWD=$(PASSGEN)
-MYSQL_ROOT_PASSWORD=$(PASSGEN)
+ROOT_PASSWORD=$(PASSGEN)
 echo -n "Collecting Host/System Data..."
 
 ## RHEL 
@@ -199,7 +199,7 @@ echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
 echo "Password: $PSWD"
-echo "MySQL Root Password: $MYSQL_ROOT_PASSWORD"
+echo "Root Password: $ROOT_PASSWORD"
 echo
 sleep 2
 
@@ -230,8 +230,8 @@ apt update && apt upgrade -y
 
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
-apt install -y apache2
-apt install -y php
+apt install -y apache2 >/dev/null 2>&1
+apt install -y php >/dev/null 2>&1
 #mkdir "/var/www/html/$HST"
 #touch /etc/apache2/sites-available/$HST.conf
 chown -R www-data:www-data /var/www/html
@@ -289,7 +289,7 @@ echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-
 echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
 
-apt-get install phpmyadmin -y
+apt-get install -y phpmyadmin >/dev/null 2>&1
 ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 systemctl restart mysql
@@ -297,30 +297,33 @@ systemctl restart mysql
 ###--------------------  INSTALL DEPENDENCIES  --------------------###
 ##
 apt update
-apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip
-apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix 
-apt install -y rar unrar perl python3 python3-pip
+apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
+apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
+apt install -y wget apt-transport-https software-properties-common >/dev/null 2>&1
+apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
 
 systemctl restart apache2
 systemctl restart mysql
 
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
-sudo apt install wget apt-transport-https software-properties-common -y
+PSWD="YourWebminPassword"
+WEBMIN_USER="your_new_user"
+
 wget -qO - http://www.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg
 echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
-sudo apt update -y
-sudo apt install webmin -y
+
+apt update -y
+apt install -y webmin >/dev/null 2>&1
 systemctl enable webmin
 systemctl start webmin
 
-clear
-echo "INSTALL WEBMIN"
-CONFIRM_YES_NO
+sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
+sudo /usr/share/webmin/changepass.pl /etc/webmin $USER_NAME "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
-apt install vsftpd -y
+apt install vsftpd -y >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
 
@@ -365,8 +368,8 @@ EOF"
 
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
-openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST" >/dev/null 2>&1
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 >/dev/null 2>&1
 
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
 ##
@@ -374,6 +377,10 @@ a2enmod ssl
 a2ensite ssl-website.conf
 sudo a2enmod rewrite
 systemctl reload apache2
+
+clear
+echo "ENABLE APACHE SSL MODULE/CONFIGURATION"
+CONFIRM_YES_NO
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
@@ -413,7 +420,9 @@ echo "Password: $PSWD"
 echo
 echo "Access Webmin at https://$IP_ADDRESS:10000 or https://$HST:10000"
 echo "Webmin Username: $USER_NAME"
-echo "Password: [SSH Password]"
+echo "Password: $PSWD"
+echo
+echo "Root Password: $ROOT_PASSWORD"
 echo
 echo "FTP server running with SSL enabled on port 990"
 echo
