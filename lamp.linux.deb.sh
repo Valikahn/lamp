@@ -226,10 +226,6 @@ apt --purge autoremove -y
 apt autoclean -y
 apt update && apt upgrade -y
 
-clear
-echo "UPDATE THE HOST"
-CONFIRM_YES_NO
-
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
 apt install apache2 -y
@@ -243,10 +239,6 @@ chmod g+s /var/www/html
 
 cp /var/www/html/index.html /var/www/html/index.html.bak
 cp -r web/* /var/www/html/
-
-clear
-echo "INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS"
-CONFIRM_YES_NO
 
 ###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
 ##
@@ -269,93 +261,49 @@ CONFIRM_YES_NO
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
-#sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PSWD"
-#sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PSWD"
-apt install mysql-server -y
-
-expect -c "
-set timeout 10
-spawn mysql_secure_installation
-expect \"Enter current password for root (enter for none):\"
-send \"$PSWD\r\"
-expect \"Switch to unix_socket authentication [Y/n]\"
-send \"n\r\"
-expect \"Change the root password? [Y/n]\"
-send \"n\r\"
-expect \"Remove anonymous users? [Y/n]\"
-send \"y\r\"
-expect \"Disallow root login remotely? [Y/n]\"
-send \"y\r\"
-expect \"Remove test database and access to it? [Y/n]\"
-send \"y\r\"
-expect \"Reload privilege tables now? [Y/n]\"
-send \"y\r\"
-expect eof
-"
+sudo DEBIAN_FRONTEND=noninteractive apt install mysql-server -y
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$PSWD';"
+sudo mysql -e "DELETE FROM mysql.user WHERE User='';"
+sudo mysql -e "DROP DATABASE IF EXISTS test;"
+sudo mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
+sudo mysql -e "FLUSH PRIVILEGES;"
 
 systemctl restart mysql
 
-clear
-echo "INSTALL MYSQL SERVER"
-CONFIRM_YES_NO
+###--------------------  INSTALL PHPMYADMIN  --------------------###
+##
+echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
+echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
+
+apt-get install phpmyadmin -y
+ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+systemctl restart apache2
+systemctl restart mysql
 
 ###--------------------  INSTALL PHP / OTHER APPLICATIONS  --------------------###
 ##
 apt update
 apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix 
-apt install -y syslog-ng-core rsyslog 
 apt install -y rar unrar perl python3 python3-pip
 
 systemctl restart apache2
+systemctl restart mysql
 
 clear
-echo "INSTALL PHP / OTHER APPLICATIONS"
-CONFIRM_YES_NO
-
-###--------------------  CONFIGURE HOST FILE  --------------------###
-##
-#bash -c "cat > /etc/apache2/sites-available/$HST.conf <<EOF
-#<VirtualHost *:8080>
-#    ServerAdmin webmaster@localhost
-#    ServerName $HST
-#    ServerAlias www.${hostname}
-#    DocumentRoot /var/www/html/${hostname}
-#    <Directory "/var/www/html/${hostname}">
-#        AllowOverride All
-#        Require all granted
-#    </Directory>
-#    ErrorLog ${APACHE_LOG_DIR}/error.log
-#    CustomLog ${APACHE_LOG_DIR}/access.log combined
-#</VirtualHost>
-#EOF"
-
-#a2enmod rewrite
-#service apache2 restart
-
-###--------------------  INSTALL PHPMYADMIN  --------------------###
-##
-echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass-again password $PSWD" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/setup-password password $PSWD" | sudo debconf-set-selections
-
-apt-get install phpmyadmin -y
-ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-systemctl restart apache2
-
-clear
-echo "INSTALL PHPMYADMIN"
+echo "INSTALL PHP / OTHER APPLICATIONS" 
 CONFIRM_YES_NO
 
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 apt install wget -y
-wget http://prdownloads.sourceforge.net/webadmin/webmin_2.202_all.deb
-dpkg --install webmin_2.202_all.deb
-apt --fix-broken install -y
+wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo tee /etc/apt/trusted.gpg.d/jcameron.asc
+sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
+apt update -y
+apt install webmin -y
 systemctl enable webmin
 systemctl start webmin
 
@@ -388,15 +336,6 @@ clear
 echo "CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)"
 CONFIRM_YES_NO
 
-###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
-##
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
-openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-
-clear
-echo "CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE"
-CONFIRM_YES_NO
-
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
 ##
 bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
@@ -425,16 +364,24 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 </VirtualHost>
 EOF"
 
-23039
-
 clear
 echo "CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE"
+CONFIRM_YES_NO
+
+###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
+##
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+clear
+echo "CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE"
 CONFIRM_YES_NO
 
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
 ##
 a2enmod ssl
 a2ensite ssl-website.conf
+sudo a2enmod rewrite
 systemctl reload apache2
 
 clear

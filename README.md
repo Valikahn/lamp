@@ -60,7 +60,7 @@ sudo ./lamp.linux.deb.sh
 12. ENABLE APACHE SSL MODULE/CONFIGURATION
 
 ## Program Information
-Program Version: 24.9.15-alpha<br />
+Program Version: 24.9.16-alpha<br />
 File Name: lamp.linux.deb.sh<br />
 Author:  Neil Jamieson (Valikahn)<br />
 
