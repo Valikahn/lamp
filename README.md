@@ -60,7 +60,7 @@ Software Installation:
 * Apache Web Server: Installs Apache and sets appropriate permissions for the /var/www/html directory.
 * MySQL: Installs MySQL server, creates a secure root user, and sets up phpMyAdmin with a user and password.
 * phpMyAdmin: Automatically configures phpMyAdmin for database management.
-* Dependencies: Installs various packages, including PHP, required PHP modules, and other utilities like net-tools, nmap, and python3.
+* Dependencies: Installs various packages, including PHP, required PHP modules, and other utilities like net-tools, nmap, perl, and python.
 
 Webmin Setup:
 * Installs Webmin, a web-based system configuration tool, enabling easier server management.
