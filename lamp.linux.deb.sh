@@ -54,8 +54,8 @@ WHITE=$(tput setaf 7)
 
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.9.16"
-BUILD="155"
+SCRIPTVERSION="v24.9.17"
+BUILD="22-44"
 REVDATE="16 September 2024"
 FILENAME="maws_h16s35-$SCRIPTVERSION.$BUILD.linux.deb.sh"
 
@@ -232,11 +232,10 @@ apt update && apt upgrade -y
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
 clear
-apt install -y apache2 >/dev/null 2>&1
-apt install -y php >/dev/null 2>&1
+apt install -y apache2
+apt install -y php
 chown -R www-data:www-data /var/www/html
 usermod -aG www-data $USER_NAME
-chown $USER_NAME:$USER_NAME /var/www/html
 chmod -R 775 /var/www/html
 chmod g+s /var/www/html
 
@@ -295,12 +294,11 @@ systemctl restart mysql
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 clear
-sudo curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh; sudo bash setup-repos.sh
-sudo bash setup-repos.sh
-sudo apt install --install-recommends webmin -y
+yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh;
+yes | bash setup-repos.sh
+apt install -y --install-recommends webmin
 
-
-#sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
+sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
