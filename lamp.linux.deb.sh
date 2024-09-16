@@ -198,6 +198,7 @@ echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
 echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
 echo
 echo "###-------------------------------------------------------------------------###"
+echo "$PSWD"
 echo
 sleep 2
 
@@ -255,20 +256,34 @@ ufw reload
 systemctl enable apache2
 systemctl start apache2
 
-clear
-echo "ENABLE FIREWALL AND INCLUDE AND PORTS"
-CONFIRM_YES_NO
-
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
-sudo DEBIAN_FRONTEND=noninteractive apt install mysql-server -y
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$PSWD';"
-sudo mysql -e "DELETE FROM mysql.user WHERE User='';"
-sudo mysql -e "DROP DATABASE IF EXISTS test;"
-sudo mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
-sudo mysql -e "FLUSH PRIVILEGES;"
+apt install mysql-server -y
+systemctl enable mysql
+systemctl start mysql
 
-systemctl restart mysql
+sudo mysql --user=root <<_EOF_
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '$PSWD';
+FLUSH PRIVILEGES;
+DELETE FROM mysql.user WHERE User='';
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
+FLUSH PRIVILEGES;
+_EOF_
+
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $PSWD"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PSWD"
+
+sudo mysql_secure_installation <<EOF
+
+y
+$PSWD
+$PSWD
+y
+y
+y
+y
+EOF
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
@@ -299,11 +314,11 @@ CONFIRM_YES_NO
 
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
-apt install wget -y
-wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo tee /etc/apt/trusted.gpg.d/jcameron.asc
-sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
-apt update -y
-apt install webmin -y
+sudo apt install wget apt-transport-https software-properties-common -y
+wget -qO - http://www.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg
+echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
+sudo apt update -y
+sudo apt install webmin -y
 systemctl enable webmin
 systemctl start webmin
 
