@@ -243,20 +243,6 @@ chmod g+s /var/www/html
 cp /var/www/html/index.html /var/www/html/index.html.bak
 cp -r web/* /var/www/html/
 
-###--------------------  ENABLE FIREWALL AND INCLUDE AND PORTS  --------------------###
-##
-clear
-ufw allow in "Apache Full"
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw allow 990/tcp
-ufw allow 22/tcp
-ufw allow 10000/tcp
-ufw allow 3306/tcp
-ufw allow 40000:50000/tcp
-echo "y" | ufw enable
-systemctl enable apache2
-systemctl start apache2
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
@@ -309,14 +295,10 @@ systemctl restart mysql
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 clear
-apt update -y
-apt install -y wget apt-transport-https software-properties-common >/dev/null 2>&1
-echo "deb https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
-wget -q -O- http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
-apt-get -y install -f
+sudo curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh; sudo bash setup-repos.sh
+sudo bash setup-repos.sh
+sudo apt install --install-recommends webmin -y
 
-systemctl enable webmin
-systemctl start webmin
 
 #sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
@@ -404,6 +386,22 @@ if ufw status | grep -q active; then
   ufw delete allow 22/tcp
   ufw reload
 fi
+
+###--------------------  ENABLE FIREWALL AND ALLOW PORTS  --------------------###
+##
+clear
+ufw allow in "Apache Full"
+ufw allow https
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow 990/tcp
+ufw allow 10000/tcp
+ufw allow 3306/tcp
+ufw allow 40000:50000/tcp
+sudo ufw reload
+echo "y" | ufw enable
+systemctl enable apache2
+systemctl start apache2
 
 systemctl restart ssh
 
