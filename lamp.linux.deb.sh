@@ -315,7 +315,7 @@ systemctl restart mysql
 ##
 clear
 wget -qO - http://www.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg
-echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository sarge contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
+echo "deb [signed-by=/usr/share/keyrings/webmin.gpg] https://download.webmin.com/download/repository buster contrib" | sudo tee /etc/apt/sources.list.d/webmin.list
 
 apt update -y
 apt install -y webmin >/dev/null 2>&1
