@@ -296,9 +296,15 @@ systemctl restart mysql
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 clear
-yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh;
-yes | bash setup-repos.sh
-apt install -y --install-recommends webmin
+wget http://prdownloads.sourceforge.net/webadmin/webmin_2.021_all.deb
+dpkg --install webmin_2.021_all.deb
+yes | apt --fix-broken install -y
+systemctl enable webmin
+systemctl start webmin
+
+#yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh;
+#yes | bash setup-repos.sh
+#apt install -y --install-recommends webmin
 
 sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
@@ -410,14 +416,14 @@ systemctl restart ssh
 clear
 echo "LAMP Stack Server Installed."
 echo
-echo "Apache HTTP is accessable at http://$IP_ADDRESS and http://$HST"
-echo "Apache HTTPS SSL enabled for https://$IP_ADDRESS and https://$HST"
+echo "Apache HTTP is accessable at http://$IP_ADDRESS"
+echo "Apache HTTPS SSL enabled for https://$IP_ADDRESS"
 echo
-echo "Access phpMyAdmin at http://$IP_ADDRESS/phpmyadmin or http://$HST/phpmyadmin"
+echo "Access phpMyAdmin at http://$IP_ADDRESS/phpmyadmin"
 echo "phpMyAdmin Username: phpMyAdmin"
 echo "Password: $PSWD"
 echo
-echo "Access Webmin at https://$IP_ADDRESS:10000 or https://$HST:10000"
+echo "Access Webmin at https://$IP_ADDRESS:10000"
 echo "Webmin Username: $USER_NAME"
 echo "Password: [SHELL PASSWORD]"
 echo
