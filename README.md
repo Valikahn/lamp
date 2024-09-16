@@ -64,8 +64,8 @@ sudo ./lamp.linux.deb.sh
 13. ENABLE FIREWALL AND ALLOW PORTS
 
 ## Program Information
-Program Version: 24.9.17-alpha<br />
-File Name: lamp.linux.deb.sh<br />
+Program Version: 24.9.17.244<br />
+File Name: maws_h16s35-v24.9.17.244.linux.deb.sh<br />
 Author:  Neil Jamieson (Valikahn)<br />
 
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"

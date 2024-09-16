@@ -55,8 +55,8 @@ WHITE=$(tput setaf 7)
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.17"
-BUILD="22-44"
-REVDATE="16 September 2024"
+BUILD="244"
+REVDATE="17 September 2024"
 FILENAME="maws_h16s35-$SCRIPTVERSION.$BUILD.linux.deb.sh"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
