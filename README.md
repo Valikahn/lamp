@@ -75,9 +75,9 @@ Firewall Configuration:
 * Configures ufw (Uncomplicated Firewall) to allow necessary ports for Apache, HTTPS, FTP, MySQL, Webmin, and a dynamically generated SSH port (randomly selected to improve security).
 
 ## Key Advantages:
-* Fully Automated: Once executed, the script handles everything from software installation to firewall configuration, reducing the need for manual intervention.
-* Security Enhancements: The script automatically sets up SSL certificates for both Apache and FTP services and changes the default SSH port to a random high number, enhancing system security.
-* Convenient Access: After installation, tools like Webmin and phpMyAdmin provide a GUI-based method to manage the server and databases, respectively.
+* **Fully Automated**: Once executed, the script handles everything from software installation to firewall configuration, reducing the need for manual intervention.
+* **Security Enhancements**: The script automatically sets up SSL certificates for both Apache and FTP services and changes the default SSH port to a random high number, enhancing system security.
+* **Convenient Access**: After installation, tools like Webmin and phpMyAdmin provide a GUI-based method to manage the server and databases, respectively.
 
 ## Usage:
 * The script is suitable for users who want to deploy a web server with minimal effort on an Ubuntu system. It simplifies the process by integrating several services into one automated setup.
