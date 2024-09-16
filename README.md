@@ -112,6 +112,6 @@ Linux (Ubuntu 24.04.x) - https://ubuntu.com/download/server<br />
 Apache - https://httpd.apache.org/<br />
 MySQL - https://www.mysql.com/<br />
 phpMyAdmin - https://www.phpmyadmin.net/<br />
-Webmin - https://webmin.com/<br />
+Webmin - https://webmin.com/download/<br />
 VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
 OpenSSL - https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
