@@ -33,7 +33,6 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 
 ## Install Commands - Install Git and clone the "lamp" package
 ```
-sudo -i
 sudo apt-get -y install wget git
 git clone https://github.com/Valikahn/lamp.git
 ```
