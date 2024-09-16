@@ -8,6 +8,10 @@
 LAMP (Linux, Apache, MySQL and PHP)
 Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apache and VSFTPD.
 
+## Purpose:
+The script automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. 
+It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.
+
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
 * [Install Commands](#install-commands)
@@ -33,6 +37,13 @@ Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed to work with Apach
 
 Please note that the above versions are the minimal versions that will be installed and may vary.
 This deployment is not pulling specific versions but looking for the latest versions available.
+
+## Features and Components
+Initial Setup and Environment:
+* Clears the terminal and sets the default text editor to nano.
+* Defines variables for color outputs, versioning information, and host data collection (network interface, IP address, etc.).
+
+
 
 ## Install Commands
 Install Git and clone the "lamp" package
