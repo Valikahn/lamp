@@ -90,7 +90,7 @@ git clone https://github.com/Valikahn/lamp.git
 ```
 
 ## Execute Script
-Change directory -->  Make shell file executable -->  sudu run the script
+Change directory -->  Make shell file executable -->  sudo run the script<br />
 Thats it - there is only one interaction required (y/n)
 ```
 cd lamp
