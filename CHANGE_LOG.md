@@ -21,12 +21,3 @@ In host data collection this will be collected using the method the user request
 ##
 Configure randome port to become accessible when using VSFTPD
 Included TCP ports 10000:10100 into the firewall; these are passive ports that VSFTPD uses.
-
-
-
-Features Included
------------------
-
-###--------------------  CPU Core Check before script starting  --------------------###
-##
-Scripted in as a function to be called during system check.
