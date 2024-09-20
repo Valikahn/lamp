@@ -61,8 +61,9 @@ RESET=$(tput sgr0)
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
+BUILD="001"
 REVDATE="23 September 2024"
-FILENAME="maws_hp2v48-$SCRIPTVERSION.linux.deb.sh"
+FILENAME="maws_hp2v48.[$SCRIPTVERSION.$BUILD].linux.deb.sh"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
 ##
@@ -308,45 +309,46 @@ chmod -R 775 /var/www/html
 chmod g+s /var/www/html
 
 cp /var/www/html/index.html /var/www/html/index.html.bak
-touch /var/html/index.html
+rm -rf /var/www/html/index.html
+touch /var/www/html/index.html
 
-echo "<!DOCTYPE html>" >> /var/html/index.html
-echo >> /var/html/index.html
-echo "<!-- LAMP Logo at top of HTML document -->" >> /var/html/index.html
-echo "<div align="center">" >> /var/html/index.html
-echo "	<a href="https://github.com/Valikahn/lamp" target="_blank">" >> /var/html/index.html
-echo "		<img alt="lamp" src="img/lamp_img.png">" >> /var/html/index.html
-echo "	</a>" >> /var/html/index.html
-echo "</div>" >> /var/html/index.html
-echo >> /var/html/index.html
-echo "<!-- HEAD containing the page title and link to external CSS  -->" >> /var/html/index.html
-echo "<html lang="en">" >> /var/html/index.html
-echo "<head>" >> /var/html/index.html
-echo "	<meta charset="UTF-8">" >> /var/html/index.html
-echo "	<meta name="viewport" content="width=device-width, initial-scale=1.0">" >> /var/html/index.html
-echo "	<link rel="stylesheet" href="css/styles.css">" >> /var/html/index.html
-echo >> /var/html/index.html
-echo "	<title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/html/index.html
-echo "</head>" >> /var/html/index.html
-echo >> /var/html/index.html
-echo "<!-- BODY containing the page information -->" >> /var/html/index.html
-echo "<body>" >> /var/html/index.html
-echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/html/index.html
-echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/html/index.html
-echo "	<h3 align="center">Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/html/index.html
-echo "	<br>" >> /var/html/index.html
-echo "	<h3 align="center">Program Version: $SCRIPTVERSION</h3>" >> /var/html/index.html
-echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/html/index.html
-echo "	<h3 align="center">Author:  Neil Jamieson (Valikahn)</h3>" >> /var/html/index.html
-echo "	<br>" >> /var/html/index.html
-echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)'</h3>" >> /var/html/index.html
-echo "	<br>" >> /var/html/index.html
-echo "	<h3 align="center">Please refer to the GitHub README file for specific information about this script.</h3>" >> /var/html/index.html
-echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">https://github.com/Valikahn/lamp</a></h3>" >> /var/html/index.html
-echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/html/index.html
-echo "	<h3 align="center"><a href="http://$IP_ADDRESS/phpinfo.php" target="_blank">PHP Info</a></h3>" >> /var/html/index.html
-echo "</body>" >> /var/html/index.html
-echo "</html>" >> /var/html/index.html
+echo "<!DOCTYPE html>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "<!-- LAMP Logo at top of HTML document -->" >> /var/www/html/index.html
+echo "<div align="center">" >> /var/www/html/index.html
+echo "	<a href="https://github.com/Valikahn/lamp" target="_blank">" >> /var/www/html/index.html
+echo "		<img alt="lamp" src="img/lamp_img.png">" >> /var/www/html/index.html
+echo "	</a>" >> /var/www/html/index.html
+echo "</div>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "<!-- HEAD containing the page title and link to external CSS  -->" >> /var/www/html/index.html
+echo "<html lang="en">" >> /var/www/html/index.html
+echo "<head>" >> /var/www/html/index.html
+echo "	<meta charset="UTF-8">" >> /var/www/html/index.html
+echo "	<meta name="viewport" content="width=device-width, initial-scale=1.0">" >> /var/www/html/index.html
+echo "	<link rel="stylesheet" href="css/styles.css">" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "	<title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/www/html/index.html
+echo "</head>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "<!-- BODY containing the page information -->" >> /var/www/html/index.html
+echo "<body>" >> /var/www/html/index.html
+echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
+echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/www/html/index.html
+echo "	<h3 align="center">Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/www/html/index.html
+echo "	<br>" >> /var/www/html/index.html
+echo "	<h3 align="center">Program Version: $SCRIPTVERSION</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">Author:  Neil Jamieson (Valikahn)</h3>" >> /var/www/html/index.html
+echo "	<br>" >> /var/www/html/index.html
+echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)'</h3>" >> /var/www/html/index.html
+echo "	<br>" >> /var/www/html/index.html
+echo "	<h3 align="center">Please refer to the GitHub README file for specific information about this script.</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">https://github.com/Valikahn/lamp</a></h3>" >> /var/www/html/index.html
+echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
+echo "	<h3 align="center"><a href="http://$IP_ADDRESS/phpinfo.php" target="_blank">PHP Info</a></h3>" >> /var/www/html/index.html
+echo "</body>" >> /var/www/html/index.html
+echo "</html>" >> /var/www/html/index.html
 
 cp -r web/* /var/www/html/
 
