@@ -9,7 +9,7 @@ The script automates the installation, configuration, and setup of a LAMP (Linux
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
 Program Version: 24.9.23<br />
-File Name: maws_hp2v48-v24.9.23.linux.deb.sh<br />
+File Name: maws_hp2v48.v24.9.23.linux.deb.sh<br />
 Author:  Neil Jamieson (Valikahn)<br />
 
 * [Tested Operating Systems](#tested-operating-systems)
