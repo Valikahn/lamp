@@ -1,6 +1,8 @@
 #!/bin/bash
 clear
 export EDITOR=nano
+chmod +x include/variables.sh
+chmod +x include/functions.sh
 
 ###--------------------  START OF LAMP SCRIPT  --------------------###
 ##
@@ -32,69 +34,8 @@ export EDITOR=nano
 #######################################################################################################################################################
 
 
-###################################################
-##												 ##
-##  VARIABLES									 ##
-##												 ##
-###################################################
-
-
-###--------------------  COLORS DECLARE  --------------------###
-##
-BOLD=$(tput bold)
-NORMAL=$(tput sgr0)
-GREEN=$(tput setaf 2)
-LBLUE=$(tput setaf 6)
-RED=$(tput setaf 1)
-PURPLE=$(tput setaf 5)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-
-###--------------------  BLINK DECLARE  --------------------###
-##
-BLINK=$(tput blink)
-YELLOW=$(tput setaf 3)
-RESET=$(tput sgr0)
-
-###--------------------  VERSIONING --------------------###
-##
-SCRIPTVERSION="v24.9.23"
-BUILD="002-ALPHA"
-REVDATE="23 September 2024"
-FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
-
-###--------------------  HOST DATA COLLECTION  --------------------###
-##
-if command -v nmcli >/dev/null 2>&1; then
-    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
-    DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
-    LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
-    DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
-else
-    echo "This script works best with NMCLI (Network Manager)"
-    echo "NMCLI is not installed. Do you want to install it? (y/n)"
-    read -r INSTALL_NMCLI
-
-    if [[ "$INSTALL_NMCLI" == "y" || "$INSTALL_NMCLI" == "Y" ]]; then
-        sudo apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1
-        ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
-        DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
-        LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
-        DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
-    else
-        ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
-        LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
-        DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
-    fi
-fi
-
-HST=$(hostname)
-IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
-USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
-
-source ./functions/functions.sh
+source ./include/variables.sh
+source ./include/functions.sh
 
 
 ###################################################
@@ -216,6 +157,46 @@ echo "</body>" >> /var/www/html/index.html
 echo "</html>" >> /var/www/html/index.html
 
 cp -r web/* /var/www/html/
+
+###--------------------  INSTALL IONCUBE LOADER  --------------------###
+##
+apt update -y && sudo apt upgrade -y
+sudo apt install php-cli php-dev php-pear -y
+wget $IONCUBE_URL -O /tmp/ioncube_loaders.tar.gz
+tar xzf /tmp/ioncube_loaders.tar.gz -C /tmp/
+sudo cp $IONCUBE_DIR/ioncube_loader_lin_${PHP_VERSION}.so $PHP_EXT_DIR
+
+PHP_INI_CLI="/etc/php/${PHP_VERSION}/cli/php.ini"
+PHP_INI_FPM="/etc/php/${PHP_VERSION}/fpm/php.ini"
+
+if ! grep -q "ioncube_loader_lin_${PHP_VERSION}.so" $PHP_INI_CLI; then
+    echo "zend_extension = $PHP_EXT_DIR/ioncube_loader_lin_${PHP_VERSION}.so" | sudo tee -a $PHP_INI_CLI
+fi
+
+if [ -f "$PHP_INI_FPM" ]; then
+    if ! grep -q "ioncube_loader_lin_${PHP_VERSION}.so" $PHP_INI_FPM; then
+        echo "zend_extension = $PHP_EXT_DIR/ioncube_loader_lin_${PHP_VERSION}.so" | sudo tee -a $PHP_INI_FPM
+    fi
+fi
+
+if [ $(systemctl is-active apache2) == "active" ]; then
+    sudo systemctl restart apache2
+fi
+
+if [ $(systemctl is-active php${PHP_VERSION}-fpm) == "active" ]; then
+    sudo systemctl restart php${PHP_VERSION}-fpm
+fi
+
+clear
+php -v | grep ionCube
+sleep 5
+
+if [ $? -eq 0 ]; then
+    echo "IonCube Loader installed successfully!"
+else
+    echo "IonCube Loader installation failed."
+fi
+sleep 7
 
 CONFIRM_YES_NO
 
