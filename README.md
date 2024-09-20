@@ -30,7 +30,8 @@ Author:  Neil Jamieson (Valikahn)<br />
 |-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
 | PHP                           | 8.3.6
-| SSL                           | OpenSSL/3.0.13
+| ionCube                       | 13.3.1
+| OpenSSL                       | 3.0.13
 | MySQL                         | 8.4
 | phpMyAdmin                    | 5.2.1
 | Webmin                        | 2.202 
@@ -102,20 +103,25 @@ chmod +x maws_h16s35-v24.9.23.linux.deb.sh
 sudo ./maws_h16s35-v24.9.23.linux.deb.sh
 ```
 
+## Change Log
+Please refer to our change log as this will be updated with the changes made and to what release.
+* Release 24.9.23: <a href="https://github.com/Valikahn/lamp/blob/master/CHANGE_LOG.md">Change Log</a>
+
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.
-* Issues:  <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
+* Issues: <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
 
 ## Licence
 Licensed under the GPLv3 License.
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br /><br />
-GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html 
+GPLv3 Licence: https://www.gnu.org/licenses/gpl-3.0.en.html 
 
 ## References
 Linux (Ubuntu 24.04.x) - https://ubuntu.com/download/server<br />
-Apache - https://httpd.apache.org/<br />
-MySQL - https://www.mysql.com/<br />
-phpMyAdmin - https://www.phpmyadmin.net/<br />
-Webmin - https://webmin.com/download/<br />
-VSFTPD - https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
-OpenSSL - https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
+Apache: https://httpd.apache.org/<br />
+MySQL: https://www.mysql.com/<br />
+phpMyAdmin: https://www.phpmyadmin.net/<br />
+Webmin: https://webmin.com/download/<br />
+VSFTPD: https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
+OpenSSL: https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
+ionCube: https://www.ioncube.com/<br />

@@ -203,8 +203,6 @@ else
 fi
 sleep 7
 
-CONFIRM_YES_NO
-
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
 clear
@@ -278,7 +276,6 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsf
 CREATE_RANDOM_PORT
 FTP_PORT=$NEW_PORT
 
-# Enable SSL
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
 echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
 echo "rsa_private_key_file=/etc/ssl/private/vsftpd.key" | tee -a /etc/vsftpd.conf
@@ -286,7 +283,6 @@ echo "ssl_tlsv1=YES" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
 
-# Configure to use FTPS on port 990
 echo "listen_port=27783" | tee -a /etc/vsftpd.conf
 echo "allow_anon_ssl=NO" | tee -a /etc/vsftpd.conf
 echo "force_local_data_ssl=YES" | tee -a /etc/vsftpd.conf
@@ -294,7 +290,6 @@ echo "force_local_logins_ssl=YES" | tee -a /etc/vsftpd.conf
 echo "ssl_ciphers=HIGH" | tee -a /etc/vsftpd.conf
 echo "require_ssl_reuse=NO" | tee -a /etc/vsftpd.conf
 
-# Passive mode settings (optional, adjust based on your network setup)
 echo "pasv_enable=YES" | tee -a /etc/vsftpd.conf
 echo "pasv_min_port=10000" | tee -a /etc/vsftpd.conf
 echo "pasv_max_port=10100" | tee -a /etc/vsftpd.conf
