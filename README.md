@@ -56,6 +56,10 @@ System Data Collection:
 User Confirmation:
 * Prompts the user for confirmation before proceeding with the setup.
 
+Software Removal:
+* Ubuntu Pro is detached and purged from the host.
+* Cloud-init is deleted and purged from the host.
+ 
 Software Installation:
 * Apache Web Server: Installs Apache and sets appropriate permissions for the /var/www/html directory.
 * MySQL: Installs MySQL server, creates a secure root user, and sets up phpMyAdmin with a user and password.
