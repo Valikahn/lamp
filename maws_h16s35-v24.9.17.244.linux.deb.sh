@@ -11,7 +11,7 @@ export EDITOR=nano
 ##																																					 ##
 ##  LAMP (Linux, Apache, MySQL and PHP)                                                                                                              ##
 ##  Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL                                                                                            ##
-##  Managing a Web Server (maws_h16s35)                                                                                                              ##
+##  Managing a Web Server (MAWS_HP2V48)                                                                                                              ##
 ##																																					 ##
 ##  Author:  Neil Jamison <000705@uhi.ac.uk>	                        																	         ##
 ##																																					 ##
@@ -52,24 +52,46 @@ BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
 
+###--------------------  BLINK DECLARE  --------------------###
+##
+BLINK=$(tput blink)
+YELLOW=$(tput setaf 3)
+RESET=$(tput sgr0)
+
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.9.17"
-BUILD="244"
-REVDATE="17 September 2024"
-FILENAME="maws_h16s35-$SCRIPTVERSION.$BUILD.linux.deb.sh"
+SCRIPTVERSION="v24.9.23"
+REVDATE="23 September 2024"
+FILENAME="maws_hp2v48-$SCRIPTVERSION.linux.deb.sh"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
 ##
-ENS=`nmcli dev status | grep '^ens' | awk '{ print $1 }'`
-DOM=`nmcli dev status | grep '^ens' | awk '{ print $4 }'`
-LIP=`nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }'`
-DNS=`nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }'`
+if command -v nmcli >/dev/null 2>&1; then
+    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+    DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
+    LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
+    DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
+else
+    echo "This script works best with NMCLI (Network Manager)"
+    echo "NMCLI is not installed. Do you want to install it? (y/n)"
+    read -r INSTALL_NMCLI
+
+    if [[ "$INSTALL_NMCLI" == "y" || "$INSTALL_NMCLI" == "Y" ]]; then
+        sudo apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1
+        ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+        DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
+        LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
+        DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
+    else
+        ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
+        LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
+        DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
+    fi
+fi
+
 HST=$(hostname)
 IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
-PRO_STATUS=$(pro status --format json)
 USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
-
 
 ###################################################
 ##												 ##
@@ -108,6 +130,19 @@ tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
 IS_PORT_IN_USE() {
   lsof -i -P -n | grep LISTEN | grep ":$1 " > /dev/null
   return $?
+}
+
+###--------------------  CREATE RANDOM PORT  --------------------###
+##
+CREATE_RANDOM_PORT() {
+    $NEW_PORT=$nil
+    while true; 
+    do
+      NEW_PORT=$((RANDOM % 64512 + 1024))
+      if ! IS_PORT_IN_USE $NEW_PORT; then
+        break
+      fi
+    done
 }
 
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
@@ -179,47 +214,78 @@ COLLECTING_SYSTEM_DATA
 ##
 sleep 2
 echo
-echo "###-------------------------------------------------------------------------###"
+echo "###-----------------------------------------------------------------------------------------###"
 echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
-echo "Managing a Web Server (maws_h16s35)"
+echo "Managing a Web Server (MAWS_HP2V48)"
 echo
 echo "Author:  Neil Jamieson <000705@uhi.ac.uk>"
+echo "Currently logged-in as user: ${LBLUE}[  $USER_NAME  ]${NORMAL} with sudo permissions."
+echo
 echo "${YELLOW}[  Credit where credits due!  This did not write itself!  ]${NORMAL}"
 echo
-echo "###-------------------------------------------------------------------------###"
+echo "###-----------------------------------------------------------------------------------------###"
 echo
 echo "Script Version: ${LBLUE}[  $SCRIPTVERSION  ]${NORMAL}"
 echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
 echo "Last Update: ${LBLUE}[  $REVDATE  ]${NORMAL}"
+echo
 echo "Operating System: ${LBLUE}[  $DIST  ]${NORMAL}"
-echo "IP Address: ${LBLUE}[  $IP_ADDRESS  ]${NORMAL}"
 echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
-echo "Logged-in user (SUDO Permissions): ${LBLUE}[  $USER_NAME  ]${NORMAL}"
+echo "IP Address / CIDR: ${LBLUE}[  $LIP  ]${NORMAL}"
+echo "DNS Addresses: ${LBLUE}[  $DNS  ]${NORMAL}"
+echo "Network Interface: ${LBLUE}[  $ENS  ]${NORMAL}" 
 echo
-echo "###-------------------------------------------------------------------------###"
+echo "###-----------------------------------------------------------------------------------------###"
 echo
-echo "Once the script has completed deployment, output infomration will be provided."
-echo "This is important as once the screen is cleared or rebooted the data will be lost!"
+echo "${BLINK}${YELLOW}[  IMPORTANT  ]${RESET}"
+echo "Once the script has completed deploying, output infomration will be provided."
+echo "This is important!  Once the screen is cleared or the host rebooted the data will be lost!"
 echo
-echo "###-------------------------------------------------------------------------###"
+echo "###-----------------------------------------------------------------------------------------###"
 echo
 sleep 2
 
 CONFIRM_YES_NO
+
+
+###--------------------  UNINSTALL PRO  --------------------###
+##
+if command -v pro &> /dev/null; then
+    echo "Ubuntu Pro is installed. Checking if the system is attached..."
+    PRO_STATUS=$(pro status --format json)
+        if [[ $(echo "$PRO_STATUS" | grep -i '"attached": true') ]]; then
+            echo "System is attached to Ubuntu Pro. Detaching now..."
+            sudo pro detach
+                if [ $? -eq 0 ]; then
+                    echo "System successfully detached from Ubuntu Pro."
+                else
+                    echo "Failed to detach from Ubuntu Pro. Exiting."
+                    exit 1
+                fi
+            else
+                echo "System is not attached to Ubuntu Pro."
+        fi
+    echo "Proceeding to uninstall Ubuntu Pro."
+    sudo apt-get remove --purge ubuntu-advantage-tools -y
+    if [ $? -eq 0 ]; then
+        echo "Ubuntu Pro has been successfully uninstalled."
+    else
+        echo "Failed to uninstall Ubuntu Pro."
+        exit 1
+    fi
+else
+    echo "Ubuntu Pro is not installed. Continuing."
+fi
+
+echo "Script will now continue..."
+sleep 5
 
 ###--------------------  UPDATE THE HOST  --------------------###
 ##
 NEEDRESTART_MODE=a
 DEBIAN_PRIORITY=required
 export DEBIAN_FRONTEND=noninteractive
-
-pro_attached=$(echo "$PRO_STATUS" | jq '.account')
-    if [[ $pro_attached != "null" ]]; then
-        echo "Ubuntu Pro is attached. Detaching and purging the client."
-        pro detach --assume-yes
-        apt-get purge ubuntu-pro-client -y
-    fi
 
 apt update && apt upgrade -y
 apt-get -o Dpkg::Options::="--force-confdef" \
@@ -242,8 +308,49 @@ chmod -R 775 /var/www/html
 chmod g+s /var/www/html
 
 cp /var/www/html/index.html /var/www/html/index.html.bak
+touch /var/html/index.html
+
+echo "<!DOCTYPE html>" >> /var/html/index.html
+echo >> /var/html/index.html
+echo "<!-- LAMP Logo at top of HTML document -->" >> /var/html/index.html
+echo "<div align="center">" >> /var/html/index.html
+echo "	<a href="https://github.com/Valikahn/lamp" target="_blank">" >> /var/html/index.html
+echo "		<img alt="lamp" src="img/lamp_img.png">" >> /var/html/index.html
+echo "	</a>" >> /var/html/index.html
+echo "</div>" >> /var/html/index.html
+echo >> /var/html/index.html
+echo "<!-- HEAD containing the page title and link to external CSS  -->" >> /var/html/index.html
+echo "<html lang="en">" >> /var/html/index.html
+echo "<head>" >> /var/html/index.html
+echo "	<meta charset="UTF-8">" >> /var/html/index.html
+echo "	<meta name="viewport" content="width=device-width, initial-scale=1.0">" >> /var/html/index.html
+echo "	<link rel="stylesheet" href="css/styles.css">" >> /var/html/index.html
+echo >> /var/html/index.html
+echo "	<title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/html/index.html
+echo "</head>" >> /var/html/index.html
+echo >> /var/html/index.html
+echo "<!-- BODY containing the page information -->" >> /var/html/index.html
+echo "<body>" >> /var/html/index.html
+echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/html/index.html
+echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/html/index.html
+echo "	<h3 align="center">Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/html/index.html
+echo "	<br>" >> /var/html/index.html
+echo "	<h3 align="center">Program Version: $SCRIPTVERSION</h3>" >> /var/html/index.html
+echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/html/index.html
+echo "	<h3 align="center">Author:  Neil Jamieson (Valikahn)</h3>" >> /var/html/index.html
+echo "	<br>" >> /var/html/index.html
+echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)'</h3>" >> /var/html/index.html
+echo "	<br>" >> /var/html/index.html
+echo "	<h3 align="center">Please refer to the GitHub README file for specific information about this script.</h3>" >> /var/html/index.html
+echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">https://github.com/Valikahn/lamp</a></h3>" >> /var/html/index.html
+echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/html/index.html
+echo "	<h3 align="center"><a href="http://$IP_ADDRESS/phpinfo.php" target="_blank">PHP Info</a></h3>" >> /var/html/index.html
+echo "</body>" >> /var/html/index.html
+echo "</html>" >> /var/html/index.html
+
 cp -r web/* /var/www/html/
 
+CONFIRM_YES_NO
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
@@ -313,13 +420,42 @@ systemctl start vsftpd
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###
 ##
 clear
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=UK/ST=Cromarty/L=Alness/O=MAWS_HP2V48/OU=H16S35/CN=$HST"
+
+CREATE_RANDOM_PORT
+FTP_PORT=$NEW_PORT
+
+# Enable SSL
 sed -i 's/#ssl_enable=YES/ssl_enable=YES/' /etc/vsftpd.conf
 echo "rsa_cert_file=/etc/ssl/private/vsftpd.crt" | tee -a /etc/vsftpd.conf
 echo "rsa_private_key_file=/etc/ssl/private/vsftpd.key" | tee -a /etc/vsftpd.conf
 echo "ssl_tlsv1=YES" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
+
+# Configure to use FTPS on port 990
+echo "listen_port=27783" | tee -a /etc/vsftpd.conf
+echo "allow_anon_ssl=NO" | tee -a /etc/vsftpd.conf
+echo "force_local_data_ssl=YES" | tee -a /etc/vsftpd.conf
+echo "force_local_logins_ssl=YES" | tee -a /etc/vsftpd.conf
+echo "ssl_ciphers=HIGH" | tee -a /etc/vsftpd.conf
+echo "require_ssl_reuse=NO" | tee -a /etc/vsftpd.conf
+
+# Passive mode settings (optional, adjust based on your network setup)
+echo "pasv_enable=YES" | tee -a /etc/vsftpd.conf
+echo "pasv_min_port=10000" | tee -a /etc/vsftpd.conf
+echo "pasv_max_port=10100" | tee -a /etc/vsftpd.conf
+
+cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
+sed -i "/^#listen_port/c\listen_port $FTP_PORT" /etc/vsftpd.conf
+
+if ufw status | grep -q active; then
+    if ! ufw status | grep -q "$FTP_PORT/tcp"; then
+        ufw allow $FTP_PORT/tcp
+        ufw reload
+    fi
+fi
+
 systemctl restart vsftpd
 
 ###--------------------  CONFIGURE APACHE TO USE THE SELF-SIGNED CERTIFICATE  --------------------###
@@ -354,7 +490,7 @@ EOF"
 ###--------------------  CREATE A SELF-SIGNED CERTIFICATE TO USE WITH APACHE  --------------------###
 ##
 clear
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=$HST" >/dev/null 2>&1
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=UK/ST=Cromarty/L=Alness/O=MAWS_HP2V48/OU=H16S35/CN=$HST" >/dev/null 2>&1
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 >/dev/null 2>&1
 
 ###--------------------  ENABLE APACHE SSL MODULE/CONFIGURATION  --------------------###
@@ -368,20 +504,15 @@ systemctl reload apache2
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
 clear
-while true; 
-do
-  NEW_PORT=$((RANDOM % 64512 + 1024))
-  if ! IS_PORT_IN_USE $NEW_PORT; then
-    break
-  fi
-done
+CREATE_RANDOM_PORT
+SSH_PORT=$NEW_PORT
 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
-sed -i "/^#Port/c\Port $NEW_PORT" /etc/ssh/sshd_config
+sed -i "/^#Port/c\Port $SSH_PORT" /etc/ssh/sshd_config
 
 if ufw status | grep -q active; then
-  if ! ufw status | grep -q "$NEW_PORT/tcp"; then
-    ufw allow $NEW_PORT/tcp
+  if ! ufw status | grep -q "$SSH_PORT/tcp"; then
+    ufw allow $SSH_PORT/tcp
     ufw reload
   fi
   ufw delete allow 22/tcp
@@ -395,10 +526,10 @@ ufw allow in "Apache Full"
 ufw allow https
 ufw allow 80/tcp
 ufw allow 443/tcp
-ufw allow 990/tcp
 ufw allow 10000/tcp
 ufw allow 3306/tcp
 ufw allow 40000:50000/tcp
+ufw allow 10000:10100/tcp
 ufw reload
 echo "y" | ufw enable
 systemctl enable apache2
@@ -418,12 +549,15 @@ echo "phpMyAdmin Username: phpMyAdmin"
 echo "Password: $PSWD"
 echo
 echo "Access Webmin at https://$IP_ADDRESS:10000"
-echo "Webmin Username: root"
+echo "Webmin Username: $USER_NAME"
+echo "Password: [SHELL PASSWORD]"
+echo 
+echo "Sudo Username: root"
 echo "Password: $ROOT_PASSWORD"
 echo
-echo "FTP server running with SSL enabled on port 990"
+echo "FTP server running with SSL enabled on port $FTP_PORT"
+echo "SSH port has been changed to $SSH_PORT."
 echo
-echo "SSH port has been changed to $NEW_PORT."
 echo "Port 22 has been blocked on the firewall."
 echo "Please ensure you update your connection settings accordingly."
 echo
