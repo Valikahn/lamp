@@ -61,9 +61,9 @@ RESET=$(tput sgr0)
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="001"
+BUILD="001-ALPHA"
 REVDATE="23 September 2024"
-FILENAME="maws_hp2v48.[$SCRIPTVERSION.$BUILD].linux.deb.sh"
+FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
 ##
@@ -229,6 +229,7 @@ echo "###-----------------------------------------------------------------------
 echo
 echo "Script Version: ${LBLUE}[  $SCRIPTVERSION  ]${NORMAL}"
 echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
+echo "Build Release: ${LBLUE}[  $BUILD  ]${NORMAL}"
 echo "Last Update: ${LBLUE}[  $REVDATE  ]${NORMAL}"
 echo
 echo "Operating System: ${LBLUE}[  $DIST  ]${NORMAL}"
