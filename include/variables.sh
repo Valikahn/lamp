@@ -27,16 +27,9 @@ RESET=$(tput sgr0)
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="003-ALPHA"
+BUILD="004-ALPHA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
-
-###--------------------  IONCUBE LOADER VARIABLES  --------------------###
-##
-PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
-PHP_EXT_DIR=$(php -i | grep extension_dir | cut -d" " -f5)
-IONCUBE_URL="https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
-IONCUBE_DIR="/tmp/ioncube"
 
 ###--------------------  HOST DATA COLLECTION  --------------------###
 ##

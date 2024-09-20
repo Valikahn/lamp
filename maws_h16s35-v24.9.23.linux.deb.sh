@@ -160,6 +160,11 @@ cp -r web/* /var/www/html/
 
 ###--------------------  INSTALL IONCUBE LOADER  --------------------###
 ##
+PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+PHP_EXT_DIR=$(php -i | grep extension_dir | cut -d" " -f5)
+IONCUBE_URL="https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
+IONCUBE_DIR="/tmp/ioncube"
+
 apt update -y && sudo apt upgrade -y
 sudo apt install php-cli php-dev php-pear -y
 wget $IONCUBE_URL -O /tmp/ioncube_loaders.tar.gz
