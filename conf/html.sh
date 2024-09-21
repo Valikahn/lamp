@@ -14,7 +14,17 @@ echo "<html lang="en">" >> /var/www/html/index.html
 echo "<head>" >> /var/www/html/index.html
 echo "	<meta charset="UTF-8">" >> /var/www/html/index.html
 echo "	<meta name="viewport" content="width=device-width, initial-scale=1.0">" >> /var/www/html/index.html
-echo "	<link rel="stylesheet" href="css/styles.css">" >> /var/www/html/index.html
+echo "  <header>" >> /var/www/html/index.html
+echo "		<link rel="stylesheet" href="css/header.css">" >> /var/www/html/index.html
+echo "    <nav>" >> /var/www/html/index.html
+echo "      <ul>" >> /var/www/html/index.html
+echo "        <li><a href='http://$IP_ADDRESS' target='_blank'>HTTP Unsecure</a></li>" >> /var/www/html/index.html
+echo "        <li><a href='https://$IP_ADDRESS' target='_blank'>HTTPS Secured</a></li>" >> /var/www/html/index.html
+echo "        <li><a href='http://$IP_ADDRESS/phpmyadmin' target='_blank'>phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
+echo "        <li><a href='https://$IP_ADDRESS:10000' target='_blank'>Webmin</a></li>" >> /var/www/html/index.html
+echo "      </ul>" >> /var/www/html/index.html
+echo "    </nav>" >> /var/www/html/index.html
+echo "  </header>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
 echo "	<title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/www/html/index.html
 echo "</head>" >> /var/www/html/index.html
