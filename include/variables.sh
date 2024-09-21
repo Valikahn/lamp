@@ -34,7 +34,7 @@ RESET=$(tput sgr0)
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="009-ALPHA"
+BUILD="010-ALPHA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 

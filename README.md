@@ -5,7 +5,7 @@
 </div>
 
 ## Purpose:
-The script automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
+The script is modular built and automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
 Program Version: 24.9.23<br />
@@ -81,9 +81,6 @@ Password Generation:
 
 System Data Collection:
 * Detects the operating system (either RedHat/CentOS or Debian/Ubuntu) and collects key host information such as distribution version, hostname, and IP address. If the OS is unsupported, the script exits.
-
-User Confirmation:
-* Prompts the user for confirmation before proceeding with the setup.
 
 Software Removal:
 * Ubuntu Pro is detached and purged from the host.
