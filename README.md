@@ -100,8 +100,8 @@ Change directory -->  Make shell file executable -->  sudo run the script<br />
 Thats it - there is only one interaction required (y/n)
 ```
 cd lamp
-chmod +x maws_h16s35-v24.9.23.linux.deb.sh
-sudo ./maws_h16s35-v24.9.23.linux.deb.sh
+chmod +x maws_hp2v48-v24.9.23.linux.deb.sh
+sudo ./maws_hp2v48-v24.9.23.linux.deb.sh
 ```
 
 ## Change Log
