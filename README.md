@@ -43,6 +43,9 @@ Please note that the above versions are the minimal versions that will be instal
 This deployment is not pulling specific versions but looking for the latest versions available.
 
 ## Additional Installed Software
+This is a list of software that is dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.
+These all work well with the installation of LAMP and are all auto installed, cleaned up, and have a basic configuration.
+
 | Application                   | Description
 |-------------------------------|-------------------------------|
 | ionCube                       | A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.
