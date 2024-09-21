@@ -24,6 +24,14 @@ echo "<body>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
 echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Apache, MySQL, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/www/html/index.html
+echo "  <nav>" >> /var/www/html/index.html
+echo "  	<ul>" >> /var/www/html/index.html
+echo "  		<li><a href='http://$IP_ADDRESS' target="_blank">HTTP Unsecure</a></li>" >> /var/www/html/index.html
+echo "  		<li><a href='https://$IP_ADDRESS' target="_blank">HTTPS Secured</a></li>" >> /var/www/html/index.html
+echo "  		<li><a href='http://$IP_ADDRESS/phpmyadmin' target="_blank">phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
+echo "  		<li><a href='https://$IP_ADDRESS:10000' target="_blank">Webmin</a></li>" >> /var/www/html/index.html
+echo "  	</ul>" >> /var/www/html/index.html
+echo "  </nav>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Program Version: $SCRIPTVERSION.$BUILD</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/www/html/index.html
@@ -31,15 +39,12 @@ echo "	<h3 align="center">Written by:  Neil Jamieson</h3>" >> /var/www/html/inde
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Please refer to the <a href="https://github.com/Valikahn/lamp" target="_blank">GitHub README</a> file for specific information about this script.</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
-echo "  <h3 align="center"><a href='http://$IP_ADDRESS' target="_blank">HTTP Unsecure</a></h3>" >> /var/www/html/index.html
-echo "  <h3 align="center"><a href='https://$IP_ADDRESS' target="_blank">HTTPS Secured</a></h3>" >> /var/www/html/index.html
-echo "  <h3 align="center"><a href='http://$IP_ADDRESS/phpmyadmin' target="_blank">phpMyAdmin / MySQL</a></h3>" >> /var/www/html/index.html
-echo "	<h3 align="center">Username:  phpMyAdmin | Password: $PSWD</h3>" >> /var/www/html/index.html
-echo "  <h3 align="center"><a href='https://$IP_ADDRESS:10000' target="_blank">Webmin</a></h3>" >> /var/www/html/index.html
-echo "	<h3 align="center">Username: $USER_NAME | Password: [SHELL PASSWORD]</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">phpMyAdmin Username:  phpMyAdmin | Password: $PSWD</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">Webmin Username: $USER_NAME | Password: [SHELL PASSWORD]</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">FTP IP: $IP_ADDRESS | FTP Port: $FTP_PORT</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Username: $USER_NAME | Password: [SHELL PASSWORD] | Encryption: Use explicit FTP over TLS</h3>" >> /var/www/html/index.html
+echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">SSH IP: $IP_ADDRESS | SSH Port: $SSH_PORT</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Username: $USER_NAME | Password: [SHELL PASSWORD]</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
@@ -48,13 +53,13 @@ echo "	<h2 align="center">_________________________________________________</h3>
 echo >> /var/www/html/index.html
 echo "  <footer>" >> /var/www/html/index.html
 echo "    <div style='text-align: center; padding: 10px; background-color: #333; color: white;'>" >> /var/www/html/index.html
-echo "      <p>Copyright &copy; 2024 Neil Jamieson - <a href='mailto:000705@uhi.ac.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a> - HND Computer Science Student</p>" >> /var/www/html/index.html
+echo "      <p>Copyright &copy; 2024 Neil Jamieson - <a href='mailto:000705@uhi.ac.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a></p>" >> /var/www/html/index.html
 echo "      <nav>" >> /var/www/html/index.html
 echo "        <a href='http://$IP_ADDRESS/phpinfo.php' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/issues' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
-echo "        <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' style='color: white;'>GPLv3 Licence</a>" >> /var/www/html/index.html
-echo "        <a href='https://nwh.uhi.ac.uk/en/' style='color: white;'>NWH UHI</a><br><br>" >> /var/www/html/index.html
+echo "        <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' style='color: white; margin-right: 15px;'>GPLv3 Licence</a>" >> /var/www/html/index.html
+echo "        <a href='https://nwh.uhi.ac.uk/en/' style='color: white; margin-right: 15px;'>NWH UHI</a><br><br>" >> /var/www/html/index.html
 echo "        <a style='color: white;'>Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a><br>" >> /var/www/html/index.html
 echo "      </nav>" >> /var/www/html/index.html
 echo "    </div>" >> /var/www/html/index.html
