@@ -13,7 +13,6 @@ echo -n "SYSTEM CHECK..."; 	sleep 3
 
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
-echo -n "NETWORK MANAGER (NMCLI) CHECK..."; 	sleep 3
 if command -v nmcli >/dev/null 2>&1; then
     ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
     DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
@@ -36,7 +35,6 @@ else
         DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
     fi
 fi
-echo -e "\rSNETWORK MANAGER (NMCLI) CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3
 
 ###--------------------  PASSWORD COLLECTION  --------------------###
 ##
