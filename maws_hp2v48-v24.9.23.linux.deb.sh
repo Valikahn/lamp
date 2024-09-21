@@ -56,9 +56,11 @@ echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
 echo "Managing a Web Server (MAWS_HP2V48)"
 echo
-echo "Author:  Neil Jamieson <000705@uhi.ac.uk>"
-echo "Currently logged-in as user: ${LBLUE}[  $USER_NAME  ]${NORMAL} with sudo permissions."
+echo "$FILENAME Copyright (C) 2024 Neil Jamieson <000705@uhi.ac.uk>"
+echo "This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'. This is free software,"
+echo "and you are welcome to redistribute it under certain conditions; type 'show c' for details."
 echo
+echo "Currently logged-in as user: ${LBLUE}[  $USER_NAME  ]${NORMAL} with sudo permissions."
 echo "${YELLOW}[  Credit where credits due!  This did not write itself!  ]${NORMAL}"
 echo
 echo "###-----------------------------------------------------------------------------------------###"
@@ -141,20 +143,60 @@ echo "<!-- BODY containing the page information -->" >> /var/www/html/index.html
 echo "<body>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
 echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/www/html/index.html
-echo "	<h3 align="center">Apache, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">Apache, MySQL, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Program Version: $SCRIPTVERSION</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Author:  Neil Jamieson (Valikahn)</h3>" >> /var/www/html/index.html
+echo "	<br>" >> /var/www/html/index.html
+echo "  <h2 align="center">Software and Tools List</h2><br>" >> /var/www/html/index.html
+echo "    <ul>" >> /var/www/html/index.html
+echo "        <li><strong>ionCube</strong>: A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.</li>" >> /var/www/html/index.html
+echo "        <li><strong>libapache2-mod-php</strong>: An Apache module for running PHP scripts directly on the server using the Apache web server.</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-mysql</strong>: A PHP extension that allows PHP to communicate with MySQL databases.</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-cli</strong>: The PHP Command Line Interface, enabling PHP scripts to be run directly from the terminal.</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-curl</strong>: A PHP extension for transferring data using URLs with various protocols, supporting cURL functions.</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-json</strong>: A PHP extension that enables PHP to work with JSON data (JavaScript Object Notation).</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-xml</strong>: A PHP extension providing XML parsing capabilities.</li>" >> /var/www/html/index.html
+echo "        <li><strong>php-zip</strong>: A PHP extension for handling ZIP files, allowing for creation and extraction.</li>" >> /var/www/html/index.html
+echo "        <li><strong>net-tools</strong>: A package that provides basic networking utilities like ifconfig, netstat, route, and others.</li>" >> /var/www/html/index.html
+echo "        <li><strong>nmap</strong>: A network discovery and security auditing tool used for scanning networks and finding open ports or vulnerabilities.</li>" >> /var/www/html/index.html
+echo "        <li><strong>tcpdump</strong>: A command-line packet analyzer used to capture and inspect network traffic in real time.</li>" >> /var/www/html/index.html
+echo "        <li><strong>cifs-utils</strong>: Utilities for mounting and managing file systems using the CIFS/SMB protocol (common for network shares).</li>" >> /var/www/html/index.html
+echo "        <li><strong>dnsutils</strong>: A set of DNS-related utilities, including tools like dig and nslookup, used for DNS queries.</li>" >> /var/www/html/index.html
+echo "        <li><strong>default-jre</strong>: The default Java Runtime Environment (JRE) for running Java applications.</li>" >> /var/www/html/index.html
+echo "        <li><strong>dos2unix</strong>: A utility to convert plain text files from DOS/Windows format (CRLF line endings) to Unix format (LF line endings).</li>" >> /var/www/html/index.html
+echo "        <li><strong>rar</strong>: A utility for compressing files into the RAR format.</li>" >> /var/www/html/index.html
+echo "        <li><strong>unrar</strong>: A utility to extract files from RAR archives.</li>" >> /var/www/html/index.html
+echo "        <li><strong>perl</strong>: A high-level programming language often used for system administration, web development, and text manipulation.</li>" >> /var/www/html/index.html
+echo "        <li><strong>python3</strong>: The third major version of the Python programming language, known for its readability and versatility.</li>" >> /var/www/html/index.html
+echo "        <li><strong>python3-pip</strong>: A package manager for Python that allows the installation and management of Python libraries.</li>" >> /var/www/html/index.html
+echo "    </ul>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)'</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Please refer to the GitHub README file for specific information about this script.</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">https://github.com/Valikahn/lamp</a></h3>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
-echo "	<h3 align="center"><a href="http://$IP_ADDRESS/phpinfo.php" target="_blank">PHP Info</a></h3>" >> /var/www/html/index.html
-echo "</body>" >> /var/www/html/index.html
-echo "</html>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "	<footer>" >> /var/www/html/index.html
+echo "	  <div style='text-align: center; padding: 10px; background-color: #333; color: white;'> " >> /var/www/html/index.html
+echo "	    <p>&copy; 2024 Neil Jamieson.</p>" >> /var/www/html/index.html
+echo "	    <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "	    <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "	    <p>You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.</p>" >> /var/www/html/index.html
+echo "	    <nav>" >> /var/www/html/index.html
+echo "	      <a href="http://$IP_ADDRESS/phpinfo.php" style="color: white; margin-right: 15px;">PHP Info</a>" >> /var/www/html/index.html
+echo "	      <a href="https://github.com/Valikahn/lamp/issues" style="color: white; margin-right: 15px;">Bugs & Issues</a>" >> /var/www/html/index.html
+echo "	      <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" style="color: white;">GPLv3 Licence</a>" >> /var/www/html/index.html
+echo "	    </nav>" >> /var/www/html/index.html
+echo "	  </div>" >> /var/www/html/index.html
+echo "	</footer>" >> /var/www/html/index.html
+#echo "	<h3 align="center"><a href="http://$IP_ADDRESS/phpinfo.php" target="_blank">PHP Info</a></h3>" >> /var/www/html/index.html
+#echo "</body>" >> /var/www/html/index.html
+#echo "</html>" >> /var/www/html/index.html
 
 cp -r web/* /var/www/html/
 
@@ -203,6 +245,8 @@ else
 fi
 sleep 7
 
+CONFIRM_YES_NO
+
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
 clear
@@ -244,7 +288,7 @@ systemctl restart mysql
 ##
 clear
 apt update
-apt install -y php libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
+apt install -y libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
 apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
 
