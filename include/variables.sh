@@ -5,14 +5,12 @@
 ###################################################
 
 
-clear
-echo "VARIABLE CHECK..."
-sleep 3
+echo -n "VARIABLE CHECK..."; 	sleep 3
 
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="020-ALPHA"
+BUILD="021-ALPHA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
@@ -41,3 +39,7 @@ BWHITE=$(tput setaf 15)
 ##
 BLINK=$(tput blink)
 RESET=$(tput sgr0)
+
+##
+###
+echo -e "\rVARIABLE CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3

@@ -5,25 +5,7 @@
 ###################################################
 
 
-clear
-echo "SYSTEM CHECK..."
-sleep 3
-
-###--------------------  SUDO/ROOT CHECK  --------------------###
-##
-clear
-if [ "$(id -u)" -ne 0 ]; then 
-	echo -n "Checking if user is root/sudo..."; 	sleep 5
-	echo -e "\rChecking if user is root/sudo... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
-	echo
-	echo "Error 126: Command cannot execute."
-	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
-	exit 126
-else
-	echo -n "Checking if user is root/sudo..."; 	sleep 5
-	echo -e "\rChecking if user is root/sudo... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
-    clear
-fi
+echo -n "SYSTEM CHECK..."; 	sleep 3
 
 ###--------------------  HOST REQUIREMENT CHECK  --------------------###
 ##
@@ -31,7 +13,7 @@ fi
 
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
-clear
+echo "NETWORK MANAGER (NMCLI) CHECK..."
 if command -v nmcli >/dev/null 2>&1; then
     ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
     DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
@@ -100,3 +82,7 @@ else
 	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
 	exit 1
 fi
+
+##
+###
+echo -e "\rSYSTEM CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3

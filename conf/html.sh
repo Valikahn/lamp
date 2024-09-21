@@ -48,7 +48,7 @@ echo "	<h2 align="center">_________________________________________________</h3>
 echo >> /var/www/html/index.html
 echo "  <footer>" >> /var/www/html/index.html
 echo "    <div style='text-align: center; padding: 10px; background-color: #333; color: white;'>" >> /var/www/html/index.html
-echo "      <p>&copy; 2024 Copyright - <a href='mailto:000705@uhi.ac.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a> - HND Computer Science Student</p>" >> /var/www/html/index.html
+echo "      <p>Copyright &copy; 2024 Neil Jamieson - <a href='mailto:000705@uhi.ac.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a> - HND Computer Science Student</p>" >> /var/www/html/index.html
 echo "      <nav>" >> /var/www/html/index.html
 echo "        <a href='http://$IP_ADDRESS/phpinfo.php' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/issues' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html

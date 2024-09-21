@@ -1,8 +1,6 @@
 #!/bin/bash
 clear
 export EDITOR=nano
-#chmod +x include/variables.sh
-#chmod +x include/functions.sh
 
 ###--------------------  START OF LAMP SCRIPT  --------------------###
 ##
@@ -30,6 +28,22 @@ export EDITOR=nano
 ######################################################################################################################################################
 ######################################################################################################################################################
 
+
+###--------------------  SUDO/ROOT CHECK  --------------------###
+##
+clear
+if [ "$(id -u)" -ne 0 ]; then 
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
+	echo
+	echo "Error 126: Command cannot execute."
+	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
+	exit 126
+else
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
+    clear
+fi
 
 source ./include/variables.sh
 source ./include/functions.sh

@@ -5,9 +5,7 @@
 ###################################################
 
 
-clear
-echo "FUNCTION CHECK..."
-sleep 3
+echo -n "FUNCTION CHECK..."; 	sleep 3
 
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
 ##
@@ -45,7 +43,6 @@ while true;
 	read -p "Please confirm you're happy to proceed? (Yy/Nn): " CONFIRM
     echo
     if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
-		clear
 		break
     elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
 	    exit
@@ -55,3 +52,7 @@ while true;
     fi
 done
 }
+
+##
+###
+echo -e "\rFUNCTION CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3
