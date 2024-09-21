@@ -13,7 +13,7 @@ export EDITOR=nano
 ##  Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL                                                                                           ##
 ##  Managing a Web Server (MAWS_HP2V48)                                                                                                             ##
 ##																																					##
-##  Written by:  Neil Jamison <helpdesk@metaeffect.uk>																								##
+##  Written by:  Neil Jamison <000705@uhi.ac.uk>																									##
 ##  Copyright (C) 2024 Neil Jamieson																												##
 ##																																					##
 ######################################################################################################################################################
