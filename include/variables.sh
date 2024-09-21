@@ -12,7 +12,7 @@ sleep 3
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="016-ALPHA"
+BUILD="017-ALPHA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
