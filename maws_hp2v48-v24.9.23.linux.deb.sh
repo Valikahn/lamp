@@ -57,7 +57,7 @@ echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
 echo "Managing a Web Server (MAWS_HP2V48)"
 echo
-echo "${BLINK}${PURPLE}[  Copyright (C) 2024 Neil Jamieson <Valikahn>  ]${RESET}"
+echo "${BLINK}${BYELLOW}[  Copyright (C) 2024 Neil Jamieson <Valikahn>  ]${RESET}"
 echo "This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'. This is free software,"
 echo "and you are welcome to redistribute it under certain conditions; type 'show c' for details."
 echo

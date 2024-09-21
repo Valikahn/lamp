@@ -17,17 +17,24 @@ YELLOW=$(tput setaf 3)
 BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
+BBLACK=$(tput setaf 8)
+BRED=$(tput setaf 9)
+BGREEN=$(tput setaf 10)
+BYELLOW=$(tput setaf 11)
+BBLUE=$(tput setaf 12)
+BMAGENTA=$(tput setaf 13)
+BCYAN=$(tput setaf 14)
+BWHITE=$(tput setaf 15)
 
 ###--------------------  BLINK DECLARE  --------------------###
 ##
 BLINK=$(tput blink)
-YELLOW=$(tput setaf 3)
 RESET=$(tput sgr0)
 
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="008-ALPHA"
+BUILD="009-ALPHA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
