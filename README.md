@@ -14,6 +14,7 @@ Author:  Neil Jamieson (Valikahn)<br />
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
+* [Additional Installed Software](#additional-installed-software)
 * [Features and Components](#features-and-components)
 * [Key Advantages](#key-advantages)
 * [Usage](#usage)
