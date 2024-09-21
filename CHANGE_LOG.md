@@ -1,7 +1,7 @@
 ## CHANGE LOG
 -------------
 
-Date: September 2024<br />
+Date: 23 September 2024<br />
 Released Version: 24.09.23<br />
 
 
