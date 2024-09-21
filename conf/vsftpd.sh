@@ -12,7 +12,7 @@ echo "ssl_tlsv1=YES" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv2=NO" | tee -a /etc/vsftpd.conf
 echo "ssl_sslv3=NO" | tee -a /etc/vsftpd.conf
 
-echo "listen_port=27783" | tee -a /etc/vsftpd.conf
+echo "listen_port=$FTP_PORT" | tee -a /etc/vsftpd.conf
 echo "allow_anon_ssl=NO" | tee -a /etc/vsftpd.conf
 echo "force_local_data_ssl=YES" | tee -a /etc/vsftpd.conf
 echo "force_local_logins_ssl=YES" | tee -a /etc/vsftpd.conf

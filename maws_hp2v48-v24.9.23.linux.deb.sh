@@ -105,6 +105,7 @@ INSTALL_WEBMIN
 INSTALL_VSFTPD
 SELF_SIGNED_CERT
 GENERATE_SSH_PORT
+FIREWALL
 
 ###--------------------  HTML PAGE CREATION  --------------------###
 ##
@@ -127,15 +128,12 @@ echo "Apache HTTP is accessable at http://$IP_ADDRESS"
 echo "Apache HTTPS SSL enabled for https://$IP_ADDRESS"
 echo
 echo "Access phpMyAdmin at http://$IP_ADDRESS/phpmyadmin"
-echo "phpMyAdmin Username: phpMyAdmin"
+echo "phpMyAdmin Username: phpMyAdmin (case sensitive)"
 echo "Password: $PSWD"
 echo
 echo "Access Webmin at https://$IP_ADDRESS:10000"
 echo "Webmin Username: $USER_NAME"
 echo "Password: [SHELL PASSWORD]"
-echo 
-echo "Sudo Username: root"
-echo "Password: $ROOT_PASSWORD"
 echo
 echo "FTP server running with SSL enabled on port $FTP_PORT"
 echo "SSH port has been changed to $SSH_PORT."
