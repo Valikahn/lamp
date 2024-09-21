@@ -53,7 +53,7 @@ echo "      <nav>" >> /var/www/html/index.html
 echo "        <a href='http://$IP_ADDRESS/phpinfo.php' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/issues' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
-echo "        <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' style='color: white;'>GPLv3 Licence</a><br><br>" >> /var/www/html/index.html
+echo "        <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' style='color: white;'>GPLv3 Licence</a>" >> /var/www/html/index.html
 echo "        <a href='https://nwh.uhi.ac.uk/en/' style='color: white;'>NWH UHI</a><br><br>" >> /var/www/html/index.html
 echo "        <a style='color: white;'>Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a><br>" >> /var/www/html/index.html
 echo "      </nav>" >> /var/www/html/index.html

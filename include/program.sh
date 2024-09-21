@@ -5,8 +5,6 @@
 ###################################################
 
 
-echo -n "PROGRAM CHECK..."; 	sleep 3
-
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
 DETACH_PRO() {
@@ -299,8 +297,3 @@ systemctl enable apache2
 systemctl start apache2
 systemctl restart ssh
 }
-
-##
-###
-echo -e "\rPROGRAM CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3
-clear

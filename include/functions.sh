@@ -5,8 +5,6 @@
 ###################################################
 
 
-echo -n "FUNCTION CHECK..."; 	sleep 3
-
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
 ##
 PASSGEN() {
@@ -52,7 +50,3 @@ while true;
     fi
 done
 }
-
-##
-###
-echo -e "\rFUNCTION CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3

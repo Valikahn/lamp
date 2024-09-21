@@ -16,7 +16,6 @@ RESOLVED ISSUES
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###<br />
 Removed the index.html file from the web directory and touched out a new index.html file to echo the data required in order to store variables from the shell script.
 
-
 ###--------------------  HOST DATA COLLECTION  --------------------###<br />
 Included a application check for NMCLI and if not installed prompt user to install or use default method.
 In host data collection this will be collected using the method the user requests (NMCLI or ifconfig).
@@ -24,6 +23,10 @@ In host data collection this will be collected using the method the user request
 ###--------------------  CONFIGURE VSFTPD/FTP TO INCLUDE SSL (FTPS)  --------------------###<br />
 Configure random port to become accessible when using VSFTPD
 Included TCP ports 10000:10100 into the firewall; these are passive ports that VSFTPD uses.
+
+###--------------------  README FILE UPDATED  --------------------###<br />
+README file updated to include the additional applications to be installed during automation.
+These include dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.
 
 
 NEW ADDITIONS

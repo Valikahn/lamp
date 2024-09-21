@@ -5,8 +5,6 @@
 ###################################################
 
 
-echo -n "SYSTEM CHECK..."; 	sleep 3
-
 ###--------------------  HOST REQUIREMENT CHECK  --------------------###
 ##
 # COMING SOON
@@ -50,7 +48,7 @@ USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
 
 DIST=$nil
 PSUEDONAME=$nil
-echo -n "Collecting Host/System Data..."
+echo -n "DATA COLLECTION..."
 sleep 3
 
 ## RHEL 
@@ -62,7 +60,7 @@ if [ -f "/etc/redhat-release" ]; then
 	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
 		DISTRO='CentOS'
 	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
+echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
 sleep 3
 
 ## DEBIAN
@@ -72,16 +70,12 @@ elif [ -f /etc/debian_version ] ; then
 	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
 		DISTRO='Debian'
 	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
+echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
 sleep 3
 
 else
-	echo -e "\rCollecting Host/System Data... ${BOLD}${RED}[  FAIL  ]${NORMAL}"
+	echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
 	sleep 3
 	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
 	exit 1
 fi
-
-##
-###
-echo -e "\rSYSTEM CHECK... ${GREEN}[  OK!  ]${NORMAL}"; sleep 3
