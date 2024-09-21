@@ -36,8 +36,8 @@ echo "	<h3 align="center">Please refer to the GitHub README file for specific in
 echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">Valikahn / lamp</a></h3>" >> /var/www/html/index.html
 echo "  <a href='http://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTP</a>" >> /var/www/html/index.html
 echo "  <a href='https://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTPS</a>" >> /var/www/html/index.html
-echo "  <a href='http://10.11.22.51/phpmyadmin' style='color: white; margin-right: 15px;'>phpMyAdmin</a>" >> /var/www/html/index.html
-echo "  <a href='https://10.11.22.51:10000' style='color: white; margin-right: 15px;'>Webmin</a>" >> /var/www/html/index.html
+echo "  <a href='http://$IP_ADDRESS/phpmyadmin' style='color: white; margin-right: 15px;'>phpMyAdmin</a>" >> /var/www/html/index.html
+echo "  <a href='https://$IP_ADDRESS:10000' style='color: white; margin-right: 15px;'>Webmin</a>" >> /var/www/html/index.html
 echo "	<h3 align="center">FTP server running with SSL enabled on port $FTP_PORT'</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">SSH port has been changed to $SSH_PORT'</h3>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
