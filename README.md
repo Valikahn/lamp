@@ -15,7 +15,7 @@ Author:  Neil Jamieson (Valikahn)<br />
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
 * [Additional Installed Software](#additional-installed-software)
-* [Features and Components](#features-and-components)
+* [Features of Deployment](#features-of-deployment)
 * [Key Advantages](#key-advantages)
 * [Usage](#usage)
 * [Install Commands](#install-commands)
@@ -68,7 +68,7 @@ This is a list of software that is dependencies, supporting, and enhancement app
 | python3                       | The third major version of the Python programming language, known for its readability and versatility.
 | python3-pip                   | A package manager for Python that allows the installation and management of Python libraries.
 
-## Features and Components
+## Features of Deployment
 Initial Setup and Environment:
 * Clears the terminal and sets the default text editor to nano.
 * Defines variables for color outputs, versioning information, and host data collection (network interface, IP address, etc.).
