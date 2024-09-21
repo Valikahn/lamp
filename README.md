@@ -18,6 +18,7 @@ Author:  Neil Jamieson (Valikahn)<br />
 * [Key Advantages](#key-advantages)
 * [Usage](#usage)
 * [Install Commands](#install-commands)
+* [Change Log](#change-log)
 * [Bugs & Issues](#bugs--issues)
 * [Licence](#licence)
 * [References](#references)
