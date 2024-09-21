@@ -41,6 +41,12 @@ Author:  Neil Jamieson (Valikahn)<br />
 Please note that the above versions are the minimal versions that will be installed and may vary.
 This deployment is not pulling specific versions but looking for the latest versions available.
 
+## Additional Installed Software
+| Install Modules               | Version
+|-------------------------------|-------------------------------|
+| ionCube                       | A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.
+| libapache2-mod-php            | An Apache module for running PHP scripts directly on the server using the Apache web server.
+
 ## Features and Components
 Initial Setup and Environment:
 * Clears the terminal and sets the default text editor to nano.
