@@ -29,15 +29,15 @@ echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Program Version: $SCRIPTVERSION.$BUILD</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Author:  Neil Jamieson (Valikahn)</h3>" >> /var/www/html/index.html
-echo "	<br>" >> /var/www/html/index.html
-echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)'</h3>" >> /var/www/html/index.html
+#echo "	<br>" >> /var/www/html/index.html
+#echo "	<h3 align="center">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Please refer to the GitHub README file for specific information about this script.</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">Github: <a href="https://github.com/Valikahn/lamp" target="_blank">Valikahn / lamp</a></h3>" >> /var/www/html/index.html
-echo "  <a href='http://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTP</a>" >> /var/www/html/index.html
-echo "  <a href='https://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTPS</a>" >> /var/www/html/index.html
-echo "  <a href='http://$IP_ADDRESS/phpmyadmin' style='color: white; margin-right: 15px;'>phpMyAdmin</a>" >> /var/www/html/index.html
-echo "  <a href='https://$IP_ADDRESS:10000' style='color: white; margin-right: 15px;'>Webmin</a>" >> /var/www/html/index.html
+echo "  <h3 align="center"><a href='http://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTP</a></h3>" >> /var/www/html/index.html
+echo "  <h3 align="center"><a href='https://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTPS</a></h3>" >> /var/www/html/index.html
+echo "  <h3 align="center"><a href='http://$IP_ADDRESS/phpmyadmin' style='color: white; margin-right: 15px;'>phpMyAdmin</a></h3>" >> /var/www/html/index.html
+echo "  <h3 align="center"><a href='https://$IP_ADDRESS:10000' style='color: white; margin-right: 15px;'>Webmin</a></h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">FTP server running with SSL enabled on port $FTP_PORT</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">SSH port has been changed to $SSH_PORT</h3>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
@@ -52,6 +52,7 @@ echo "        <a href='http://$IP_ADDRESS/phpinfo.php' style='color: white; marg
 echo "        <a href='https://github.com/Valikahn/lamp/issues' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
 echo "        <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' style='color: white;'>GPLv3 Licence</a>" >> /var/www/html/index.html
+echo "        <a Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a>" >> /var/www/html/index.html
 echo "      </nav>" >> /var/www/html/index.html
 echo "    </div>" >> /var/www/html/index.html
 echo "  </footer>" >> /var/www/html/index.html
