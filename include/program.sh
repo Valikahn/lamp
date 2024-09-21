@@ -5,9 +5,6 @@
 ###################################################
 
 
-source ./conf/ss_cert.sh
-source ./conf/vsftpd.sh
-
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
 DETACH_PRO() {
@@ -224,7 +221,7 @@ apt install -y vsftpd >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
 
-CONF_VSFTPD
+source ./conf/vsftpd.sh
 
 systemctl restart vsftpd
 }
@@ -259,7 +256,7 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 </VirtualHost>
 EOF"
 
-CREATE_SELF_SIGNED_CERT
+source ./conf/ss_cert.sh
 }
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###

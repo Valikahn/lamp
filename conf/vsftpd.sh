@@ -1,6 +1,5 @@
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
 ##
-CONF_VSFTPD(){
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/private/vsftpd.crt -subj "/C=UK/ST=Cromarty/L=Alness/O=MAWS_HP2V48/OU=H16S35/CN=$HST"
 
 CREATE_RANDOM_PORT
@@ -33,4 +32,3 @@ if ufw status | grep -q active; then
         ufw reload
     fi
 fi
-}

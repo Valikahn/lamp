@@ -1,41 +1,39 @@
 #!/bin/bash
 clear
 export EDITOR=nano
-chmod +x include/variables.sh
-chmod +x include/functions.sh
+#chmod +x include/variables.sh
+#chmod +x include/functions.sh
 
 ###--------------------  START OF LAMP SCRIPT  --------------------###
 ##
 
 
-#######################################################################################################################################################
-#######################################################################################################################################################
-##																																					 ##
-##  LAMP (Linux, Apache, MySQL and PHP)                                                                                                              ##
-##  Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL                                                                                            ##
-##  Managing a Web Server (MAWS_HP2V48)                                                                                                              ##
-##																																					 ##
-##  Author:  Neil Jamison <000705@uhi.ac.uk>	                        																	         ##
-##																																					 ##
-##  This bash scrip has been fully tested to work on Ubuntu 24.04 and has been developed to be fully automated once started.                         ##
-##  This includes the installation and configuration of Apache, phpMyAdmin, Webmin, and FTP/VSFTPD.                                                  ##
-##  This will also need install, configure, and install an SSL cert for HTTPS and FTP                                                                ##
-##																																					 ##
-#######################################################################################################################################################
-#######################################################################################################################################################
-##																																					 ##
-##  Licensed under the GPLv3 License.																												 ##
-##  GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html																					 ##
-##																																					 ##
-##  This program is free software: 	You can redistribute it and/or modify it under the terms of the GNU General Public License as published by		 ##
-##	 							    	the Free Software Foundation, either version 3 of the License, or (at your option) any later version.		 ##
-##																																					 ##
-#######################################################################################################################################################
-#######################################################################################################################################################
+######################################################################################################################################################
+######################################################################################################################################################
+##																																					##
+##  LAMP (Linux, Apache, MySQL and PHP)                                                                                                             ##
+##  Apache SSL, phpMyAdmin, Webmin and VSFTPD inc FTP SSL                                                                                           ##
+##  Managing a Web Server (MAWS_HP2V48)                                                                                                             ##
+##																																					##
+##  Written by:  Neil Jamison <helpdesk@metaeffect.uk>																								##
+##  Copyright (C) 2024 Neil Jamieson																												##
+##																																					##
+######################################################################################################################################################
+######################################################################################################################################################
+##																																					##
+##  Licensed under the GPLv3 License.																												##
+##  GPLv3 Licence:  https://www.gnu.org/licenses/gpl-3.0.en.html																					##
+##																																					##
+##	This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'. This is free software, and you are welcome to redistribute it		##
+##  under certain conditions; type 'show c' for details."																							##
+##																																					##
+######################################################################################################################################################
+######################################################################################################################################################
 
 
 source ./include/variables.sh
 source ./include/functions.sh
+source ./include/system_check.sh
 
 
 ###################################################
@@ -44,8 +42,7 @@ source ./include/functions.sh
 ##												 ##
 ###################################################
 
-SUDO_CHECK
-COLLECTING_SYSTEM_DATA
+
 clear
 
 ###--------------------  OPERATING SYSTEM CONSOLE OUTPUT  --------------------###
@@ -63,7 +60,7 @@ echo "and you are welcome to redistribute it under certain conditions; type 'sho
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
-echo "Filename: $FILENAME"
+echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
@@ -82,7 +79,7 @@ echo "Network Interface: ${LBLUE}[  $ENS  ]${NORMAL}"
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
-echo "${BLINK}${YELLOW}[  IMPORTANT  ]${RESET}"
+echo "${BLINK}${BYELLOW}[  IMPORTANT  ]${RESET}"
 echo "Once the script has completed deploying, output infomration will be provided."
 echo "This is important!  Once the screen is cleared or the host rebooted the data will be lost!"
 echo
@@ -110,13 +107,12 @@ GENERATE_SSH_PORT
 ###--------------------  HTML PAGE CREATION  --------------------###
 ##
 clear
-source ./conf/html.sh
 
 cp /var/www/html/index.html /var/www/html/index.html.bak
 rm -rf /var/www/html/index.html
 touch /var/www/html/index.html
 
-INDEX_HTML
+source ./conf/html.sh
 
 cp -r web/* /var/www/html/
 

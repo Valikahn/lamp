@@ -5,22 +5,9 @@
 ###################################################
 
 
-###--------------------  SUDO/ROOT CHECK  --------------------###
-##
-SUDO_CHECK() {
-if [ "$(id -u)" -ne 0 ]; then 
-	echo -n "Checking if user is root/sudo..."; 	sleep 5
-	echo -e "\rChecking if user is root/sudo... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
-	echo
-	echo "Error 126: Command cannot execute."
-	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
-	exit 126
-else
-	echo -n "Checking if user is root/sudo..."; 	sleep 5
-	echo -e "\rChecking if user is root/sudo... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
-    clear
-fi
-}
+clear
+echo "FUNCTION CHECK..."
+sleep 3
 
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
 ##
@@ -48,42 +35,6 @@ CREATE_RANDOM_PORT() {
         break
       fi
     done
-}
-
-###--------------------  COLLECTING SYSTEM DATA  --------------------###
-##
-COLLECTING_SYSTEM_DATA() {
-DIST=$nil
-PSUEDONAME=$nil
-PSWD=$(PASSGEN)
-ROOT_PASSWORD=$(PASSGEN)
-echo -n "Collecting Host/System Data..."
-
-## RHEL 
-if [ -f "/etc/redhat-release" ]; then 
-	DIST=`cat /etc/redhat-release`
-	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
-	if [[ "$PSUEDONAME" == "Red" ]]; then
-		DISTRO='RedHat'	
-	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
-		DISTRO='CentOS'
-	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
-
-## DEBIAN
-elif [ -f /etc/debian_version ] ; then
-	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
-	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
-	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
-		DISTRO='Debian'
-	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
-
-else
-	echo -e "\rCollecting Host/System Data... ${BOLD}${RED}[  FAIL  ]${NORMAL}"
-	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
-	exit 1
-fi
 }
 
 ###--------------------  CONFIRM_YES_NO  --------------------###
