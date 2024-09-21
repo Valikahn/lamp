@@ -42,10 +42,28 @@ Please note that the above versions are the minimal versions that will be instal
 This deployment is not pulling specific versions but looking for the latest versions available.
 
 ## Additional Installed Software
-| Install Modules               | Version
+| Application                   | Description
 |-------------------------------|-------------------------------|
 | ionCube                       | A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.
 | libapache2-mod-php            | An Apache module for running PHP scripts directly on the server using the Apache web server.
+| php-mysql                     | A PHP extension that allows PHP to communicate with MySQL databases.
+| php-cli                       | The PHP Command Line Interface, enabling PHP scripts to be run directly from the terminal.
+| php-curl                      | A PHP extension for transferring data using URLs with various protocols, supporting cURL functions.
+| php-json                      | A PHP extension that enables PHP to work with JSON data (JavaScript Object Notation).
+| php-xml                       | A PHP extension providing XML parsing capabilities.
+| php-zip                       | A PHP extension for handling ZIP files, allowing for creation and extraction.
+| net-tools                     | A package that provides basic networking utilities like ifconfig, netstat, route, and others.
+| nmap                          | A network discovery and security auditing tool used for scanning networks and finding open ports or vulnerabilities.
+| tcpdump                       | A command-line packet analyzer used to capture and inspect network traffic in real time.
+| cifs-utils                    | Utilities for mounting and managing file systems using the CIFS/SMB protocol (common for network shares).
+| dnsutils                      | A set of DNS-related utilities, including tools like dig and nslookup, used for DNS queries.
+| default-jre                   | The default Java Runtime Environment (JRE) for running Java applications.
+| dos2unix                      | A utility to convert plain text files from DOS/Windows format (CRLF line endings) to Unix format (LF line endings).
+| rar                           | A utility for compressing files into the RAR format.
+| unrar                         | A utility to extract files from RAR archives.
+| perl                          | A high-level programming language often used for system administration, web development, and text manipulation.
+| python3                       | The third major version of the Python programming language, known for its readability and versatility.
+| python3-pip                   | A package manager for Python that allows the installation and management of Python libraries.
 
 ## Features and Components
 Initial Setup and Environment:
