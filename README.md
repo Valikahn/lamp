@@ -130,7 +130,7 @@ sudo ./maws_hp2v48-v24.9.23.linux.deb.sh
 
 ## Change Log
 Please refer to our change log as this will be updated with the changes made and to what release.
-* Release 24.9.23: <a href="https://github.com/Valikahn/lamp/blob/master/CHANGE_LOG.md">Change Log</a>
+* Release 24.9.23: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
 
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.
