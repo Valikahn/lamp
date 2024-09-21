@@ -5,7 +5,6 @@
 ###################################################
 
 
-source ./conf/html.sh
 source ./conf/ss_cert.sh
 source ./conf/vsftpd.sh
 
@@ -103,14 +102,6 @@ chown -R www-data:www-data /var/www/html
 usermod -aG www-data $USER_NAME
 chmod -R 775 /var/www/html
 chmod g+s /var/www/html
-
-cp /var/www/html/index.html /var/www/html/index.html.bak
-rm -rf /var/www/html/index.html
-touch /var/www/html/index.html
-
-INDEX_HTML
-
-cp -r web/* /var/www/html/
 }
 
 ###--------------------  INSTALL IONCUBE LOADER  --------------------###

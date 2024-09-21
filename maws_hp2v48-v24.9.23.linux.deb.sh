@@ -57,7 +57,7 @@ echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
 echo "Managing a Web Server (MAWS_HP2V48)"
 echo
-echo "${BLINK}${BYELLOW}[  Copyright (C) 2024 Neil Jamieson <Valikahn>  ]${RESET}"
+echo "${BLINK}${BYELLOW}[  Copyright (C) 2024 Neil Jamieson  ]${RESET}"
 echo "This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'. This is free software,"
 echo "and you are welcome to redistribute it under certain conditions; type 'show c' for details."
 echo
@@ -106,6 +106,19 @@ INSTALL_WEBMIN
 INSTALL_VSFTPD
 SELF_SIGNED_CERT
 GENERATE_SSH_PORT
+
+###--------------------  HTML PAGE CREATION  --------------------###
+##
+clear
+source ./conf/html.sh
+
+cp /var/www/html/index.html /var/www/html/index.html.bak
+rm -rf /var/www/html/index.html
+touch /var/www/html/index.html
+
+INDEX_HTML
+
+cp -r web/* /var/www/html/
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##

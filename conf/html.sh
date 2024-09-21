@@ -38,15 +38,15 @@ echo "  <a href='http://$IP_ADDRESS' style='color: white; margin-right: 15px;'>H
 echo "  <a href='https://$IP_ADDRESS' style='color: white; margin-right: 15px;'>HTTPS</a>" >> /var/www/html/index.html
 echo "  <a href='http://$IP_ADDRESS/phpmyadmin' style='color: white; margin-right: 15px;'>phpMyAdmin</a>" >> /var/www/html/index.html
 echo "  <a href='https://$IP_ADDRESS:10000' style='color: white; margin-right: 15px;'>Webmin</a>" >> /var/www/html/index.html
-echo "	<h3 align="center">FTP server running with SSL enabled on port $FTP_PORT'</h3>" >> /var/www/html/index.html
-echo "	<h3 align="center">SSH port has been changed to $SSH_PORT'</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">FTP server running with SSL enabled on port $FTP_PORT</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">SSH port has been changed to $SSH_PORT</h3>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
-echo "	<h3 align="center">Please ensure you update your connection settings accordingly.'</h3>" >> /var/www/html/index.html
+echo "	<h3 align="center">Please ensure you update your connection settings accordingly.</h3>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
 echo "  <footer>" >> /var/www/html/index.html
 echo "    <div style='text-align: center; padding: 10px; background-color: #333; color: white;'>" >> /var/www/html/index.html
-echo "      <p>&copy; 2024 Copyright 2024 Neil Jamieson '<Valikahn>'</p>" >> /var/www/html/index.html
+echo "      <p>&copy; 2024 Copyright 2024 - <a href='mailto:helpdesk@metaeffect.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a></p>" >> /var/www/html/index.html
 echo "      <nav>" >> /var/www/html/index.html
 echo "        <a href='http://$IP_ADDRESS/phpinfo.php' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
 echo "        <a href='https://github.com/Valikahn/lamp/issues' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
