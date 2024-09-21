@@ -81,7 +81,6 @@ echo
 echo "Currently logged-in as user: ${LBLUE}[  $USER_NAME  ]${NORMAL} with sudo permissions."
 echo
 echo "Script Version: ${LBLUE}[  $SCRIPTVERSION  ]${NORMAL}"
-echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
 echo "Build Release: ${LBLUE}[  $BUILD  ]${NORMAL}"
 echo "Last Update: ${LBLUE}[  $REVDATE  ]${NORMAL}"
 echo
