@@ -11,6 +11,7 @@ sleep 3
 
 ###--------------------  SUDO/ROOT CHECK  --------------------###
 ##
+clear
 if [ "$(id -u)" -ne 0 ]; then 
 	echo -n "Checking if user is root/sudo..."; 	sleep 5
 	echo -e "\rChecking if user is root/sudo... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
@@ -24,49 +25,13 @@ else
     clear
 fi
 
-###--------------------  PASSWORD COLLECTION  --------------------###
+###--------------------  HOST REQUIREMENT CHECK  --------------------###
 ##
-PSWD=$(PASSGEN)
-ROOT_PASSWORD=$(PASSGEN)
-
-###--------------------  COLLECTING SYSTEM DATA  --------------------###
-##
-HST=$(hostname)
-IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
-USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
-
-DIST=$nil
-PSUEDONAME=$nil
-echo -n "Collecting Host/System Data..."
-
-## RHEL 
-if [ -f "/etc/redhat-release" ]; then 
-	DIST=`cat /etc/redhat-release`
-	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
-	if [[ "$PSUEDONAME" == "Red" ]]; then
-		DISTRO='RedHat'	
-	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
-		DISTRO='CentOS'
-	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
-
-## DEBIAN
-elif [ -f /etc/debian_version ] ; then
-	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
-	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
-	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
-		DISTRO='Debian'
-	fi
-echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
-
-else
-	echo -e "\rCollecting Host/System Data... ${BOLD}${RED}[  FAIL  ]${NORMAL}"
-	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
-	exit 1
-fi
+# COMING SOON
 
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
+clear
 if command -v nmcli >/dev/null 2>&1; then
     ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
     DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
@@ -88,4 +53,50 @@ else
         LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
         DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
     fi
+fi
+
+###--------------------  PASSWORD COLLECTION  --------------------###
+##
+PSWD=$(PASSGEN)
+ROOT_PASSWORD=$(PASSGEN)
+
+###--------------------  COLLECTING SYSTEM DATA  --------------------###
+##
+clear
+HST=$(hostname)
+IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
+USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
+
+DIST=$nil
+PSUEDONAME=$nil
+echo -n "Collecting Host/System Data..."
+sleep 3
+
+## RHEL 
+if [ -f "/etc/redhat-release" ]; then 
+	DIST=`cat /etc/redhat-release`
+	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
+	if [[ "$PSUEDONAME" == "Red" ]]; then
+		DISTRO='RedHat'	
+	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
+		DISTRO='CentOS'
+	fi
+echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
+sleep 3
+
+## DEBIAN
+elif [ -f /etc/debian_version ] ; then
+	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
+	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
+	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
+		DISTRO='Debian'
+	fi
+echo -e "\rCollecting Host/System Data... ${GREEN}[  OK  ]${NORMAL}"
+sleep 3
+
+else
+	echo -e "\rCollecting Host/System Data... ${BOLD}${RED}[  FAIL  ]${NORMAL}"
+	sleep 3
+	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
+	exit 1
 fi

@@ -60,22 +60,22 @@ echo "and you are welcome to redistribute it under certain conditions; type 'sho
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
-echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
+echo "Filename: ${BYELLOW}[  $FILENAME  ]${NORMAL}"
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
-echo "Currently logged-in as user: ${LBLUE}[  $USER_NAME  ]${NORMAL} with sudo permissions."
+echo "Currently logged-in as user: ${BYELLOW}[  $USER_NAME  ]${NORMAL} with sudo permissions."
 echo
-echo "Script Version: ${LBLUE}[  $SCRIPTVERSION  ]${NORMAL}"
-echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
-echo "Build Release: ${LBLUE}[  $BUILD  ]${NORMAL}"
-echo "Last Update: ${LBLUE}[  $REVDATE  ]${NORMAL}"
+echo "Script Version: ${BYELLOW}[  $SCRIPTVERSION  ]${NORMAL}"
+echo "Filename: ${BYELLOW}[  $FILENAME  ]${NORMAL}"
+echo "Build Release: ${BYELLOW}[  $BUILD  ]${NORMAL}"
+echo "Last Update: ${BYELLOW}[  $REVDATE  ]${NORMAL}"
 echo
-echo "Operating System: ${LBLUE}[  $DIST  ]${NORMAL}"
-echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
-echo "IP Address / CIDR: ${LBLUE}[  $LIP  ]${NORMAL}"
-echo "DNS Addresses: ${LBLUE}[  $DNS  ]${NORMAL}"
-echo "Network Interface: ${LBLUE}[  $ENS  ]${NORMAL}" 
+echo "Operating System: ${BYELLOW}[  $DIST  ]${NORMAL}"
+echo "Hostname: ${BYELLOW}[  $HST  ]${NORMAL}"
+echo "IP Address / CIDR: ${BYELLOW}[  $LIP  ]${NORMAL}"
+echo "DNS Addresses: ${BYELLOW}[  $DNS  ]${NORMAL}"
+echo "Network Interface: ${BYELLOW}[  $ENS  ]${NORMAL}" 
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
@@ -89,6 +89,8 @@ sleep 2
 
 CONFIRM_YES_NO
 
+###--------------------  PROGRAM EXECUTE FUNCTIONS  --------------------###
+##
 source ./include/program.sh
 
 DETACH_PRO

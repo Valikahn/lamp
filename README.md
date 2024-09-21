@@ -5,12 +5,12 @@
 </div>
 
 ## Purpose:
-The script is modular built and automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
+The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
 Program Version: 24.9.23<br />
 File Name: maws_hp2v48.v24.9.23.linux.deb.sh<br />
-Author:  Neil Jamieson (Valikahn)<br />
+Written by:  Neil Jamieson [Licence](#licence)<br />
 
 * [Tested Operating Systems](#tested-operating-systems)
 * [Installed Software Module Versions](#installed-software-module-versions)
@@ -28,6 +28,9 @@ Author:  Neil Jamieson (Valikahn)<br />
 * Ubuntu 24.04.x (Noble Numbat)
 
 ## Installed Software Module Versions
+
+This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
+
 | Install Modules               | Version
 |-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
@@ -38,9 +41,6 @@ Author:  Neil Jamieson (Valikahn)<br />
 | phpMyAdmin                    | 5.2.1
 | Webmin                        | 2.202 
 | FTP server (vsftpd)           | 3.0.5
-
-Please note that the above versions are the minimal versions that will be installed and may vary.
-This deployment is not pulling specific versions but looking for the latest versions available.
 
 ## Additional Installed Software
 This is a list of software that is dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.  These all work well with the installation of LAMP and are all auto installed, cleaned up, and have a basic configuration.
