@@ -25,7 +25,7 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 * [References](#references)
 
 ## Tested Operating Systems
-* Ubuntu 24.04.x (Noble Numbat) ![Unit Tests](###)
+* Ubuntu 24.04.x (Noble Numbat) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 
 ## Installed Software Module Versions
 
