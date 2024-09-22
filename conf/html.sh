@@ -15,13 +15,13 @@ echo "<head>" >> /var/www/html/index.html
 echo "	<meta charset="UTF-8">" >> /var/www/html/index.html
 echo "	<meta name="viewport" content="width=device-width, initial-scale=1.0">" >> /var/www/html/index.html
 echo "  <header>" >> /var/www/html/index.html
-echo "		<link rel="stylesheet" href="css/header.css">" >> /var/www/html/index.html
+#echo "		<link rel="stylesheet" href="css/header.css">" >> /var/www/html/index.html
 echo "    <nav>" >> /var/www/html/index.html
 echo "      <ul>" >> /var/www/html/index.html
-echo "        <li><a href='http://$IP_ADDRESS' target='_blank'>HTTP Unsecure</a></li>" >> /var/www/html/index.html
-echo "        <li><a href='https://$IP_ADDRESS' target='_blank'>HTTPS Secured</a></li>" >> /var/www/html/index.html
-echo "        <li><a href='http://$IP_ADDRESS/phpmyadmin' target='_blank'>phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
-echo "        <li><a href='https://$IP_ADDRESS:10000' target='_blank'>Webmin</a></li>" >> /var/www/html/index.html
+echo "        <li><a align="center" href='http://$IP_ADDRESS' target='_blank'>HTTP Unsecure</a></li>" >> /var/www/html/index.html
+echo "        <li><a align="center" href='https://$IP_ADDRESS' target='_blank'>HTTPS Secured</a></li>" >> /var/www/html/index.html
+echo "        <li><a align="center" href='http://$IP_ADDRESS/phpmyadmin' target='_blank'>phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
+echo "        <li><a align="center" href='https://$IP_ADDRESS:10000' target='_blank'>Webmin</a></li>" >> /var/www/html/index.html
 echo "      </ul>" >> /var/www/html/index.html
 echo "    </nav>" >> /var/www/html/index.html
 echo "  </header>" >> /var/www/html/index.html
@@ -34,14 +34,6 @@ echo "<body>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
 echo "	<h2 align="center">LAMP (Linux, Apache, MySQL and PHP)</h2><br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Apache, MySQL, phpMyAdmin, Webmin and VSFTPD inc FTP and Self-Signed Certificate to work with Apache and VSFTPD.</h3>" >> /var/www/html/index.html
-echo "  <nav>" >> /var/www/html/index.html
-echo "  	<ul>" >> /var/www/html/index.html
-echo "  		<li><a href='http://$IP_ADDRESS' target="_blank">HTTP Unsecure</a></li>" >> /var/www/html/index.html
-echo "  		<li><a href='https://$IP_ADDRESS' target="_blank">HTTPS Secured</a></li>" >> /var/www/html/index.html
-echo "  		<li><a href='http://$IP_ADDRESS/phpmyadmin' target="_blank">phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
-echo "  		<li><a href='https://$IP_ADDRESS:10000' target="_blank">Webmin</a></li>" >> /var/www/html/index.html
-echo "  	</ul>" >> /var/www/html/index.html
-echo "  </nav>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Program Version: $SCRIPTVERSION.$BUILD</h3>" >> /var/www/html/index.html
 echo "	<h3 align="center">File Name: $FILENAME</h3>" >> /var/www/html/index.html
