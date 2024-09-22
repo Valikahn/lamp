@@ -40,15 +40,15 @@ echo "      <h3 align="center">Username: $USER_NAME | Password: [SHELL PASSWORD]
 echo "      <h3 align="center">Please ensure you update your connection settings accordingly.</h3>" >> /var/www/html/index.html
 echo "      <h2 align="center">_________________________________________________</h2><br>" >> /var/www/html/index.html
 echo "      <footer>" >> /var/www/html/index.html
-echo "        <div style="text-align: center; padding: 10px; background-color: #333; color: white;">" >> /var/www/html/index.html
-echo "          <p>Copyright &copy; 2024 <a href="mailto:000705@uhi.ac.uk" style="color: white; margin-right: 15px;">Neil Jamieson</a></p>" >> /var/www/html/index.html
+echo "        <div style='text-align: center; padding: 10px; background-color: #333; color: white;'>" >> /var/www/html/index.html
+echo "          <p>Copyright &copy; 2024 <a href='mailto:000705@uhi.ac.uk' style='color: white; margin-right: 15px;'>Neil Jamieson</a></p>" >> /var/www/html/index.html
 echo "          <nav>" >> /var/www/html/index.html
-echo "            <a href="http://$IP_ADDRESS/phpinfo.php" target='_blank' style="color: white; margin-right: 15px;">PHP Info</a>" >> /var/www/html/index.html
-echo "            <a href="https://github.com/Valikahn/lamp/issues" target='_blank' style="color: white; margin-right: 15px;">Bugs & Issues</a>" >> /var/www/html/index.html
-echo "            <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md" target='_blank' style="color: white; margin-right: 15px;">Change Log</a>" >> /var/www/html/index.html
-echo "            <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target='_blank' style="color: white; margin-right: 15px;">GPLv3 Licence</a>" >> /var/www/html/index.html
-echo "            <a href="https://nwh.uhi.ac.uk/en/" target='_blank' style="color: white; margin-right: 15px;">NWH UHI</a><br><br>" >> /var/www/html/index.html
-echo "            <a style="color: white;">Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a><br>" >> /var/www/html/index.html
+echo "            <a href='http://$IP_ADDRESS/phpinfo.php' target='_blank' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
+echo "            <a href='https://github.com/Valikahn/lamp/issues' target='_blank' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
+echo "            <a href='https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md' target='_blank' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
+echo "            <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' target='_blank' style='color: white; margin-right: 15px;'>GPLv3 Licence</a>" >> /var/www/html/index.html
+echo "            <a href='https://nwh.uhi.ac.uk/en/' target='_blank' style='color: white; margin-right: 15px;'>NWH UHI</a><br><br>" >> /var/www/html/index.html
+echo "            <a style='color: white;'>Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a><br>" >> /var/www/html/index.html
 echo "          </nav>" >> /var/www/html/index.html
 echo "        </div>" >> /var/www/html/index.html
 echo "      </footer>" >> /var/www/html/index.html
