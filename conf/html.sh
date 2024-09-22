@@ -7,8 +7,9 @@ echo "      <a href='https://github.com/Valikahn/lamp' target='_blank'>" >> /var
 echo "        <img alt='lamp' src='img/lamp_img.png'>" >> /var/www/html/index.html
 echo "      </a>" >> /var/www/html/index.html
 echo "    </div>" >> /var/www/html/index.html
-echo "  <link rel='stylesheet' type='text/css' href='css/styles.css'>" >> /var/www/html/index.html
 echo "    <head>" >> /var/www/html/index.html
+echo "		<link rel='stylesheet' type='text/css' href='css/styles.css'>" >> /var/www/html/index.html
+echo "      <title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/www/html/index.html
 echo "      <meta charset='UTF-8'>" >> /var/www/html/index.html
 echo "      <meta name='viewport' content='width=device-width, initial-scale=1.0'>" >> /var/www/html/index.html
 echo "      <header>" >> /var/www/html/index.html
@@ -21,7 +22,6 @@ echo "            <li><a align='center' href='https://$IP_ADDRESS:10000' target=
 echo "          </ul>" >> /var/www/html/index.html
 echo "        </nav>" >> /var/www/html/index.html
 echo "      </header>" >> /var/www/html/index.html
-echo "      <title>LAMP (Linux, Apache, MySQL and PHP)</title>" >> /var/www/html/index.html
 echo "    </head>" >> /var/www/html/index.html
 echo "    <body>" >> /var/www/html/index.html
 echo "      <h2 align='center'>_________________________________________________</h2><br>" >> /var/www/html/index.html
