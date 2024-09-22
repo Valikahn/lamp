@@ -100,6 +100,7 @@ apt install -y php
 chown -R www-data:www-data /var/www/html
 usermod -aG www-data $USER_NAME
 chmod -R 775 /var/www/html
+chmod -R g+w /var/www/html
 chmod g+s /var/www/html
 }
 
@@ -260,6 +261,12 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 EOF"
 
 source ./conf/ss_cert.sh
+
+a2enmod ssl
+a2ensite ssl-website.conf
+a2enmod rewrite
+systemctl reload apache2
+
 }
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###

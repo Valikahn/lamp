@@ -22,6 +22,8 @@ echo "require_ssl_reuse=NO" | tee -a /etc/vsftpd.conf
 echo "pasv_enable=YES" | tee -a /etc/vsftpd.conf
 echo "pasv_min_port=10000" | tee -a /etc/vsftpd.conf
 echo "pasv_max_port=10100" | tee -a /etc/vsftpd.conf
+echo "write_enable=YES" | tee -a /etc/vsftpd.conf
+echo "local_umask=022" | tee -a /etc/vsftpd.conf
 
 cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 sed -i "/^#listen_port/c\listen_port $FTP_PORT" /etc/vsftpd.conf

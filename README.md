@@ -5,7 +5,7 @@
 </div>
 
 ## Purpose:
-The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
+The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.  As this is a webserver, this is best on a host that has a static IP address.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
 Program Version: 24.9.23<br />

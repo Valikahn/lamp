@@ -8,7 +8,7 @@
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.23"
-BUILD="029-BETA"
+BUILD="031-BETA"
 REVDATE="23 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 

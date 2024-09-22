@@ -87,7 +87,9 @@ echo
 echo "Operating System: ${LBLUE}[  $DIST  ]${NORMAL}"
 echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
 echo "IP Address / CIDR: ${LBLUE}[  $LIP  ]${NORMAL}"
-echo "DNS Addresses: ${LBLUE}[  $DNS  ]${NORMAL}"
+if [ -n "$DNS" ]; then
+  echo "DNS Addresses: ${LBLUE}[  $DNS  ]${NORMAL}"
+fi
 echo "Network Interface: ${LBLUE}[  $ENS  ]${NORMAL}" 
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
