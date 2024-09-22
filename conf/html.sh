@@ -51,6 +51,13 @@ echo "	<h3 align="center">SSH IP: $IP_ADDRESS | SSH Port: $SSH_PORT</h3>" >> /va
 echo "	<h3 align="center">Username: $USER_NAME | Password: [SHELL PASSWORD]</h3>" >> /var/www/html/index.html
 echo "	<br>" >> /var/www/html/index.html
 echo "	<h3 align="center">Please ensure you update your connection settings accordingly.</h3>" >> /var/www/html/index.html
+echo >> /var/www/html/index.html
+echo "	    <button onclick="printPage()">Print This Page</button>" >> /var/www/html/index.html
+echo "	    <script>" >> /var/www/html/index.html
+echo "	        function printPage() {" >> /var/www/html/index.html
+echo "	           window.print();" >> /var/www/html/index.html
+echo "	        }" >> /var/www/html/index.html
+echo "	    </script>" >> /var/www/html/index.html
 echo "	<h2 align="center">_________________________________________________</h3><br>" >> /var/www/html/index.html
 echo >> /var/www/html/index.html
 echo "  <footer>" >> /var/www/html/index.html
@@ -66,3 +73,5 @@ echo "        <a style='color: white;'>Program designed, developed, and tested w
 echo "      </nav>" >> /var/www/html/index.html
 echo "    </div>" >> /var/www/html/index.html
 echo "  </footer>" >> /var/www/html/index.html
+echo "	</body>"
+echo "</html>"
