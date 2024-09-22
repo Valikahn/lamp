@@ -16,7 +16,7 @@ echo "      <header>" >> /var/www/html/index.html
 echo "        <nav>" >> /var/www/html/index.html
 echo "          <ul>" >> /var/www/html/index.html
 echo "            <li><a align='center' href='http://$IP_ADDRESS' target='_blank'>HTTP Unsecure</a></li>" >> /var/www/html/index.html
-echo "            <li><a align='center' href='https://$IP_ADDRESS' target='_blank'>HTTPS Secured</a></li>" >> /var/www/html/index.html
+echo "            <li><a align='center' href='https://$IP_ADDRESS' target='_blank'>HTTPS Secure</a></li>" >> /var/www/html/index.html
 echo "            <li><a align='center' href='http://$IP_ADDRESS/phpmyadmin' target='_blank'>phpMyAdmin / MySQL</a></li>" >> /var/www/html/index.html
 echo "            <li><a align='center' href='https://$IP_ADDRESS:10000' target='_blank'>Webmin</a></li>" >> /var/www/html/index.html
 echo "          </ul>" >> /var/www/html/index.html

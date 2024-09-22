@@ -209,10 +209,11 @@ INSTALL_WEBMIN() {
 clear
 yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
 yes | sh setup-repos.sh
-apt-get install -y webmin --install-recommends
+apt-get install -y --install-recommends webmin
 apt-get install -y --install-recommends ./webmin-current.deb
 }
 
+# This command will reset the root password and prevent access using the shell login.
 #sudo /usr/share/webmin/changepass.pl /etc/webmin root "$ROOT_PASSWORD"
 
 ###--------------------  INSTALL VSFTPD TO ENABLE FTP ACCESS  --------------------###
