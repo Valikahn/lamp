@@ -135,26 +135,11 @@ cp -r web/* /var/www/html/
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
 clear
-echo "LAMP Stack Server Installed."
+echo "LAMP Stack Server Installed"
+echo "---------------------------"
+echo "Visit http://$IP_ADDRESS for all automation completion details."
 echo
-echo "Apache HTTP is accessable at http://$IP_ADDRESS"
-echo "Apache HTTPS SSL enabled for https://$IP_ADDRESS"
-echo
-echo "Access phpMyAdmin at http://$IP_ADDRESS/phpmyadmin"
-echo "phpMyAdmin Username: phpMyAdmin (case sensitive)"
-echo "Password: $PSWD"
-echo
-echo "Access Webmin at https://$IP_ADDRESS:10000"
-echo "Webmin Username: $USER_NAME"
-echo "Password: [SHELL PASSWORD]"
-echo
-echo "FTP server running with SSL enabled on port $FTP_PORT"
-echo "SSH port has been changed to $SSH_PORT."
-echo
-echo "Port 22 has been blocked on the firewall."
-echo "Please ensure you update your connection settings accordingly."
-echo
-echo "You can now reboot the system.  This is advisible!"
+echo "It is advisible to reboot this host as soon as possible!"
 CONFIRM_YES_NO
 reboot
 
