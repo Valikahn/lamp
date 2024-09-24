@@ -121,15 +121,17 @@ systemctl restart NetworkManager > /dev/null 2>&1
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
 echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
+nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
+ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
+nmcli device connect $INTERFACE > /dev/null 2>&1
 
-INTERFACE=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
-OLD_IP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
+ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
 
-ip addr add $NEW_IP dev $ENS > /dev/null 2>&1
-nmcli con mod $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
-nmcli con mod $ENS ipv4.dns $DNS > /dev/null 2>&1
-nmcli con mod $ENS ipv4.method manual > /dev/null 2>&1
-nmcli con up $ENS > /dev/null 2>&1
+nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
+nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
+nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
+nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
+sudo nmcli con up $ENS > /dev/null 2>&1
 
 ###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
 ##
@@ -158,8 +160,8 @@ EOL
 ###--------------------  NETPLAN SECURE AND APPLY  --------------------###
 ##
 echo "${GREEN}[ 9. ] NETPLAN SECURE AND APPLY${NORMAL}"
-sudo chmod 600 /etc/netplan/00-installer-config.yaml
-sudo netplan apply
+chmod 600 /etc/netplan/00-installer-config.yaml
+netplan apply
 
 ###--------------------  EXECUTION COMPLETE  --------------------###
 ##
