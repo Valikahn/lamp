@@ -8,9 +8,8 @@
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #
 CHECK_STATIC_IP_DEFAULT() {
-    #local INTERFACE=$I
-    #IP_DATA=$(ip addr show "$INTERFACE")
-    IP_DATA=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
+    NET_ADD=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
+    IP_DATA=$(ip -4 addr show dev $NET_ADD | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
     if echo "$IP_DATA" | grep -q "inet "; then
         IP_ADDRESS=$(echo "$IP_DATA" | grep "inet " | awk '{print $2}')
         if grep -q "iface $INTERFACE inet static" /etc/network/interfaces 2>/dev/null || \

@@ -5,10 +5,6 @@
 ###################################################
 
 
-###--------------------  HOST REQUIREMENT CHECK  --------------------###
-##
-# COMING SOON
-
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
 if command -v nmcli >/dev/null 2>&1; then
