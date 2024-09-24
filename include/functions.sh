@@ -5,6 +5,23 @@
 ###################################################
 
 
+###--------------------  SUDO/ROOT CHECK  --------------------###
+##
+SUDO_CHECK() {
+if [ "$(id -u)" -ne 0 ]; then 
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
+	echo
+	echo "Error 126: Command cannot execute."
+	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
+	exit 126
+else
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
+    clear
+fi
+}
+
 ###--------------------  VALID IP ADDRESS CHECK  --------------------###
 ##
 VALID_IP_ADDRESS() {
@@ -60,7 +77,8 @@ while true;
     if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
 		break
     elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
-	    exit
+	    clear
+        exit
     else
 	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
 	    echo

@@ -38,7 +38,9 @@ else
 fi
 
 echo "Script will now continue..."
-sleep 5
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  DELETE PURGE CLOUD-INIT  --------------------###
@@ -69,7 +71,9 @@ if [ -e "/var/log/cloud-init-output.log" ]; then
     rm -rf /var/log/cloud-init-output.log 2>&1
     echo "Deleted cloud-init files (/var/log/cloud-init-output.log)"
 fi
-sleep 5
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  UPDATE DEB HOST  --------------------###
@@ -89,6 +93,9 @@ apt-get -o Dpkg::Options::="--force-confdef" \
 apt --purge autoremove -y
 apt autoclean -y
 apt update && apt upgrade -y
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
@@ -102,6 +109,9 @@ usermod -aG www-data $USER_NAME
 chmod -R 775 /var/www/html
 chmod -R g+w /var/www/html
 chmod g+s /var/www/html
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL IONCUBE LOADER  --------------------###
@@ -147,7 +157,9 @@ if [ $? -eq 0 ]; then
 else
     echo "IonCube Loader installation failed."
 fi
-sleep 5
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
@@ -173,6 +185,9 @@ _EOF_
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
@@ -189,6 +204,9 @@ apt-get install -y phpmyadmin >/dev/null 2>&1
 ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 systemctl restart mysql
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL DEPENDENCIES  --------------------###
@@ -202,6 +220,9 @@ apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
 
 systemctl restart apache2
 systemctl restart mysql
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  INSTALL WEBMIN  --------------------###
@@ -212,6 +233,9 @@ yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/mas
 yes | sh setup-repos.sh
 apt-get install -y --install-recommends webmin
 apt-get install -y --install-recommends ./webmin-current.deb
+
+clear 
+COUNTDOWN 5
 }
 
 # This command will reset the root password and prevent access using the shell login.
@@ -228,6 +252,9 @@ systemctl start vsftpd
 source ./conf/vsftpd.sh
 
 systemctl restart vsftpd
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  CONFIGURE APACHE VIRTUAL HOST FOR PORT 443  --------------------###
@@ -267,6 +294,8 @@ a2ensite ssl-website.conf
 a2enmod rewrite
 systemctl reload apache2
 
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
@@ -284,28 +313,50 @@ if ufw status | grep -q active; then
     ufw allow $SSH_PORT/tcp
     ufw reload
   fi
-  ufw delete allow 22/tcp
+  ufw deny 22/tcp
   ufw reload
 fi
+
+clear 
+COUNTDOWN 5
 }
 
-###--------------------  ENABLE FIREWALL AND ALLOW PORTS  --------------------###
+###--------------------  ENABLE FIREWALL AND CONFIGURE PORTS  --------------------###
 ##
 FIREWALL() {
 clear
+## ALLOW
 ufw allow in "Apache Full"
 ufw allow https
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw allow 10000/tcp
-ufw allow 3306/tcp
-ufw allow 40000:50000/tcp
-ufw allow 10000:10100/tcp
+ufw allow 80/tcp # HTTP
+ufw allow 443/tcp # HTTPS
+ufw allow 10000/tcp # WEBMIN
+ufw allow 3306/tcp # MYSQL
+ufw allow 40000:50000/tcp # SAFETYNET PASSIVE 
+ufw allow 10000:10100/tcp # VSFTPD/FTP PASSIVE
+
+## DENY
+ufw deny 23/tcp # TELNET
+ufw deny 21/tcp # FTP
+ufw deny 25/tcp # SMTP
+ufw deny 137:139/tcp # NETBIOS/SMB
+ufw deny 445/tcp # SMB
+ufw deny 161:162/tcp # SNMP
+ufw deny 3389/tcp # RDP
+ufw deny 69/tcp # TFTP
+ufw deny 111/tcp # RPC
+ufw deny 5060/tcp # SIP
+ufw deny 5061/tcp # SIP
+
+# RELOAD | RESTART | ENABLE
 ufw reload
 echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
 systemctl restart ssh
+
+clear 
+COUNTDOWN 5
 }
 
 ###--------------------  HTML PAGE CREATION  --------------------###
@@ -320,4 +371,7 @@ touch /var/www/html/index.html
 source ./conf/html.sh
 
 cp -r web/* /var/www/html/
+
+clear 
+COUNTDOWN 5
 }

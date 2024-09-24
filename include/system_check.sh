@@ -38,9 +38,29 @@ if [ -n "$IP_DATA" ]; then
     else
         clear
         echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
+        echo "A static IP address is preferable when installing a LAMP server, for several reasons:"
+        echo
+        echo
+        echo "1. Consistent Server Access"
+        sleep 2
+        echo "2. DNS Configuration"
+        sleep 2
+        echo "3. Firewall Rules"
+        sleep 2
+        echo "4. Remote Access and SSH"
+        sleep 2
+        echo "5. Service Continuity"
+        sleep 2
+        echo "6. Security and Auditing"
+        sleep 2
         echo "A static IP address will need to be configured."
-        sleep 5
-        source ./conf/static_ip.sh
+        sleep 2
+        echo
+        echo "Please note!  If connected using SSH, by continuing this could disrupt your connection and the installation will fail."
+        echo "${BRED}[  WARNING  ]${NORMAL}Continue at your own risk!"
+        echo
+        CONFIRM_YES_NO
+        source ./include/system_check.sh
     fi
 else
     clear

@@ -8,8 +8,7 @@
 The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.  As this is a webserver, this is best on a host that has a static IP address.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
-Program Version: 24.9.24<br />
-File Name: maws_hp2v48.v24.9.24.linux.deb.sh<br />
+Program Version: 24.10.08<br />
 Written by:  Neil Jamieson [Licence](#licence)<br />
 
 * [Tested Operating Systems](#tested-operating-systems)
@@ -127,13 +126,13 @@ Change directory -->  Make shell file executable -->  sudo run the script<br />
 Thats it - there is only one interaction required (y/n)
 ```
 cd lamp
-chmod +x maws_hp2v48-v24.9.24.linux.deb.sh
-sudo ./maws_hp2v48-v24.9.24.linux.deb.sh
+chmod +x lamp.linux.deb.sh
+sudo ./lamp.linux.deb.sh
 ```
 
 ## Change Log
 Please refer to our change log as this will be updated with the changes made and to what release.
-* Release 24.9.24: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
+* Release 24.10.08: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
 
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.

@@ -1,6 +1,8 @@
 #!/bin/bash
 clear
 export EDITOR=nano
+source ./include/variables.sh
+source ./include/functions.sh
 
 ###--------------------  START OF LAMP SCRIPT  --------------------###
 ##
@@ -29,24 +31,7 @@ export EDITOR=nano
 ######################################################################################################################################################
 
 
-###--------------------  SUDO/ROOT CHECK  --------------------###
-##
-clear
-if [ "$(id -u)" -ne 0 ]; then 
-	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
-	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
-	echo
-	echo "Error 126: Command cannot execute."
-	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
-	exit 126
-else
-	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
-	echo -e "\rSUDO PERMISSION CHECK... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
-    clear
-fi
-
-source ./include/variables.sh
-source ./include/functions.sh
+SUDO_CHECK
 source ./include/system_check.sh
 
 
@@ -122,6 +107,20 @@ SELF_SIGNED_CERT
 GENERATE_SSH_PORT
 FIREWALL
 DEPLOY_HTML
+
+###--------------------  VHOST QUESTION  --------------------###
+##
+read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
+echo
+	if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
+		source ./include/vhosts.sh
+		break
+	elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
+	    break
+    else
+	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
+	    echo
+    fi
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##

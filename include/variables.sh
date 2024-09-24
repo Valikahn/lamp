@@ -7,10 +7,10 @@
 
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.9.24"
-BUILD="045"
-REVDATE="24 September 2024"
-FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
+SCRIPTVERSION="v24.10.08"
+BUILD="001"
+REVDATE="08 October 2024"
+FILENAME="lamp.linux.deb.sh"
 
 ###--------------------  COLORS DECLARE  --------------------###
 ##
