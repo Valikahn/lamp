@@ -1,8 +1,8 @@
 ## CHANGE LOG
 -------------
 
-Date: 23 September 2024<br />
-Released Version: 24.09.23<br />
+Date: 24 September 2024<br />
+Released Version: 24.09.24<br />
 
 
 KNOWN ISSUES
@@ -39,3 +39,8 @@ This saving on resources on the host; not loading one file into memory and only 
 ###--------------------  IONCUBE LOADER  --------------------###<br />
 Encoding support for PHP 8.2, 8.1, 7.4 and many others.
 Unique runtime compatibility allowing 8.2 encoded files to run on up to PHP 8.3 without re-encoding.
+
+###--------------------  STATIC IP ADDRESS  --------------------###<br />
+Static IP address check as this is recommended to build and configure a WebServer.
+This will check using default method if NMCLI is not installed.
+This will prompt if NMCLI is not installed if you would like to install and continue.

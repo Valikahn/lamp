@@ -8,8 +8,8 @@
 The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.  As this is a webserver, this is best on a host that has a static IP address.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
-Program Version: 24.9.23<br />
-File Name: maws_hp2v48.v24.9.23.linux.deb.sh<br />
+Program Version: 24.9.24<br />
+File Name: maws_hp2v48.v24.9.24.linux.deb.sh<br />
 Written by:  Neil Jamieson [Licence](#licence)<br />
 
 * [Tested Operating Systems](#tested-operating-systems)
@@ -17,7 +17,6 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 * [Additional Installed Software](#additional-installed-software)
 * [Features of Deployment](#features-of-deployment)
 * [Key Advantages](#key-advantages)
-* [Usage](#usage)
 * [Install Commands](#install-commands)
 * [Change Log](#change-log)
 * [Bugs & Issues](#bugs--issues)
@@ -84,6 +83,10 @@ Password Generation:
 System Data Collection:
 * Detects the operating system (either RedHat/CentOS or Debian/Ubuntu) and collects key host information such as distribution version, hostname, and IP address. If the OS is unsupported, the script exits.
 
+IP Address Check (Static)
+* Detects if the host has been configured with a static IP address.  If not this will check if NMCLI is installed and prompt to installed by user choice.
+* Either (y/n) will continue with configuration of static IP address setup using NMCLI or Default build-in.  NMCLI is preferred but will work either way. 
+
 Software Removal:
 * Ubuntu Pro is detached and purged from the host.
 * Cloud-init is deleted and purged from the host.
@@ -110,9 +113,7 @@ Firewall Configuration:
 * **Fully Automated**: Once executed, the script handles everything from software installation to firewall configuration, reducing the need for manual intervention.
 * **Security Enhancements**: The script automatically sets up SSL certificates for both Apache and FTP services and changes the default SSH port to a random high number, enhancing system security.
 * **Convenient Access**: After installation, tools like Webmin and phpMyAdmin provide a GUI-based method to manage the server and databases, respectively.
-
-## Usage:
-* The script is suitable for users who want to deploy a web server with minimal effort on an Ubuntu system. It simplifies the process by integrating several services into one automated setup.
+* **Efficient Deployment**: The script is suitable for users who want to deploy a web server with minimal effort on an Ubuntu system. It simplifies the process by integrating several services into one automated setup.
 
 ## Install Commands
 Install Git and clone the "lamp" package
@@ -126,13 +127,13 @@ Change directory -->  Make shell file executable -->  sudo run the script<br />
 Thats it - there is only one interaction required (y/n)
 ```
 cd lamp
-chmod +x maws_hp2v48-v24.9.23.linux.deb.sh
-sudo ./maws_hp2v48-v24.9.23.linux.deb.sh
+chmod +x maws_hp2v48-v24.9.24.linux.deb.sh
+sudo ./maws_hp2v48-v24.9.24.linux.deb.sh
 ```
 
 ## Change Log
 Please refer to our change log as this will be updated with the changes made and to what release.
-* Release 24.9.23: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
+* Release 24.9.24: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
 
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.

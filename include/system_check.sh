@@ -18,8 +18,7 @@ if command -v nmcli >/dev/null 2>&1; then
     DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
 else
     echo "This script works best with NMCLI (Network Manager)"
-    echo "NMCLI is not installed. Do you want to install it? (y/n)"
-    read -r INSTALL_NMCLI
+    read -p "NMCLI is not installed. Do you want to install it? (y/n)" INSTALL_NMCLI
 
     if [[ "$INSTALL_NMCLI" == "y" || "$INSTALL_NMCLI" == "Y" ]]; then
         sudo apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1
@@ -78,4 +77,16 @@ else
 	sleep 3
 	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
 	exit 1
+fi
+
+###--------------------  STATIC IP ADDRESS CHECK  --------------------###
+##
+if command -v nmcli > /dev/null 2>&1; then
+    CHECK_STATIC_IP_NMCLI
+else
+    echo "nmcli is not installed, using default method."
+    INTERFACES=$(ip link show | grep 'state UP' | awk -F: '{print $2}' | tr -d ' ')
+    for INTERFACE in $INTERFACES; do
+        CHECK_STATIC_IP_DEFAULT "$INTERFACE"
+    done
 fi

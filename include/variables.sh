@@ -7,9 +7,9 @@
 
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.9.23"
-BUILD="031-BETA"
-REVDATE="23 September 2024"
+SCRIPTVERSION="v24.9.24"
+BUILD="032-BETA"
+REVDATE="24 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
 ###--------------------  COLORS DECLARE  --------------------###

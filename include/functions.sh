@@ -5,6 +5,45 @@
 ###################################################
 
 
+###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
+#
+CHECK_STATIC_IP_DEFAULT() {
+    local INTERFACE=$I
+    IP_DATA=$(ip addr show "$INTERFACE")
+    if echo "$IP_DATA" | grep -q "inet "; then
+        IP_ADDRESS=$(echo "$IP_DATA" | grep "inet " | awk '{print $2}')
+        if grep -q "iface $INTERFACE inet static" /etc/network/interfaces 2>/dev/null || \
+           grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
+            echo "Static IP is configured for interface $INTERFACE"
+            echo "IP Address: $IP_ADDRESS"
+        else
+            echo "Interface $INTERFACE is likely using DHCP (Dynamic IP)"
+            sleep 5
+            source ./conf/static_ip.sh
+        fi
+    else
+        echo "No IP address is assigned to interface $INTERFACE"
+        exit 1
+    fi
+}
+
+CHECK_STATIC_IP_NMCLI() {
+    INTERFACES=$(nmcli -t -f NAME,DEVICE connection show --active)
+    while IFS= read -r LINE; do
+        INTERFACE=$(echo "$LINE" | cut -d: -f2)
+        IPV4_METHOD=$(nmcli -g ipv4.method connection show "$INTERFACE")
+        if [ "$IPV4_METHOD" = "manual" ]; then
+            echo "Static IP is configured for interface $INTERFACE"
+            IP_ADDR=$(nmcli -g ip4.address connection show "$INTERFACE")
+            echo "IP Address: $IP_ADDR"
+        else
+            echo "Interface $INTERFACE is not configured with a static IP."
+            sleep 5
+            source ./conf/static_ip.sh
+        fi
+    done <<< "$INTERFACES"
+}
+
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
 ##
 PASSGEN() {
@@ -50,3 +89,4 @@ while true;
     fi
 done
 }
+
