@@ -8,19 +8,30 @@
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #
 CHECK_STATIC_IP_NMCLI() {
+    # Fetch active connections and their associated devices
     INTERFACES=$(nmcli -t -f NAME,DEVICE connection show --active)
+    
     while IFS= read -r LINE; do
-        INTERFACE=$(echo "$LINE" | cut -d: -f2)
-        IPV4_METHOD=$(nmcli -g ipv4.method connection show "$INTERFACE")
+        # Extract the connection name (first field) and device name (second field)
+        CONNECTION_NAME=$(echo "$LINE" | cut -d: -f1)
+        DEVICE_NAME=$(echo "$LINE" | cut -d: -f2)
+
+        # Check if the connection has manual (static) IP configuration
+        IPV4_METHOD=$(nmcli -g ipv4.method connection show "$CONNECTION_NAME")
+        
         if [ "$IPV4_METHOD" = "manual" ]; then
-        clear
-            echo "Static IP is configured for interface $INTERFACE"
-            IP_ADDR=$(nmcli -g ip4.address connection show "$INTERFACE")
+            clear
+            echo "Static IP is configured for interface $DEVICE_NAME (Connection: $CONNECTION_NAME)"
+            
+            # Fetch and display the IP address associated with the connection
+            IP_ADDR=$(nmcli -g ip4.address connection show "$CONNECTION_NAME")
             echo "IP Address: $IP_ADDR"
             sleep 5
         else
-            echo "Interface $INTERFACE is not configured with a static IP."
+            echo "Interface $DEVICE_NAME (Connection: $CONNECTION_NAME) is not configured with a static IP."
             sleep 5
+            
+            # Source your script to configure static IP (if needed)
             source ./conf/static_ip.sh
         fi
     done <<< "$INTERFACES"
