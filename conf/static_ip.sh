@@ -167,3 +167,4 @@ sudo netplan apply
 ##
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
 systemctl restart NetworkManager
+autossh -M 0 $USER_NAME@$IP_ADDRESS
