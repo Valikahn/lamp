@@ -8,8 +8,9 @@
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #
 CHECK_STATIC_IP_DEFAULT() {
-    local INTERFACE=$I
-    IP_DATA=$(ip addr show "$INTERFACE")
+    #local INTERFACE=$I
+    #IP_DATA=$(ip addr show "$INTERFACE")
+    IP_DATA=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
     if echo "$IP_DATA" | grep -q "inet "; then
         IP_ADDRESS=$(echo "$IP_DATA" | grep "inet " | awk '{print $2}')
         if grep -q "iface $INTERFACE inet static" /etc/network/interfaces 2>/dev/null || \
@@ -42,6 +43,23 @@ CHECK_STATIC_IP_NMCLI() {
             source ./conf/static_ip.sh
         fi
     done <<< "$INTERFACES"
+}
+
+###--------------------  VALID IP ADDRESS CHECK  --------------------###
+##
+VALID_IP_ADDRESS() {
+    local ip=$1
+    local stat=1
+
+    if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        OIFS=$IFS
+        IFS='.'
+        ip=($ip)
+        IFS=$OIFS
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+        stat=$?
+    fi
+    return $stat
 }
 
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###

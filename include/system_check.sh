@@ -18,9 +18,10 @@ if command -v nmcli >/dev/null 2>&1; then
     DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
 else
     echo "This script works best with NMCLI (Network Manager)"
-    read -p "NMCLI is not installed. Do you want to install it? (y/n)" INSTALL_NMCLI
+    read -p "NMCLI is not installed. Do you want to install it? (y/n): " INSTALL_NMCLI
 
     if [[ "$INSTALL_NMCLI" == "y" || "$INSTALL_NMCLI" == "Y" ]]; then
+    clear
         sudo apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1
         ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
         DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
