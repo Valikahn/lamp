@@ -78,9 +78,9 @@ CONFIRM_YES_NO
 ##
 echo "${GREEN}[ 1. ] UPDATE SYSTEM AND INSTALL OPEN VSWITCH AND AUTOSSH${NORMAL}"
 #apt install -y network-manager > /dev/null 2>&1
-apt update -y > /dev/null 2>&1
+#apt update -y > /dev/null 2>&1
 apt install -y openvswitch-switch > /dev/null 2>&1
-apt install -y autossh > /dev/null 2>&1
+#apt install -y autossh > /dev/null 2>&1
 
 ###--------------------  DISABLE SYSTEM NETWORKD SERVICE WAIT WHILE BOOT  --------------------###
 ##
@@ -122,17 +122,21 @@ systemctl restart NetworkManager > /dev/null 2>&1
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
 echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
-nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
-ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
-nmcli device connect $INTERFACE > /dev/null 2>&1
 
-ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+INTERFACE=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
+OLD_IP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
 
-nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
-nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
-nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
-nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
-sudo nmcli con up $ENS > /dev/null 2>&1
+ip addr add $NEW_IP dev $ENS > /dev/null 2>&1
+nmcli con mod $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
+nmcli con mod $ENS ipv4.dns $DNS > /dev/null 2>&1
+nmcli con mod $ENS ipv4.method manual > /dev/null 2>&1
+nmcli con up $ENS > /dev/null 2>&1
+
+sleep 5
+
+ip addr del $OLD_IP dev $INTERFACE > /dev/null 2>&1
+
+sleep 5
 
 ###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
 ##
@@ -168,4 +172,3 @@ sudo netplan apply
 ##
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
 systemctl restart NetworkManager
-autossh -M 0 $USER_NAME@$IP_ADDRESS
