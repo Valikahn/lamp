@@ -22,7 +22,9 @@ CHECK_STATIC_IP_DEFAULT() {
             source ./conf/static_ip.sh
         fi
     else
+        clear
         echo "No IP address is assigned to interface $INTERFACE"
+        echo "Script cannot continue until the adapter is online with an IP Address assigned."
         exit 1
     fi
 }
