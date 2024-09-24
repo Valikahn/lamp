@@ -16,8 +16,10 @@ CHECK_STATIC_IP_DEFAULT() {
            grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
             echo "Static IP is configured for interface $IFACE"
             echo "IP Address: $IP_ADDRESS"
+            sleep 5
         else
             echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
+            echo "A static IP address will need to be configured."
             sleep 5
             source ./conf/static_ip.sh
         fi
@@ -38,6 +40,7 @@ CHECK_STATIC_IP_NMCLI() {
             echo "Static IP is configured for interface $INTERFACE"
             IP_ADDR=$(nmcli -g ip4.address connection show "$INTERFACE")
             echo "IP Address: $IP_ADDR"
+            sleep 5
         else
             echo "Interface $INTERFACE is not configured with a static IP."
             sleep 5
