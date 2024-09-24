@@ -8,7 +8,7 @@
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.9.24"
-BUILD="040"
+BUILD="042"
 REVDATE="24 September 2024"
 FILENAME="maws_hp2v48.$SCRIPTVERSION.linux.deb.sh"
 
@@ -37,7 +37,3 @@ BWHITE=$(tput setaf 15)
 ##
 BLINK=$(tput blink)
 RESET=$(tput sgr0)
-
-###--------------------  INSTALL NETWORK MANAGER  --------------------###
-##
-apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1

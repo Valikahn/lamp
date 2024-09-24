@@ -23,6 +23,32 @@ fi
 PSWD=$(PASSGEN)
 ROOT_PASSWORD=$(PASSGEN)
 
+###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
+#
+IFACE=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
+IP_DATA=$(ip -4 addr show dev $IFACE | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
+if [ -n "$IP_DATA" ]; then
+    IP_ADDRESS=$IP_DATA
+    if grep -q "iface $IFACE inet static" /etc/network/interfaces 2>/dev/null || \
+       grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
+       clear
+       echo "Static IP is configured for interface $IFACE"
+       echo "IP Address: $IP_ADDRESS"
+       sleep 5
+    else
+        clear
+        echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
+        echo "A static IP address will need to be configured."
+        sleep 5
+        source ./conf/static_ip.sh
+    fi
+else
+    clear
+    echo "No IP address is assigned to interface $IFACE"
+    echo "Script cannot continue until the adapter is online with an IP Address assigned."
+    exit 1
+fi
+
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
 ##
 clear
@@ -62,16 +88,4 @@ else
 	sleep 3
 	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
 	exit 1
-fi
-
-###--------------------  STATIC IP ADDRESS CHECK  --------------------###
-##
-if command -v nmcli > /dev/null 2>&1; then
-    CHECK_STATIC_IP_NMCLI
-else
-    echo "nmcli is not installed, this will install NMCLI during the automation."
-    INTERFACES=$(ip link show | grep 'state UP' | awk -F: '{print $2}' | tr -d ' ')
-    for INTERFACE in $INTERFACES; do
-        CHECK_STATIC_IP_NMCLI "$INTERFACE"
-    done
 fi
