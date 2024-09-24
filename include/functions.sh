@@ -8,22 +8,22 @@
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #
 CHECK_STATIC_IP_DEFAULT() {
-    NET_ADD=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
-    IP_DATA=$(ip -4 addr show dev $NET_ADD | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
-    if echo "$IP_DATA" | grep -q "inet "; then
-        IP_ADDRESS=$(echo "$IP_DATA" | grep "inet " | awk '{print $2}')
-        if grep -q "iface $INTERFACE inet static" /etc/network/interfaces 2>/dev/null || \
+    IFACE=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
+    IP_DATA=$(ip -4 addr show dev $IFACE | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
+    if [ -n "$IP_DATA" ]; then
+        IP_ADDRESS=$IP_DATA
+        if grep -q "iface $IFACE inet static" /etc/network/interfaces 2>/dev/null || \
            grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
-            echo "Static IP is configured for interface $INTERFACE"
+            echo "Static IP is configured for interface $IFACE"
             echo "IP Address: $IP_ADDRESS"
         else
-            echo "Interface $INTERFACE is likely using DHCP (Dynamic IP)"
+            echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
             sleep 5
             source ./conf/static_ip.sh
         fi
     else
         clear
-        echo "No IP address is assigned to interface $INTERFACE"
+        echo "No IP address is assigned to interface $IFACE"
         echo "Script cannot continue until the adapter is online with an IP Address assigned."
         exit 1
     fi
