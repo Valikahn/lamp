@@ -131,12 +131,6 @@ nmcli con mod $ENS ipv4.dns $DNS > /dev/null 2>&1
 nmcli con mod $ENS ipv4.method manual > /dev/null 2>&1
 nmcli con up $ENS > /dev/null 2>&1
 
-sleep 5
-
-ip addr del $OLD_IP dev $INTERFACE > /dev/null 2>&1
-
-sleep 5
-
 ###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
 ##
 echo "${GREEN}[ 8. ] REMOVE NETPLAN FILES AND CREATE A NEW${NORMAL}"
