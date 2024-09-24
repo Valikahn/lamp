@@ -112,3 +112,14 @@ while true;
 done
 }
 
+###--------------------  COUNTDOWN  --------------------###
+#
+COUNTDOWN() {
+    local SECS=$1
+    while [ $SECS -gt 0 ]; do
+        echo -ne "$SECS\033[0K\r"
+        sleep 1
+        : $((SECS--))
+    done
+    echo "Time's up! Rebooting!"
+}

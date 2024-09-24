@@ -139,10 +139,10 @@ cp -r web/* /var/www/html/
 clear
 echo "LAMP Stack Server Installed"
 echo "---------------------------"
+echo "This automation script has now completed and will reboot in 30 seconds!"
 echo "Visit http://$IP_ADDRESS for all automation completion details."
 echo
-echo "It is advisible to reboot this host as soon as possible!"
-CONFIRM_YES_NO
+COUNTDOWN 30
 reboot
 
 ##
