@@ -7,32 +7,6 @@
 
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #
-CHECK_STATIC_IP_DEFAULT() {
-    IFACE=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
-    IP_DATA=$(ip -4 addr show dev $IFACE | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
-    if [ -n "$IP_DATA" ]; then
-        IP_ADDRESS=$IP_DATA
-        if grep -q "iface $IFACE inet static" /etc/network/interfaces 2>/dev/null || \
-           grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
-           clear
-           echo "Static IP is configured for interface $IFACE"
-           echo "IP Address: $IP_ADDRESS"
-           sleep 5
-        else
-            clear
-            echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
-            echo "A static IP address will need to be configured."
-            sleep 5
-            source ./conf/static_ip.sh
-        fi
-    else
-        clear
-        echo "No IP address is assigned to interface $IFACE"
-        echo "Script cannot continue until the adapter is online with an IP Address assigned."
-        exit 1
-    fi
-}
-
 CHECK_STATIC_IP_NMCLI() {
     INTERFACES=$(nmcli -t -f NAME,DEVICE connection show --active)
     while IFS= read -r LINE; do

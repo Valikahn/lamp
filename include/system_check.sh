@@ -13,21 +13,9 @@ if command -v nmcli >/dev/null 2>&1; then
     LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
     DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
 else
-    echo "This script works best with NMCLI (Network Manager)"
-    read -p "NMCLI is not installed. Do you want to install it? (y/n): " INSTALL_NMCLI
-
-    if [[ "$INSTALL_NMCLI" == "y" || "$INSTALL_NMCLI" == "Y" ]]; then
-    clear
-        sudo apt-get update && sudo apt-get install network-manager -y >/dev/null 2>&1
-        ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
-        DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
-        LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
-        DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
-    else
-        ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
-        LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
-        DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
-    fi
+	ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
+    LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
+    DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
 fi
 
 ###--------------------  PASSWORD COLLECTION  --------------------###
@@ -81,9 +69,9 @@ fi
 if command -v nmcli > /dev/null 2>&1; then
     CHECK_STATIC_IP_NMCLI
 else
-    echo "nmcli is not installed, using default method."
+    echo "nmcli is not installed, this will install NMCLI during the automation."
     INTERFACES=$(ip link show | grep 'state UP' | awk -F: '{print $2}' | tr -d ' ')
     for INTERFACE in $INTERFACES; do
-        CHECK_STATIC_IP_DEFAULT "$INTERFACE"
+        CHECK_STATIC_IP_NMCLI "$INTERFACE"
     done
 fi

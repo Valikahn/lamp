@@ -79,6 +79,7 @@ CONFIRM_YES_NO
 echo "${GREEN}[ 1. ] UPDATE SYSTEM AND INSTALL NETWORK MANAGER${NORMAL}"
 apt install -y network-manager > /dev/null 2>&1
 apt install -y openvswitch-switch > /dev/null 2>&1
+apt install -y autossh > /dev/null 2>&1
 
 ###--------------------  DISABLE SYSTEM NETWORKD SERVICE WAIT WHILE BOOT  --------------------###
 ##
