@@ -307,3 +307,17 @@ systemctl enable apache2
 systemctl start apache2
 systemctl restart ssh
 }
+
+###--------------------  HTML PAGE CREATION  --------------------###
+##
+DEPLOY_HTML() {
+clear
+
+cp /var/www/html/index.html /var/www/html/index.html.bak
+rm -rf /var/www/html/index.html
+touch /var/www/html/index.html
+
+source ./conf/html.sh
+
+cp -r web/* /var/www/html/
+}

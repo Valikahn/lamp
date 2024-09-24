@@ -166,4 +166,4 @@ netplan apply
 ###--------------------  EXECUTION COMPLETE  --------------------###
 ##
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
-#systemctl restart NetworkManager
+systemctl restart NetworkManager

@@ -121,18 +121,7 @@ INSTALL_VSFTPD
 SELF_SIGNED_CERT
 GENERATE_SSH_PORT
 FIREWALL
-
-###--------------------  HTML PAGE CREATION  --------------------###
-##
-clear
-
-cp /var/www/html/index.html /var/www/html/index.html.bak
-rm -rf /var/www/html/index.html
-touch /var/www/html/index.html
-
-source ./conf/html.sh
-
-cp -r web/* /var/www/html/
+DEPLOY_HTML
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
