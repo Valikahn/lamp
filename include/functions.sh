@@ -14,10 +14,12 @@ CHECK_STATIC_IP_DEFAULT() {
         IP_ADDRESS=$IP_DATA
         if grep -q "iface $IFACE inet static" /etc/network/interfaces 2>/dev/null || \
            grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
-            echo "Static IP is configured for interface $IFACE"
-            echo "IP Address: $IP_ADDRESS"
-            sleep 5
+           clear
+           echo "Static IP is configured for interface $IFACE"
+           echo "IP Address: $IP_ADDRESS"
+           sleep 5
         else
+            clear
             echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
             echo "A static IP address will need to be configured."
             sleep 5
@@ -37,6 +39,7 @@ CHECK_STATIC_IP_NMCLI() {
         INTERFACE=$(echo "$LINE" | cut -d: -f2)
         IPV4_METHOD=$(nmcli -g ipv4.method connection show "$INTERFACE")
         if [ "$IPV4_METHOD" = "manual" ]; then
+        clear
             echo "Static IP is configured for interface $INTERFACE"
             IP_ADDR=$(nmcli -g ip4.address connection show "$INTERFACE")
             echo "IP Address: $IP_ADDR"
