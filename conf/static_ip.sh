@@ -76,8 +76,9 @@ CONFIRM_YES_NO
 
 ###--------------------  UPDATE SYSTEM AND INSTALL NETWORK MANAGER  --------------------###
 ##
-echo "${GREEN}[ 1. ] UPDATE SYSTEM AND INSTALL NETWORK MANAGER${NORMAL}"
-apt install -y network-manager > /dev/null 2>&1
+echo "${GREEN}[ 1. ] UPDATE SYSTEM AND INSTALL OPEN VSWITCH AND AUTOSSH${NORMAL}"
+#apt install -y network-manager > /dev/null 2>&1
+apt update -y > /dev/null 2>&1
 apt install -y openvswitch-switch > /dev/null 2>&1
 apt install -y autossh > /dev/null 2>&1
 
