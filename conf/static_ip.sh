@@ -83,7 +83,7 @@ apt install -y openvswitch-switch > /dev/null 2>&1
 
 ###--------------------  DISABLE SYSTEM NETWORKD SERVICE WAIT WHILE BOOT  --------------------###
 ##
-echo "${GREEN}[ 2. ] DISABLE SYSTEM NETWORKD SERVICE WAIT WHILE BOOT  ]${NORMAL}"
+echo "${GREEN}[ 2. ] DISABLE SYSTEM NETWORKD SERVICE WAIT WHILE BOOT${NORMAL}"
 systemctl disable systemd-networkd-wait-online.service > /dev/null 2>&1
 
 ###--------------------  EDIT GLOBALLY MANAGED DEVICES  --------------------###
@@ -164,4 +164,4 @@ sudo netplan apply
 ###--------------------  EXECUTION COMPLETE  --------------------###
 ##
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
-systemctl restart NetworkManager
+#systemctl restart NetworkManager
