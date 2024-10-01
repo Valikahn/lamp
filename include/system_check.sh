@@ -52,14 +52,13 @@ if [ -n "$IP_DATA" ]; then
         sleep 2
         echo "6. Security and Auditing"
         sleep 2
-        echo "A static IP address will need to be configured."
-        sleep 2
         echo
         echo "Please note!  If connected using SSH, by continuing this could disrupt your connection and the installation will fail."
         echo "${RED}[  WARNING  ]${NORMAL} Continue at your own risk!"
         echo
+
         CONFIRM_YES_NO
-        source ./include/system_check.sh
+        source ./conf/static_ip.sh
     fi
 else
     clear
