@@ -39,6 +39,15 @@ VALID_IP_ADDRESS() {
     return $stat
 }
 
+###--------------------  NMCLI CONFIGURATOIN  --------------------###
+##
+NMCLI_DEV_SHOW() {
+    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+    DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
+    LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
+    DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
+}
+
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
 ##
 PASSGEN() {
