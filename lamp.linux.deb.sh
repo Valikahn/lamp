@@ -55,7 +55,7 @@ echo
 echo "LAMP (Linux, Apache, MySQL and PHP)"
 echo "Managing a Web Server (MAWS_HP2V48)"
 echo
-echo "${BLINK}${BYELLOW}[  Copyright (C) 2024 Neil Jamieson  ]${RESET}"
+echo "${RED}[  Copyright (C) 2024 Neil Jamieson  ]${NORMAL}"
 echo "This program comes with ABSOLUTELY NO WARRANTY; for details type 'show w'. This is free software,"
 echo "and you are welcome to redistribute it under certain conditions; type 'show c' for details."
 echo
@@ -82,8 +82,8 @@ echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
 echo "${BLINK}${BYELLOW}[  IMPORTANT  ]${RESET}"
-echo "Once the script has completed deploying, output infomration will be provided."
-echo "This is important!  Once the screen is cleared or the host rebooted the data will be lost!"
+echo "Once the script has completed deploying the host will reboot in 30 seconds."
+echo "Take note of the URL displayed on the terminal windows for the server configuration."
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
