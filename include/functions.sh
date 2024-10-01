@@ -46,6 +46,9 @@ NMCLI_DEV_SHOW() {
     DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
     LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
     DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
+    HST=$(hostname)
+    IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
+    USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
 }
 
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###
@@ -104,5 +107,4 @@ COUNTDOWN() {
         sleep 1
         : $((SECS--))
     done
-    echo "Time's up! Rebooting!"
 }

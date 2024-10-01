@@ -103,6 +103,10 @@ EOL
     a2ensite $VHOST_NAME.conf
 done
 
+cp -r web/* /var/www/public_html/$VHOST_NAME
+cp -r web/* /var/www/public_html/$VHOST_NAME
+cp -r web/* /var/www/public_html/$VHOST_NAME
+
 if systemctl reload apache2; then
     echo "Apache reloaded successfully."
 else

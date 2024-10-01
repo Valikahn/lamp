@@ -133,6 +133,8 @@ echo "This automation script has now completed and will reboot in 30 seconds!"
 echo "Visit http://$IP_ADDRESS for all automation completion details."
 echo
 COUNTDOWN 30
+echo "Time's up! Rebooting!"
+sleep 2
 reboot
 
 ##

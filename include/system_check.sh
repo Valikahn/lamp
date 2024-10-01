@@ -8,10 +8,7 @@
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
 if command -v nmcli >/dev/null 2>&1; then
-    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
-    DOM=$(nmcli dev status | grep '^ens' | awk '{ print $4 }')
-    LIP=$(nmcli -f ipv4.addresses con show $DOM | awk '{ print $2 }')
-    DNS=$(nmcli -f ipv4.dns con show $DOM | awk '{ print $2 }' | paste -sd ',')
+    NMCLI_DEV_SHOW
 else
 	ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
     LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
@@ -70,9 +67,6 @@ fi
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
 ##
 clear
-HST=$(hostname)
-IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
-USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
 
 DIST=$nil
 PSUEDONAME=$nil
