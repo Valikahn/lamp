@@ -82,44 +82,45 @@ for ((v=1; v<=num_vhosts; v++)); do
         esac
     done
 
-        cat <<EOL >/etc/apache2/sites-available/$VHOST_NAME.conf
-    <VirtualHost *:80>
-        ServerAdmin webmaster@$VHOST_NAME
-        ServerName $VHOST_NAME
-        ServerAlias www.$VHOST_NAME
-        DocumentRoot /var/www/public_html/$VHOST_NAME
+    cat <<EOL >/etc/apache2/sites-available/$VHOST_NAME.conf
+<VirtualHost *:80>
+    ServerAdmin webmaster@$VHOST_NAME
+    ServerName $VHOST_NAME
+    ServerAlias www.$VHOST_NAME
+    DocumentRoot /var/www/public_html/$VHOST_NAME
 
-        <Directory /var/www/public_html/$VHOST_NAME>
-            Options -Indexes +FollowSymLinks
-            AllowOverride All
-            Require all granted
-        </Directory>
+    <Directory /var/www/public_html/$VHOST_NAME>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
 
-        ErrorLog \${APACHE_LOG_DIR}/${VHOST_NAME}_error.log
-        CustomLog \${APACHE_LOG_DIR}/${VHOST_NAME}_access.log combined
-    </VirtualHost>
+    ErrorLog \${APACHE_LOG_DIR}/${VHOST_NAME}_error.log
+    CustomLog \${APACHE_LOG_DIR}/${VHOST_NAME}_access.log combined
+</VirtualHost>
 
-    <VirtualHost *:443>
-        ServerAdmin webmaster@$VHOST_NAME
-        ServerName $VHOST_NAME
-        ServerAlias www.$VHOST_NAME
-        DocumentRoot /var/www/public_html/$VHOST_NAME
+<VirtualHost *:443>
+    ServerAdmin webmaster@$VHOST_NAME
+    ServerName $VHOST_NAME
+    ServerAlias www.$VHOST_NAME
+    DocumentRoot /var/www/public_html/$VHOST_NAME
 
-        SSLEngine on
-        SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
-        SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
-        SSLCertificateChainFile /etc/ssl/certs/dhparam.pem
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+    SSLCertificateChainFile /etc/ssl/certs/dhparam.pem
 
-        <Directory /var/www/public_html/$VHOST_NAME>
-            Options -Indexes +FollowSymLinks
-            AllowOverride All
-            Require all granted
-        </Directory>
 
-        ErrorLog \${APACHE_LOG_DIR}/${VHOST_NAME}_ssl_error.log
-        CustomLog \${APACHE_LOG_DIR}/${VHOST_NAME}_ssl_access.log combined
-    </VirtualHost>
-    EOL
+    <Directory /var/www/public_html/$VHOST_NAME>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/${VHOST_NAME}_ssl_error.log
+    CustomLog \${APACHE_LOG_DIR}/${VHOST_NAME}_ssl_access.log combined
+</VirtualHost>
+EOL
 
     a2enmod ssl
     a2ensite $VHOST_NAME.conf
