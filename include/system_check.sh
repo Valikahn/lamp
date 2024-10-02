@@ -52,6 +52,7 @@ if [ -n "$IP_DATA" ]; then
                     echo "Redirecting to static IP configuration..."
                     COUNTDOWN 5
                     source ./conf/static_ip.sh
+                    break
                     ;;
                 n|N)
                     echo "Continuing at your own risk... Redirecting..."
