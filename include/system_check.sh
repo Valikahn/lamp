@@ -24,38 +24,47 @@ ROOT_PASSWORD=$(PASSGEN)
 #
 IFACE=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
 IP_DATA=$(ip -4 addr show dev $IFACE | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
+
 if [ -n "$IP_DATA" ]; then
     IP_ADDRESS=$IP_DATA
     if grep -q "iface $IFACE inet static" /etc/network/interfaces 2>/dev/null || \
        grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
-       clear
-       echo "Static IP is configured for interface $IFACE"
-       echo "IP Address: $IP_ADDRESS"
-       sleep 5
+        clear
+        echo "Static IP is configured for interface $IFACE"
+        echo "IP Address: $IP_ADDRESS"
+        sleep 5
     else
         clear
         echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
-        echo "A static IP address is preferable when installing a LAMP server, for several reasons:"
-        echo
-        echo "1. Consistent Server Access"
-        sleep 2
-        echo "2. DNS Configuration"
-        sleep 2
-        echo "3. Firewall Rules"
-        sleep 2
-        echo "4. Remote Access and SSH"
-        sleep 2
-        echo "5. Service Continuity"
-        sleep 2
-        echo "6. Security and Auditing"
-        sleep 2
+        echo "A static IP address is preferable when installing a LAMP server, for several reasons!"
         echo
         echo "Please note!  If connected using SSH, by continuing this could disrupt your connection and the installation will fail."
-        echo "${RED}[  WARNING  ]${NORMAL} Continue at your own risk!"
         echo
-
-        CONFIRM_YES_NO
-        source ./conf/static_ip.sh
+        echo -e "${RED}[  WARNING  ]${NORMAL} Continue at your own risk!"
+        echo
+        
+        while true; 
+        do
+            echo "Would you like to configure a static IP address? (y/n)"
+            read -r CONF_STATIC_IP
+            case "$CONF_STATIC_IP" in
+                y|Y)
+                    echo "Redirecting to static IP configuration..."
+                    COUNTDOWN 5
+                    source ./conf/static_ip.sh
+                    ;;
+                n|N)
+                    echo "Continuing at your own risk... Redirecting..."
+                    apt install -y network-manager > /dev/null 2>&1
+                    apt install -y openvswitch-switch > /dev/null 2>&1
+                    COUNTDOWN 5
+                    break
+                    ;;
+                *)
+                    echo "Please enter y/Y or n/N."
+                    ;;
+            esac
+        done
     fi
 else
     clear
