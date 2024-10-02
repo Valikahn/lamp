@@ -10,17 +10,19 @@ clear
 
 read -p "How many vHosts would you like to create? " num_vhosts
 for ((v=1; v<=num_vhosts; v++)); do
+    clear
     read -p "Enter the name for vHost $v (e.g., hello_world.local): " VHOST_NAME
     if ! mkdir -p /var/www/public_html/$VHOST_NAME/cms; then
         echo "Failed to create directory for $VHOST_NAME"
         continue
     fi
+    clear
 
     while true; do
         read -p "Which CMS would you like to install for $VHOST_NAME? (drupal/joomla/wordpress/skip) " CMS_CHOICE
         case $CMS_CHOICE in
-            clear
             drupal)
+                clear
                 echo "Setting up Drupal for $VHOST_NAME"
                 if wget -O /tmp/drupal.tar.gz https://www.drupal.org/download-latest/tar.gz; then
                     if tar -xzf /tmp/drupal.tar.gz -C /var/www/public_html/$VHOST_NAME/cms --strip-components=1; then

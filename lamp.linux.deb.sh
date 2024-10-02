@@ -43,7 +43,6 @@ source ./include/system_check.sh
 
 
 clear
-COUNTDOWN 10
 NMCLI_DEV_SHOW
 
 ###--------------------  OPERATING SYSTEM CONSOLE OUTPUT  --------------------###
