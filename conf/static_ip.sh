@@ -32,18 +32,18 @@ fi
     while true; do
         read -p "Enter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
         IFS=',' read -ra DNS_ARRAY <<< "$DNS"
-        ALL_VALID_ENTRIES=1  # Assume all IPs are valid initially
+        ALL_VALID_ENTRIES=1
 
         for DNS_IP in "${DNS_ARRAY[@]}"; do
             if ! VALID_IP_ADDRESS "$DNS_IP"; then
                 echo "Invalid IP address format: $DNS_IP"
-                ALL_VALID_ENTRIES=0  # Set flag to false if any IP is invalid
+                ALL_VALID_ENTRIES=0
             fi
         done
 
         if [ "$ALL_VALID_ENTRIES" -eq 1 ]; then
             echo "All DNS entered IP addresses are valid."
-            break  # Exit the while loop since all IPs are valid
+            break
         else
             echo "Please enter valid IP addresses."
         fi
@@ -62,6 +62,7 @@ fi
         echo "Static IP Address: $STATIC_IP"
     else
         echo "Static IP is not set."
+        echo "Using Dynamic IP Address: $IP_ADDRESS"
     fi
     echo "Subnet Mask CIDR: $CIDR"
     echo "Gateway: $GATEWAY"
