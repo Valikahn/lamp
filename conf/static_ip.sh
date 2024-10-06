@@ -42,7 +42,7 @@ fi
         done
 
         if [ "$ALL_VALID_ENTRIES" -eq 1 ]; then
-            echo "All DNS entered IP addresses are valid."
+            #echo "All DNS entered IP addresses are valid."
             break
         else
             echo "Please enter valid IP addresses."
