@@ -6,65 +6,67 @@
 
 
 clear
-###--------------------  IP ADDRESS ENTRY / CHECK RECALL FUNCTION  --------------------###
-##
-while true;
-do
-read -p "Enter the static IP address to set (e.g., 192.168.1.100): " STATIC_IP
-    if VALID_IP_ADDRESS $STATIC_IP; then
-        break
-    else
-        echo "Invalid IP address format: $STATIC_IP"
-    fi
-done
-
-while true;
-do
-read -p "Enter the default gateway (e.g., 192.168.1.1): " GATEWAY
-    if VALID_IP_ADDRESS $GATEWAY; then
-        break
-    else
-        echo "Invalid IP address format: $GATEWAY"
-    fi
-done
-
-while true; do
-    read -p "Enter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
-    IFS=',' read -ra DNS_ARRAY <<< "$DNS"
-    ALL_VALID_ENTRIES=1  # Assume all IPs are valid initially
-
-    for DNS_IP in "${DNS_ARRAY[@]}"; do
-        if ! VALID_IP_ADDRESS "$DNS_IP"; then
-            echo "Invalid IP address format: $DNS_IP"
-            ALL_VALID_ENTRIES=0  # Set flag to false if any IP is invalid
+if [ "$STATIC_IP_CONFIG" != "1" ]; then
+    ###--------------------  IP ADDRESS ENTRY / CHECK RECALL FUNCTION  --------------------###
+    ##
+    while true;
+    do
+    read -p "Enter the static IP address to set (e.g., 192.168.1.100): " STATIC_IP
+        if VALID_IP_ADDRESS $STATIC_IP; then
+            break
+        else
+            echo "Invalid IP address format: $STATIC_IP"
         fi
     done
 
-    if [ "$ALL_VALID_ENTRIES" -eq 1 ]; then
-        echo "All DNS entered IP addresses are valid."
-        break  # Exit the while loop since all IPs are valid
-    else
-        echo "Please enter valid IP addresses."
-    fi
-done
+    while true;
+    do
+    read -p "Enter the default gateway (e.g., 192.168.1.1): " GATEWAY
+        if VALID_IP_ADDRESS $GATEWAY; then
+            break
+        else
+            echo "Invalid IP address format: $GATEWAY"
+        fi
+    done
 
-read -p "Enter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
+    while true; do
+        read -p "Enter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
+        IFS=',' read -ra DNS_ARRAY <<< "$DNS"
+        ALL_VALID_ENTRIES=1  # Assume all IPs are valid initially
 
-###--------------------  GATHERED DATA  --------------------###
-##
-INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -n 1)
+        for DNS_IP in "${DNS_ARRAY[@]}"; do
+            if ! VALID_IP_ADDRESS "$DNS_IP"; then
+                echo "Invalid IP address format: $DNS_IP"
+                ALL_VALID_ENTRIES=0  # Set flag to false if any IP is invalid
+            fi
+        done
 
-echo
-echo "Setting up static IP address:"
-echo
-echo "IP Address: $STATIC_IP"
-echo "Subnet Mask CIDR: $CIDR"
-echo "Gateway: $GATEWAY"
-echo "DNS Servers: $DNS"
-echo "Network Interface: $INTERFACE"
-echo
+        if [ "$ALL_VALID_ENTRIES" -eq 1 ]; then
+            echo "All DNS entered IP addresses are valid."
+            break  # Exit the while loop since all IPs are valid
+        else
+            echo "Please enter valid IP addresses."
+        fi
+    done
 
-CONFIRM_YES_NO
+    read -p "Enter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
+
+    ###--------------------  GATHERED DATA  --------------------###
+    ##
+    INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -n 1)
+
+    echo
+    echo "Setting up static IP address:"
+    echo
+    echo "IP Address: $STATIC_IP"
+    echo "Subnet Mask CIDR: $CIDR"
+    echo "Gateway: $GATEWAY"
+    echo "DNS Servers: $DNS"
+    echo "Network Interface: $INTERFACE"
+    echo
+
+    CONFIRM_YES_NO
+fi
 
 
 ###################################################
@@ -117,28 +119,34 @@ EOL
 echo "${GREEN}[ 6. ] RESTART NETWORK MANAGER${NORMAL}"
 systemctl restart NetworkManager > /dev/null 2>&1
 
+#  systemctl restart NetworkManager.service
+#  nmcli device disconnect $ENS
+#  nmcli device connect $ENS
+
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
-echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
-nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
-ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
-nmcli device connect $INTERFACE > /dev/null 2>&1
+if [ "$STATIC_IP_CONFIG" != "1" ]; then
 
-ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+    echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
+    nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
+    ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
+    nmcli device connect $INTERFACE > /dev/null 2>&1
 
-nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
-nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
-nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
-nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
-sudo nmcli con up $ENS > /dev/null 2>&1
+    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
 
-###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
-##
-echo "${GREEN}[ 8. ] REMOVE NETPLAN FILES AND CREATE A NEW${NORMAL}"
-rm -rf /etc/netplan/* > /dev/null 2>&1
-NETPLAN_FILE="/etc/netplan/00-installer-config.yaml" > /dev/null 2>&1
+    nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
+    nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
+    nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
+    nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
+    sudo nmcli con up $ENS > /dev/null 2>&1
 
-sudo tee $NETPLAN_FILE > /dev/null 2>&1 <<EOL
+    ###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
+    ##
+    echo "${GREEN}[ 8. ] REMOVE NETPLAN FILES AND CREATE A NEW${NORMAL}"
+    rm -rf /etc/netplan/* > /dev/null 2>&1
+    NETPLAN_FILE="/etc/netplan/00-installer-config.yaml" > /dev/null 2>&1
+
+    sudo tee $NETPLAN_FILE > /dev/null 2>&1 <<EOL
 ## This is the network config written by Neil Jamieson for Insentrica Lab!
 network:
   version: 2
@@ -156,13 +164,15 @@ $(IFS=','; for ip in $DNS; do echo "        - $ip"; done)
         via: $GATEWAY
 EOL
 
-###--------------------  NETPLAN SECURE AND APPLY  --------------------###
-##
-echo "${GREEN}[ 9. ] NETPLAN SECURE AND APPLY${NORMAL}"
-chmod 600 /etc/netplan/00-installer-config.yaml
-netplan apply
+    ###--------------------  NETPLAN SECURE AND APPLY  --------------------###
+    ##
+    echo "${GREEN}[ 9. ] NETPLAN SECURE AND APPLY${NORMAL}"
+    chmod 600 /etc/netplan/00-installer-config.yaml
+    netplan apply
 
-###--------------------  EXECUTION COMPLETE  --------------------###
-##
-echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
-systemctl restart NetworkManager
+    ###--------------------  EXECUTION COMPLETE  --------------------###
+    ##
+    echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
+    systemctl restart NetworkManager
+
+fi

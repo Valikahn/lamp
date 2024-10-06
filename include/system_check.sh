@@ -49,13 +49,11 @@ if [ -n "$IP_DATA" ]; then
                 y|Y)
                     echo "Redirecting to static IP configuration..."
                     COUNTDOWN 5
-                    source ./conf/static_ip.sh
                     break
                     ;;
                 n|N)
                     echo "Proceeding without a static IP address... Redirecting..."
-                    apt install -y network-manager > /dev/null 2>&1
-                    apt install -y openvswitch-switch > /dev/null 2>&1
+                    STATIC_IP_CONFIG=1
                     COUNTDOWN 5
                     break
                     ;;
@@ -65,6 +63,7 @@ if [ -n "$IP_DATA" ]; then
             esac
         done
     fi
+    source ./conf/static_ip.sh
 else
     clear
     echo "No IP address is assigned to interface $IFACE"
