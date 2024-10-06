@@ -31,7 +31,7 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 ## Installed Software Module Versions
 This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
 
-| Install Modules               | Version                       | Optional Installs             | Version                       |
+| Auto Install Modules          | Version                       | Optional Installs             | Version                       |
 |-------------------------------|-------------------------------|-------------------------------|-------------------------------|
 | Apache                        | 2.4.58                        | WordPress                     | 6.6.2+
 | PHP                           | 8.3.6                         | Drupal                        | 11.0.5+
@@ -162,7 +162,7 @@ VSFTPD: https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
 OpenSSL: https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
 ionCube: https://www.ioncube.com/<br />
 Drupal: https://www.drupal.org/<br />
-Joomla ${LBLUE}[https://www.joomla.org/<br />
-WordPress ${LBLUE}[https://wordpress.com/<br />
-Grav ${LBLUE}[https://getgrav.org/<br />
-ModX ${LBLUE}[https://modx.com/<br />
+Joomla: https://www.joomla.org/<br />
+WordPress: https://wordpress.com/<br />
+Grav: https://getgrav.org/<br />
+ModX: https://modx.com/<br />
