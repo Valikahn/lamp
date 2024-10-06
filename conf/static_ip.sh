@@ -54,14 +54,16 @@ fi
     ###--------------------  GATHERED DATA  --------------------###
     ##
     INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -n 1)
+    
 
     echo
-    echo "Setting up static IP address:"
-    echo
     if [ -n "$STATIC_IP" ]; then
+        echo "Setting up static IP address:"
+        echo
         echo "Static IP Address: $STATIC_IP"
     else
-        echo "Static IP is not set."
+        echo "${RED}[  STATIC IP ADDRESS IS NOT CONFIGURED  ]${NORMAL}"
+        echo
         echo "Using Dynamic IP Address: $IP_ADDRESS"
     fi
     echo "Subnet Mask CIDR: $CIDR"
