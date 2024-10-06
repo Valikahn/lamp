@@ -131,13 +131,24 @@ systemctl restart NetworkManager > /dev/null 2>&1
 #if [ "$STATIC_IP_CONFIG" != "1" ]; then
 
     echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
-    nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
+    
+    if [ -n "$STATIC_IP" ]; then
+        nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
+    else
+        nmcli device set $IP_ADDRESS managed yes > /dev/null 2>&1
+    fi
+
     ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
     nmcli device connect $INTERFACE > /dev/null 2>&1
 
     ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
 
-    nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
+    if [ -n "$STATIC_IP" ]; then
+        nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
+    else
+        nmcli con modify $ENS ipv4.addresses $IP_ADDRESS/$CIDR > /dev/null 2>&1
+    fi
+    
     nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
     nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
     nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
@@ -149,7 +160,13 @@ systemctl restart NetworkManager > /dev/null 2>&1
     rm -rf /etc/netplan/* > /dev/null 2>&1
     NETPLAN_FILE="/etc/netplan/00-installer-config.yaml" > /dev/null 2>&1
 
-    sudo tee $NETPLAN_FILE > /dev/null 2>&1 <<EOL
+    if [ -z "$STATIC_IP" ]; then
+      FINAL_IP=$IP_ADDRESS
+    else
+      FINAL_IP=$STATIC_IP
+    fi
+
+sudo tee $NETPLAN_FILE > /dev/null 2>&1 <<EOL
 ## This is the network config written by Neil Jamieson for Insentrica Lab!
 network:
   version: 2
@@ -158,7 +175,7 @@ network:
     $INTERFACE:
       dhcp4: no
       addresses:
-      - $STATIC_IP/$CIDR
+      - $FINAL_IP/$CIDR
       nameservers:
         addresses:
 $(IFS=','; for ip in $DNS; do echo "        - $ip"; done)
