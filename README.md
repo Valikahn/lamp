@@ -31,7 +31,6 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 ## Installed Software Module Versions
 This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
 
-|-------------------------------|-------------------------------|
 | Install Modules               | Version                       |
 |-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
@@ -42,9 +41,7 @@ This deployment is not pulling specific versions but looking for the latest vers
 | phpMyAdmin                    | 5.2.1
 | Webmin                        | 2.202 
 | FTP server (vsftpd)           | 3.0.5
-|-------------------------------|-------------------------------|
 
-|-------------------------------|-------------------------------|
 | Optional Installs             | Version                       |
 |-------------------------------|-------------------------------|
 | WordPress                     | 6.6.2+
@@ -52,12 +49,10 @@ This deployment is not pulling specific versions but looking for the latest vers
 | Joomla                        | 5.1.4+
 | Grav                          | 1.7.46+
 | ModX                          | 3.0.5+
-|-------------------------------|-------------------------------|
 
 ## Additional Installed Software
 This is a list of software that is dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.  These all work well with the installation of LAMP and are all auto installed, cleaned up, and have a basic configuration.
 
-|-------------------------------|-------------------------------|
 | Application                   | Description                   |
 |-------------------------------|-------------------------------|
 | ionCube                       | A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.
@@ -80,7 +75,6 @@ This is a list of software that is dependencies, supporting, and enhancement app
 | perl                          | A high-level programming language often used for system administration, web development, and text manipulation.
 | python3                       | The third major version of the Python programming language, known for its readability and versatility.
 | python3-pip                   | A package manager for Python that allows the installation and management of Python libraries.
-|-------------------------------|-------------------------------|
 
 ## Features of Deployment
 Initial Setup and Environment:
