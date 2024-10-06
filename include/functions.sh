@@ -5,23 +5,6 @@
 ###################################################
 
 
-###--------------------  SUDO/ROOT CHECK  --------------------###
-##
-SUDO_CHECK() {
-if [ "$(id -u)" -ne 0 ]; then 
-	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
-	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
-	echo
-	echo "Error 126: Command cannot execute."
-	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
-	exit 126
-else
-	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
-	echo -e "\rSUDO PERMISSION CHECK... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
-    clear
-fi
-}
-
 ###--------------------  VALID IP ADDRESS CHECK  --------------------###
 ##
 VALID_IP_ADDRESS() {
@@ -39,7 +22,7 @@ VALID_IP_ADDRESS() {
     return $stat
 }
 
-###--------------------  NMCLI CONFIGURATOIN  --------------------###
+###--------------------  NMCLI CONFIGURATION  --------------------###
 ##
 NMCLI_DEV_SHOW() {
     ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
@@ -49,6 +32,15 @@ NMCLI_DEV_SHOW() {
     HST=$(hostname)
     IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
     USER_NAME=$(w -h | awk '{print $1}' | head -n 1)
+}
+
+###--------------------  IPA  --------------------###
+##
+BUILD_IN_IPA() {
+    ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
+    LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
+    DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
+    IP_ADDRESS=$(ip addr show $ENS | grep -oP 'inet \K[\d.]+')
 }
 
 ###--------------------  RANDOM PASSWORD GENERATOR  --------------------###

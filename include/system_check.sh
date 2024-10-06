@@ -5,20 +5,62 @@
 ###################################################
 
 
+###--------------------  SUDO/ROOT CHECK  --------------------###
+##
+if [ "$(id -u)" -ne 0 ]; then 
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
+	echo
+	echo "Error 126: Command cannot execute."
+	echo "This error code is used when a command is found but is not executable.  Execute as root/sudo!"
+	exit 126
+else
+	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
+	echo -e "\rSUDO PERMISSION CHECK... ${GREEN}[  ACCESS GRANTED  ]${NORMAL}"; sleep 3
+    clear
+fi
+
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
 if command -v nmcli >/dev/null 2>&1; then
     NMCLI_DEV_SHOW
 else
-	ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
-    LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
-    DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
+	BUILD_IN_IPA
 fi
 
 ###--------------------  PASSWORD COLLECTION  --------------------###
 ##
 PSWD=$(PASSGEN)
 ROOT_PASSWORD=$(PASSGEN)
+
+###--------------------  ENS LINK UP OR DOWN  --------------------###
+##
+
+# Check if the interface exists
+if ! ip link show "$ENS" > /dev/null 2>&1; then
+    echo "Interface $ENS does not exist."
+    exit 1
+fi
+
+STATE=$(cat /sys/class/net/$ENS/operstate)
+
+if [ "$STATE" = "down" ]; then
+    echo "Interface $ENS is not connected. Attempting to bring it up..."
+
+    ip link set "$ENS" up
+    COUNTDOWN 5
+
+    NEW_STATE=$(cat /sys/class/net/$ENS/operstate)
+    
+    if [ "$NEW_STATE" = "up" ]; then
+        echo "Interface $ENS successfully brought up."
+    else
+        echo "Failed to bring up interface $ENS."
+        exit 1
+    fi
+else
+    echo "Interface $ENS is already connected."
+fi
 
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
 #

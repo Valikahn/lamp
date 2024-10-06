@@ -18,7 +18,7 @@ if [ "$STATIC_IP_CONFIG" != "1" ]; then
             echo "Invalid IP address format: $STATIC_IP"
         fi
     done
-
+fi
     while true;
     do
     read -p "Enter the default gateway (e.g., 192.168.1.1): " GATEWAY
@@ -58,7 +58,11 @@ if [ "$STATIC_IP_CONFIG" != "1" ]; then
     echo
     echo "Setting up static IP address:"
     echo
-    echo "IP Address: $STATIC_IP"
+    if [ -n "$STATIC_IP" ]; then
+        echo "Static IP Address: $STATIC_IP"
+    else
+        echo "Static IP is not set."
+    fi
     echo "Subnet Mask CIDR: $CIDR"
     echo "Gateway: $GATEWAY"
     echo "DNS Servers: $DNS"
