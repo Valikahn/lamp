@@ -125,7 +125,7 @@ systemctl restart NetworkManager > /dev/null 2>&1
 
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
-if [ "$STATIC_IP_CONFIG" != "1" ]; then
+#if [ "$STATIC_IP_CONFIG" != "1" ]; then
 
     echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
     nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
@@ -175,4 +175,4 @@ EOL
     echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
     systemctl restart NetworkManager
 
-fi
+#fi
