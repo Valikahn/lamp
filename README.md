@@ -31,24 +31,16 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 ## Installed Software Module Versions
 This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
 
-| Install Modules               | Version                       |
-|-------------------------------|-------------------------------|
-| Apache                        | 2.4.58
-| PHP                           | 8.3.6
-| ionCube                       | 13.3.1
-| OpenSSL                       | 3.0.13
-| MySQL                         | 8.4
-| phpMyAdmin                    | 5.2.1
-| Webmin                        | 2.202 
-| FTP server (vsftpd)           | 3.0.5
-
-| Optional Installs             | Version                       |
-|-------------------------------|-------------------------------|
-| WordPress                     | 6.6.2+
-| Drupal                        | 11.0.5+
-| Joomla                        | 5.1.4+
-| Grav                          | 1.7.46+
-| ModX                          | 3.0.5+
+| Install Modules               | Version                       | Optional Installs             | Version                       |
+|-------------------------------|-------------------------------|-------------------------------|-------------------------------|
+| Apache                        | 2.4.58                        | WordPress                     | 6.6.2+
+| PHP                           | 8.3.6                         | Drupal                        | 11.0.5+
+| ionCube                       | 13.3.1                        | Joomla                        | 5.1.4+
+| OpenSSL                       | 3.0.13                        | Grav                          | 1.7.46+
+| MySQL                         | 8.4                           | ModX                          | 3.0.5+
+| phpMyAdmin                    | 5.2.1                         | 
+| Webmin                        | 2.202                         | 
+| FTP server (vsftpd)           | 3.0.5                         | 
 
 ## Additional Installed Software
 This is a list of software that is dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.  These all work well with the installation of LAMP and are all auto installed, cleaned up, and have a basic configuration.
