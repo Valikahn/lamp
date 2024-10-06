@@ -196,4 +196,6 @@ netplan apply
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
 systemctl restart NetworkManager
 
+
+echo
 CONFIRM_YES_NO

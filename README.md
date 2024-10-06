@@ -31,7 +31,8 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 ## Installed Software Module Versions
 This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
 
-| Install Modules               | Version
+|-------------------------------|-------------------------------|
+| Install Modules               | Version                       |
 |-------------------------------|-------------------------------|
 | Apache                        | 2.4.58
 | PHP                           | 8.3.6
@@ -41,11 +42,23 @@ This deployment is not pulling specific versions but looking for the latest vers
 | phpMyAdmin                    | 5.2.1
 | Webmin                        | 2.202 
 | FTP server (vsftpd)           | 3.0.5
+|-------------------------------|-------------------------------|
+
+|-------------------------------|-------------------------------|
+| Optional Installs             | Version                       |
+|-------------------------------|-------------------------------|
+| WordPress                     | 6.6.2+
+| Drupal                        | 11.0.5+
+| Joomla                        | 5.1.4+
+| Grav                          | 1.7.46+
+| ModX                          | 3.0.5+
+|-------------------------------|-------------------------------|
 
 ## Additional Installed Software
 This is a list of software that is dependencies, supporting, and enhancement applications. Extensions, network tools and security modules.  These all work well with the installation of LAMP and are all auto installed, cleaned up, and have a basic configuration.
 
-| Application                   | Description
+|-------------------------------|-------------------------------|
+| Application                   | Description                   |
 |-------------------------------|-------------------------------|
 | ionCube                       | A PHP extension used to encrypt and protect PHP code from unauthorized use or modification.
 | libapache2-mod-php            | An Apache module for running PHP scripts directly on the server using the Apache web server.
@@ -67,6 +80,7 @@ This is a list of software that is dependencies, supporting, and enhancement app
 | perl                          | A high-level programming language often used for system administration, web development, and text manipulation.
 | python3                       | The third major version of the Python programming language, known for its readability and versatility.
 | python3-pip                   | A package manager for Python that allows the installation and management of Python libraries.
+|-------------------------------|-------------------------------|
 
 ## Features of Deployment
 Initial Setup and Environment:
@@ -108,8 +122,14 @@ SSL Certificates:
 Firewall Configuration:
 * Configures ufw (Uncomplicated Firewall) to allow necessary ports for Apache, HTTPS, FTP, MySQL, Webmin, and a dynamically generated SSH port (randomly selected to improve security).
 
+vHosts Deployment
+* There is an option to deploy vHosts and have them auto configured to use HTTP (80) and HTTPS (443).
+* The option to pick how many vHosts you want to deploy.  Each with their own directory and configured in "apache2/sites-available" at the same time.
+* A further option to deploy a CMS platform on each vHost, with a selection of Wordpress, Drupal, Joomla, ModX, and Grav.
+
 ## Key Advantages:
 * **Fully Automated**: Once executed, the script handles everything from software installation to firewall configuration, reducing the need for manual intervention.
+* **vHost Input**: Fully deployed vHosts into "apache2/sites-available" configured with ports 80 and 443.
 * **Security Enhancements**: The script automatically sets up SSL certificates for both Apache and FTP services and changes the default SSH port to a random high number, enhancing system security.
 * **Convenient Access**: After installation, tools like Webmin and phpMyAdmin provide a GUI-based method to manage the server and databases, respectively.
 * **Efficient Deployment**: The script is suitable for users who want to deploy a web server with minimal effort on an Ubuntu system. It simplifies the process by integrating several services into one automated setup.
@@ -132,7 +152,7 @@ sudo ./lamp.linux.deb.sh
 
 ## Change Log
 Please refer to our change log as this will be updated with the changes made and to what release.
-* Release 24.10.08: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md">Change Log</a>
+* Release 24.10.08: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/">Change Log</a>
 
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.
@@ -155,3 +175,8 @@ Webmin: https://webmin.com/download/<br />
 VSFTPD: https://wiki.archlinux.org/title/Very_Secure_FTP_Daemon<br />
 OpenSSL: https://openssl-library.org/source/gitrepo/ and https://ubuntu.com/server/docs/openssl<br />
 ionCube: https://www.ioncube.com/<br />
+Drupal: https://www.drupal.org/<br />
+Joomla ${LBLUE}[https://www.joomla.org/<br />
+WordPress ${LBLUE}[https://wordpress.com/<br />
+Grav ${LBLUE}[https://getgrav.org/<br />
+ModX ${LBLUE}[https://modx.com/<br />

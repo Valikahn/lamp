@@ -10,6 +10,10 @@ clear
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
 DETACH_PRO() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 if command -v pro &> /dev/null; then
     echo "Ubuntu Pro is installed. Checking if the system is attached..."
     PRO_STATUS=$(pro status --format json)
@@ -37,15 +41,16 @@ else
     echo "Ubuntu Pro is not installed. Continuing."
 fi
 
-echo "Script will now continue..."
-
-clear 
-COUNTDOWN 5
+echo "Script will now continue..." 
 }
 
 ###--------------------  DELETE PURGE CLOUD-INIT  --------------------###
 ## 
 PURGE_CLOUD_INIT() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 if dpkg -l | grep -q cloud-init > /dev/null 2>&1; then
     apt-get purge -y cloud-init 2>&1
 	apt autoremove -y 2>&1
@@ -80,6 +85,10 @@ COUNTDOWN 5
 ##
 UPDATE_DEB_HOST() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 NEEDRESTART_MODE=a
 DEBIAN_PRIORITY=required
 export DEBIAN_FRONTEND=noninteractive
@@ -102,6 +111,10 @@ COUNTDOWN 5
 ##
 INSTALL_APACHE() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 apt install -y apache2
 apt install -y php
 chown -R www-data:www-data /var/www/html
@@ -117,6 +130,10 @@ COUNTDOWN 5
 ###--------------------  INSTALL IONCUBE LOADER  --------------------###
 ##
 INSTALL_IONCUBE() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
 PHP_EXT_DIR=$(php -i | grep extension_dir | cut -d" " -f5)
 IONCUBE_URL="https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
@@ -166,6 +183,10 @@ COUNTDOWN 5
 ##
 INSTALL_MYSQL() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 apt update
 DEBIAN_FRONTEND=noninteractive apt install -y mysql-server
 systemctl enable mysql
@@ -194,6 +215,10 @@ COUNTDOWN 5
 ##
 INSTALL_PHPMYADMIN() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/app-password-confirm password $PSWD" | debconf-set-selections
 echo "phpmyadmin phpmyadmin/mysql/admin-pass password $PSWD" | debconf-set-selections
@@ -213,6 +238,10 @@ COUNTDOWN 5
 ##
 INSTALL_DEPENDENCIES() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 apt update
 apt install -y libapache2-mod-php php-mysql php-cli php-curl php-json php-xml php-zip >/dev/null 2>&1
 apt install -y net-tools nmap tcpdump cifs-utils dnsutils default-jre dos2unix >/dev/null 2>&1
@@ -228,6 +257,10 @@ COUNTDOWN 5
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 INSTALL_WEBMIN() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 clear
 yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
 yes | sh setup-repos.sh
@@ -245,6 +278,10 @@ COUNTDOWN 5
 ##
 INSTALL_VSFTPD(){
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 apt install -y vsftpd >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
@@ -260,6 +297,10 @@ COUNTDOWN 5
 ###--------------------  CONFIGURE APACHE VIRTUAL HOST FOR PORT 443  --------------------###
 ##
 SELF_SIGNED_CERT() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 clear
 bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 <VirtualHost *:443>
@@ -302,6 +343,10 @@ COUNTDOWN 5
 ##
 GENERATE_SSH_PORT() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+clear
 CREATE_RANDOM_PORT
 SSH_PORT=$NEW_PORT
 
@@ -324,6 +369,10 @@ COUNTDOWN 5
 ###--------------------  ENABLE FIREWALL AND CONFIGURE PORTS  --------------------###
 ##
 FIREWALL() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
 clear
 ## ALLOW
 ufw allow in "Apache Full"
@@ -363,17 +412,34 @@ COUNTDOWN 5
 ##
 DEPLOY_HTML() {
 clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
 
-cp /var/www/html/index.html /var/www/html/index.html.bak
-rm -rf /var/www/html/index.html
-touch /var/www/html/index.html
+rm -rf /var/www/html/* > /dev/null 2>&1
+cp -r web/* /var/www/html/ > /dev/null 2>&1
+rm -rf /var/www/html/index.html > /dev/null 2>&1
+touch /var/www/html/index.html > /dev/null 2>&1
 
 source ./conf/html.sh
-
-cp -r web/* /var/www/html/
-
-clear 
-COUNTDOWN 5
 }
 
 
+###--------------------  VHOST QUESTION  --------------------###
+##
+DEPLOY_VHOSTS() {
+clear
+echo "WORKING ON: ${FUNCNAME[0]}"
+COUNTDOWN 5
+
+read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
+echo
+	if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
+		source ./include/vhosts.sh
+		break
+	elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
+	    break
+    else
+	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
+	    echo
+    fi
+}

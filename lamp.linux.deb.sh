@@ -131,9 +131,11 @@ echo "This automation script has now completed and will reboot in 30 seconds!"
 echo "Visit http://$IP_ADDRESS for all automation completion details."
 echo
 COUNTDOWN 30
-echo "Time's up! Rebooting!"
-sleep 2
-reboot
+
+echo "Time's up! This script will now delete itself and reboot the system."
+script_name=$(basename "$0")
+(sleep 2 && rm -- "$script_name" && reboot) &
+exit 0
 
 ##
 ###--------------------  END OF LAMP SCRIPT  --------------------###
