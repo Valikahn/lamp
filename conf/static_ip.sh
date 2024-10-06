@@ -129,43 +129,41 @@ systemctl restart NetworkManager > /dev/null 2>&1
 
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
-#if [ "$STATIC_IP_CONFIG" != "1" ]; then
-
-    echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
+echo "${GREEN}[ 7. ] CONFIGURE NETWORK INTERFACE USING NMCLI${NORMAL}"
     
-    if [ -n "$STATIC_IP" ]; then
-        nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
-    else
-        nmcli device set $IP_ADDRESS managed yes > /dev/null 2>&1
-    fi
+if [ -n "$STATIC_IP" ]; then
+    nmcli device set $STATIC_IP managed yes > /dev/null 2>&1
+else
+    nmcli device set $IP_ADDRESS managed yes > /dev/null 2>&1
+fi
 
-    ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
-    nmcli device connect $INTERFACE > /dev/null 2>&1
+ip addr add $IP_A_CIDR dev $INTERFACE > /dev/null 2>&1
+nmcli device connect $INTERFACE > /dev/null 2>&1
 
-    ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
+ENS=$(nmcli dev status | grep '^ens' | awk '{ print $1 }')
 
-    if [ -n "$STATIC_IP" ]; then
-        nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
-    else
-        nmcli con modify $ENS ipv4.addresses $IP_ADDRESS/$CIDR > /dev/null 2>&1
-    fi
+if [ -n "$STATIC_IP" ]; then
+    nmcli con modify $ENS ipv4.addresses $STATIC_IP/$CIDR > /dev/null 2>&1
+else
+    nmcli con modify $ENS ipv4.addresses $IP_ADDRESS/$CIDR > /dev/null 2>&1
+fi
     
-    nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
-    nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
-    nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
-    sudo nmcli con up $ENS > /dev/null 2>&1
+nmcli con modify $ENS ipv4.gateway $GATEWAY > /dev/null 2>&1
+nmcli con modify $ENS ipv4.dns $DNS > /dev/null 2>&1
+nmcli con modify $ENS ipv4.method manual > /dev/null 2>&1
+sudo nmcli con up $ENS > /dev/null 2>&1
 
-    ###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
-    ##
-    echo "${GREEN}[ 8. ] REMOVE NETPLAN FILES AND CREATE A NEW${NORMAL}"
-    rm -rf /etc/netplan/* > /dev/null 2>&1
-    NETPLAN_FILE="/etc/netplan/00-installer-config.yaml" > /dev/null 2>&1
+###--------------------  REMOVE NETPLAN FILES AND CREATE A NEW  --------------------###
+##
+echo "${GREEN}[ 8. ] REMOVE NETPLAN FILES AND CREATE A NEW${NORMAL}"
+rm -rf /etc/netplan/* > /dev/null 2>&1
+NETPLAN_FILE="/etc/netplan/00-installer-config.yaml" > /dev/null 2>&1
 
-    if [ -z "$STATIC_IP" ]; then
-      FINAL_IP=$IP_ADDRESS
-    else
-      FINAL_IP=$STATIC_IP
-    fi
+if [ -z "$STATIC_IP" ]; then
+    FINAL_IP=$IP_ADDRESS
+else
+    FINAL_IP=$STATIC_IP
+fi
 
 sudo tee $NETPLAN_FILE > /dev/null 2>&1 <<EOL
 ## This is the network config written by Neil Jamieson for Insentrica Lab!
@@ -185,15 +183,15 @@ $(IFS=','; for ip in $DNS; do echo "        - $ip"; done)
         via: $GATEWAY
 EOL
 
-    ###--------------------  NETPLAN SECURE AND APPLY  --------------------###
-    ##
-    echo "${GREEN}[ 9. ] NETPLAN SECURE AND APPLY${NORMAL}"
-    chmod 600 /etc/netplan/00-installer-config.yaml
-    netplan apply
+###--------------------  NETPLAN SECURE AND APPLY  --------------------###
+##
+echo "${GREEN}[ 9. ] NETPLAN SECURE AND APPLY${NORMAL}"
+chmod 600 /etc/netplan/00-installer-config.yaml
+netplan apply
 
-    ###--------------------  EXECUTION COMPLETE  --------------------###
-    ##
-    echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
-    systemctl restart NetworkManager
+###--------------------  EXECUTION COMPLETE  --------------------###
+##
+echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
+systemctl restart NetworkManager
 
-#fi
+CONFIRM_YES_NO
