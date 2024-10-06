@@ -31,8 +31,7 @@ if [ -n "$IP_DATA" ]; then
        grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
         clear
         echo "Static IP is configured for interface $IFACE"
-        echo "IP Address: $IP_ADDRESS"
-        sleep 5
+        COUNTDOWN 5
     else
         clear
         echo "Interface $IFACE is likely using DHCP (Dynamic IP)"
@@ -45,8 +44,7 @@ if [ -n "$IP_DATA" ]; then
         
         while true; 
         do
-            echo "Would you like to configure a static IP address? (y/n)"
-            read -r CONF_STATIC_IP
+            read -rp "Would you like to configure a static IP address? (y/n)" CONF_STATIC_IP
             case "$CONF_STATIC_IP" in
                 y|Y)
                     echo "Redirecting to static IP configuration..."
@@ -55,7 +53,7 @@ if [ -n "$IP_DATA" ]; then
                     break
                     ;;
                 n|N)
-                    echo "Continuing at your own risk... Redirecting..."
+                    echo "Proceeding without a static IP address... Redirecting..."
                     apt install -y network-manager > /dev/null 2>&1
                     apt install -y openvswitch-switch > /dev/null 2>&1
                     COUNTDOWN 5
