@@ -5,7 +5,8 @@
 </div>
 
 ## Purpose:
-The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.  As this is a webserver, this is best on a host that has a static IP address.<br /><br />
+The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
+As this is a webserver, best practice is to use a host that has or can be configured to use a static IP address.  However, there is a provision in the script that detect if the IP address is not Static and will use a dynamic IP address.  This carries risk, as your IP address could change at reboot or when the TTL allocation for the dynamic IP address expires.<br /><br />
 Program designed, developed, and tested while at university studying Computer Science for module "Managing a Web Server (maws_h16s35)"<br />
 
 Program Version: 24.10.08<br />
