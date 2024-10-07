@@ -25,7 +25,7 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 
 ## Tested Operating Systems
 * Ubuntu 24.04.x LTS (Noble Numbat) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
-* Ubuntu 22.04.x LTS (Jammy Jellyfish) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
+* Ubuntu 22.04.x LTS (Jammy Jellyfish) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 * Ubuntu 20.04.x LTS (Focal Fossa) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
 * Ubuntu 18.04.6 LTS (Bionic Beaver) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
  
