@@ -36,7 +36,7 @@ NMCLI_DEV_SHOW() {
 
 ###--------------------  IPA  --------------------###
 ##
-BUILD_IN_IPA() {
+BUILT_IN_IPA() {
     ENS=$(ip link show | grep '^2:' | awk -F': ' '{ print $2 }' | grep '^ens')
     LIP=$(ip -4 addr show dev $ENS | grep 'inet ' | awk '{ print $2 }')
     DNS=$(grep -A 4 'nameservers:' /etc/netplan/*.yaml | grep '-' | awk '{ print $2 }' | paste -sd ',')
@@ -72,6 +72,12 @@ CREATE_RANDOM_PORT() {
         break
       fi
     done
+}
+
+###--------------------  CREATE RANDOM PORT  --------------------###
+##
+GET_OS_VERSION() {
+source /etc/os-release
 }
 
 ###--------------------  CONFIRM YES NO  --------------------###

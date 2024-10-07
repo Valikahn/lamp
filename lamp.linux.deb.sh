@@ -1,8 +1,8 @@
 #!/bin/bash
 clear
 export EDITOR=nano
-source ./include/variables.sh
-source ./include/functions.sh
+source ./global/variables.sh
+source ./global/functions.sh
 
 ###--------------------  START OF LAMP SCRIPT  --------------------###
 ##
@@ -31,7 +31,7 @@ source ./include/functions.sh
 ######################################################################################################################################################
 
 
-source ./include/system_check.sh
+source ./global/system_check.sh
 
 
 ###################################################
@@ -89,25 +89,37 @@ sleep 2
 
 CONFIRM_YES_NO
 
-###--------------------  PROGRAM EXECUTE FUNCTIONS  --------------------###
+###--------------------  DEB EXECUTE FUNCTIONS  --------------------###
 ##
-source ./include/program.sh
+if [[ "$DISTRO" == "Debian" ]]; then
+	source ./deb/program.sh
 
-DETACH_PRO
-PURGE_CLOUD_INIT
-UPDATE_DEB_HOST
-INSTALL_APACHE
-INSTALL_IONCUBE
-INSTALL_MYSQL
-INSTALL_PHPMYADMIN
-INSTALL_DEPENDENCIES
-INSTALL_WEBMIN
-INSTALL_VSFTPD
-SELF_SIGNED_CERT
-GENERATE_SSH_PORT
-FIREWALL
-DEPLOY_HTML
-DEPLOY_VHOSTS
+	DETACH_PRO
+	PURGE_CLOUD_INIT
+	UPDATE_DEB_HOST
+	INSTALL_APACHE
+	INSTALL_IONCUBE
+	INSTALL_MYSQL
+	INSTALL_PHPMYADMIN
+	INSTALL_DEPENDENCIES
+	INSTALL_WEBMIN
+	INSTALL_VSFTPD
+	SELF_SIGNED_CERT
+	GENERATE_SSH_PORT
+	FIREWALL
+	DEPLOY_HTML
+	DEPLOY_VHOSTS
+
+elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
+	echo "RHEL Deployment Coming Soon"
+	exit
+
+else
+	echo "ERROR:  Do not know what Linux distribution this is!"
+	echo "This script will now end!"
+	exit 1
+
+fi
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##

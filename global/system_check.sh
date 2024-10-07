@@ -38,7 +38,7 @@ fi
 if command -v nmcli >/dev/null 2>&1; then
     NMCLI_DEV_SHOW
 else
-	BUILD_IN_IPA
+	BUILT_IN_IPA
 fi
 
 ###--------------------  PASSWORD COLLECTION  --------------------###
@@ -48,8 +48,6 @@ ROOT_PASSWORD=$(PASSGEN)
 
 ###--------------------  ENS LINK UP OR DOWN  --------------------###
 ##
-
-# Check if the interface exists
 if ! ip link show "$ENS" > /dev/null 2>&1; then
     echo "Interface $ENS does not exist."
     exit 1
@@ -76,7 +74,7 @@ else
 fi
 
 ###--------------------  CHECK FOR STATIC IP ADDRESS  --------------------###
-#
+##
 IFACE=$(ip link show | awk -F': ' '/^[0-9]+: [^lo]/ {print $2; exit}')
 IP_DATA=$(ip -4 addr show dev $IFACE | grep 'inet ' | awk '{ print $2 }' | cut -d'/' -f1)
 
@@ -120,7 +118,17 @@ if [ -n "$IP_DATA" ]; then
             esac
         done
     fi
-    source ./conf/static_ip.sh
+
+    if [[ "$DISTRO" == "Debian" ]]; then
+        source ./deb/conf/static_ip.sh
+
+    elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
+        source ./rpm/conf/static_ip.sh
+    else
+        echo
+        echo "oops - something has gone terribly wrong!"
+        exit 1
+    fi
 else
     clear
     echo "No IP address is assigned to interface $IFACE"
@@ -154,7 +162,8 @@ PSUEDONAME=$nil
 echo -n "DATA COLLECTION..."
 sleep 3
 
-## RHEL 
+## RHEL
+OS_VERSION=$(GET_OS_VERSION)
 if [ -f "/etc/redhat-release" ]; then 
 	DIST=`cat /etc/redhat-release`
 	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
@@ -167,6 +176,7 @@ echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
 sleep 3
 
 ## DEBIAN
+OS_VERSION=$(GET_OS_VERSION)
 elif [ -f /etc/debian_version ] ; then
 	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
 	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`

@@ -45,7 +45,7 @@ echo "Script will now continue..."
 }
 
 ###--------------------  DELETE PURGE CLOUD-INIT  --------------------###
-## 
+##
 PURGE_CLOUD_INIT() {
 clear
 echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
@@ -157,6 +157,11 @@ if [ $(systemctl is-active php${PHP_VERSION}-fpm) == "active" ]; then
     sudo systemctl restart php${PHP_VERSION}-fpm
 fi
 
+if [[ "$OS_VERSION" == "22.04" ]] || [[ "$OS_VERSION" == "20.04" ]] || [[ "$OS_VERSION" == "18.04" ]]; then
+    systemctl restart dbus.service NetworkManager.service
+    systemctl restart systemd-manager user@1000.service
+fi
+
 clear
 php -v | grep ionCube
 
@@ -262,7 +267,7 @@ apt install -y vsftpd >/dev/null 2>&1
 systemctl enable vsftpd
 systemctl start vsftpd
 
-source ./conf/vsftpd.sh
+source ./global/conf/vsftpd.sh
 
 systemctl restart vsftpd
 }
@@ -301,7 +306,7 @@ bash -c "cat > /etc/apache2/sites-available/ssl-website.conf <<EOF
 </VirtualHost>
 EOF"
 
-source ./conf/ss_cert.sh
+source ./global/conf/ss_cert.sh
 
 a2enmod ssl
 a2ensite ssl-website.conf
@@ -384,7 +389,7 @@ cp -r web/* /var/www/html/ > /dev/null 2>&1
 rm -rf /var/www/html/index.html > /dev/null 2>&1
 touch /var/www/html/index.html > /dev/null 2>&1
 
-source ./conf/html.sh
+source ./global/conf/html.sh
 }
 
 ###--------------------  VHOST QUESTION  --------------------###
@@ -394,7 +399,8 @@ if [ "$VHOST_ANSWER" == "1" ]; then
     clear
     echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
     COUNTDOWN 5
-    source ./include/vhosts.sh
+    source ./global/include/cms_deploy.sh
+    source ./global/include/vhosts.sh
     break
 else 
     break
