@@ -79,7 +79,7 @@ do
     do
         read -p "Is the information gathered correct? (If incorrect this will misconfigure the NIC) " YN
         case $YN in
-            [Yy]* ) break 2 ;;
+            [Yy]* ) echo; break 2 ;;
             [Nn]* ) clear; break ;;
             * ) echo "Please answer yes or no." ;;
         esac
