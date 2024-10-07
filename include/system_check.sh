@@ -8,13 +8,15 @@
 ###--------------------  QUICK VERSION CHECK  --------------------###
 ##
 echo "Script Version:  $SCRIPTVERSION.$BUILD"
-echo -n "STARTING"; 	sleep 1
-echo -e "\rSTARTING."; 	sleep 2
-echo -e "\rSTARTING.."; 	sleep 3
-echo -e "\rSTARTING..."; 	sleep 4
+echo -n "STARTING"; sleep 1
+echo -ne "\rSTARTING...PLEASE WAIT."; sleep 2
+echo -ne "\rSTARTING...PLEASE WAIT.."; sleep 3
+echo -ne "\rSTARTING...PLEASE WAIT..."; sleep 4
+echo -ne "\rSTARTING...PLEASE WAIT...."; sleep 5
+echo -e "\rDONE       "
 
 echo
-COUNTDOWN 5
+sleep 2
 
 ###--------------------  SUDO/ROOT CHECK  --------------------###
 ##
