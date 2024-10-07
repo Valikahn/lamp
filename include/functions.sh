@@ -47,8 +47,11 @@ BUILD_IN_IPA() {
 ##
 PASSGEN() {
 local genln=$1
-[ -z "$genln" ] && genln=16
-tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
+[ -z "$genln" ] && genln=21
+## Without Special Characters
+## tr -dc A-Za-z0-9 < /dev/urandom | head -c ${genln} | xargs
+## With Special Characters
+tr -dc 'A-Za-z0-9!@#$%^&*()_+-=[]{}|;:,.<>?' < /dev/urandom | head -c ${genln} | xargs
 }
 
 ###--------------------  IS PORT IN USE  --------------------###
