@@ -7,6 +7,8 @@
 
 ###--------------------  SUDO/ROOT CHECK  --------------------###
 ##
+echo "$SCRIPTVERSION.$BUILD"
+echo
 if [ "$(id -u)" -ne 0 ]; then 
 	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
 	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
