@@ -178,9 +178,10 @@ if ! cp /var/www/html/conf/.htaccess /var/www/public_html/$VHOST_NAME/cms/; then
     echo "Failed to copy .htaccess for $VHOST_NAME"
 fi
 
-chown -R www-data:www-data /var/www/public_html/$VHOST_NAME/
-chmod -R 2755 /var/www/public_html/$VHOST_NAME
 done
+
+chown -R www-data:www-data /var/www/public_html
+chmod -R 775 /var/www/public_html
 
 if systemctl reload apache2; then
     echo "Apache reloaded successfully."
