@@ -13,7 +13,7 @@ echo -ne "\rSTARTING...PLEASE WAIT."; sleep 2
 echo -ne "\rSTARTING...PLEASE WAIT.."; sleep 3
 echo -ne "\rSTARTING...PLEASE WAIT..."; sleep 4
 echo -ne "\rSTARTING...PLEASE WAIT...."; sleep 5
-echo -e "\rDONE       "
+echo -e "\rDONE                                           "
 
 echo
 sleep 2
