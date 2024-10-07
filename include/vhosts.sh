@@ -8,8 +8,8 @@ clear
 
 ###--------------------  vHost Creation  --------------------###
 ##
-read -p "How many vHosts would you like to create? " num_vhosts
-for ((v=1; v<=num_vhosts; v++)); do
+read -p "How many vHosts would you like to create? " QTY_VHOSTS
+for ((v=1; v<=QTY_VHOSTS; v++)); do
     clear
     read -p "Enter the name for vHost $v (e.g., hello_world.local): " VHOST_NAME
     if ! mkdir -p /var/www/public_html/$VHOST_NAME/cms; then

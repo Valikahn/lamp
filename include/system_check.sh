@@ -99,11 +99,13 @@ if [ -n "$IP_DATA" ]; then
             read -rp "Would you like to configure a static IP address? (y/n)" CONF_STATIC_IP
             case "$CONF_STATIC_IP" in
                 y|Y)
+                    echo
                     echo "Redirecting to static IP configuration..."
                     COUNTDOWN 5
                     break
                     ;;
                 n|N)
+                    echo
                     echo "Proceeding without a static IP address... Redirecting..."
                     STATIC_IP_CONFIG=1
                     COUNTDOWN 5
@@ -122,6 +124,23 @@ else
     echo "Script cannot continue until the adapter is online with an IP Address assigned."
     exit 1
 fi
+
+###--------------------  VHOST INFORMAION GATHERING  --------------------###
+##
+clear
+read -p "Are you going to be deploying vHosts? (Yy/Nn): " VHOST_ANSWER
+if [[ "$VHOST_ANSWER" == "Y" ]] || [[ "$VHOST_ANSWER" == "y" ]] || [[ "$VHOST_ANSWER" == "YES" ]] || [[ "$VHOST_ANSWER" == "yes" ]] || [[ "$VHOST_ANSWER" == "Yes" ]]; then
+		VHOST_ANSWER=1
+        echo "You will be prompted later for more input for the vHost configuration..."
+        COUNTDOWN 5
+		break
+	elif [[ "$VHOST_ANSWER" == "N" ]] || [[ "$VHOST_ANSWER" == "n" ]] || [[ "$VHOST_ANSWER" == "NO" ]] || [[ "$VHOST_ANSWER" == "no" ]] || [[ "$VHOST_ANSWER" == "No" ]]; then
+        VHOST_ANSWER=0
+	    break
+    else
+	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
+	    echo
+    fi
 
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
 ##

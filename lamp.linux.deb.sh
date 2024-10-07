@@ -107,20 +107,7 @@ SELF_SIGNED_CERT
 GENERATE_SSH_PORT
 FIREWALL
 DEPLOY_HTML
-
-###--------------------  VHOST QUESTION  --------------------###
-##
-read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
-echo
-	if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
-		source ./include/vhosts.sh
-		break
-	elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
-	    break
-    else
-	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
-	    echo
-    fi
+DEPLOY_VHOSTS
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##

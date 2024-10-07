@@ -387,24 +387,16 @@ touch /var/www/html/index.html > /dev/null 2>&1
 source ./conf/html.sh
 }
 
-
 ###--------------------  VHOST QUESTION  --------------------###
 ##
 DEPLOY_VHOSTS() {
-clear
-echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
-COUNTDOWN 5
-clear
-
-read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
-echo
-	if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
-		source ./include/vhosts.sh
-		break
-	elif [[ "$CONFIRM" == "N" ]] || [[ "$CONFIRM" == "n" ]] || [[ "$CONFIRM" == "NO" ]] || [[ "$CONFIRM" == "no" ]] || [[ "$CONFIRM" == "No" ]]; then
+if ["VHOST_ANSWER" == "1"]; then
+    clear
+    echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
+    COUNTDOWN 5
+        source ./include/vhosts.sh
 	    break
-    else
-	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
-	    echo
-    fi
+else 
+    break
+fi
 }

@@ -11,7 +11,7 @@ if [ "$STATIC_IP_CONFIG" != "1" ]; then
     ##
     while true;
     do
-    read -p "Enter the static IP address to set (e.g., 192.168.1.100): " STATIC_IP
+    read -p "Please enter the static IP address you wish to set: " STATIC_IP
         if VALID_IP_ADDRESS $STATIC_IP; then
             break
         else
@@ -21,7 +21,7 @@ if [ "$STATIC_IP_CONFIG" != "1" ]; then
 fi
     while true;
     do
-    read -p "Enter the default gateway (e.g., 192.168.1.1): " GATEWAY
+    read -p "Please enter your default gateway: " GATEWAY
         if VALID_IP_ADDRESS $GATEWAY; then
             break
         else
@@ -30,7 +30,7 @@ fi
     done
 
     while true; do
-        read -p "Enter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
+        read -p "Please rnter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
         IFS=',' read -ra DNS_ARRAY <<< "$DNS"
         ALL_VALID_ENTRIES=1
 
@@ -49,7 +49,7 @@ fi
         fi
     done
 
-    read -p "Enter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
+    read -p "Please rnter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
 
     ###--------------------  GATHERED DATA  --------------------###
     ##
