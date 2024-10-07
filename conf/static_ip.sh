@@ -42,7 +42,6 @@ fi
         done
 
         if [ "$ALL_VALID_ENTRIES" -eq 1 ]; then
-            #echo "All DNS entered IP addresses are valid."
             break
         else
             echo "Please enter valid IP addresses."
@@ -72,7 +71,7 @@ fi
     echo "Network Interface: $INTERFACE"
     echo
 
-    CONFIRM_YES_NO
+    WHILE_TRUE_YES_NO
 
 
 ###################################################
@@ -124,10 +123,6 @@ EOL
 ##
 echo "${GREEN}[ 6. ] RESTART NETWORK MANAGER${NORMAL}"
 systemctl restart NetworkManager > /dev/null 2>&1
-
-#  systemctl restart NetworkManager.service
-#  nmcli device disconnect $ENS
-#  nmcli device connect $ENS
 
 ###--------------------  CONFIGURE NETWORK INTERFACE USING NMCLI  --------------------###
 ##
@@ -196,6 +191,6 @@ netplan apply
 echo "${GREEN}[ 10. ] EXECUTION COMPLETE${NORMAL}"
 systemctl restart NetworkManager
 
-
 echo
-CONFIRM_YES_NO
+echo "Network has been configured..."
+COUNTDOWN 5

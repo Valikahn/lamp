@@ -390,12 +390,12 @@ source ./conf/html.sh
 ###--------------------  VHOST QUESTION  --------------------###
 ##
 DEPLOY_VHOSTS() {
-if ["VHOST_ANSWER" == "1"]; then
+if [ "$VHOST_ANSWER" == "1" ]; then
     clear
     echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
     COUNTDOWN 5
-        source ./include/vhosts.sh
-	    break
+    source ./include/vhosts.sh
+    break
 else 
     break
 fi

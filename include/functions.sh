@@ -74,7 +74,7 @@ CREATE_RANDOM_PORT() {
     done
 }
 
-###--------------------  CONFIRM_YES_NO  --------------------###
+###--------------------  CONFIRM YES NO  --------------------###
 #
 CONFIRM_YES_NO () {
 while true;
@@ -91,6 +91,20 @@ while true;
 	    echo
     fi
 done
+}
+
+###--------------------  WHILE TRUE YES OR NO  --------------------###
+#
+WHILE_TRUE_YES_NO() {
+    while true; 
+    do
+        read -p "Do you want to proceed? (Yy/Nn): " CONFIRM
+        case "$CONFIRM" in
+            [Yy]* ) echo "You answered yes. Proceeding..."; COUNTDONW 5; break;;
+            [Nn]* ) echo "You answered no. Try again...";;
+            * ) echo "Please answer [Yy] for Yes or [Nn] for No.";;
+        esac
+    done
 }
 
 ###--------------------  COUNTDOWN  --------------------###
