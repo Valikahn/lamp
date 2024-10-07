@@ -18,7 +18,8 @@ for ((v=1; v<=num_vhosts; v++)); do
     fi
     echo
 
-while true; do
+while true;
+    do
     echo "Which CMS would you like to install for $VHOST_NAME?"
     echo "(1) for Drupal ${LBLUE}[https://www.drupal.org/]${NORMAL}"
     echo "(2) for Joomla ${LBLUE}[https://www.joomla.org/]${NORMAL}"
@@ -179,6 +180,7 @@ fi
 
 chown -R www-data:www-data /var/www/public_html/$VHOST_NAME/
 chmod -R 2755 /var/www/public_html/$VHOST_NAME
+done
 
 if systemctl reload apache2; then
     echo "Apache reloaded successfully."

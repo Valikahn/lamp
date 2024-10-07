@@ -394,6 +394,7 @@ DEPLOY_VHOSTS() {
 clear
 echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
+clear
 
 read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
 echo
