@@ -33,6 +33,46 @@ else
     clear
 fi
 
+###--------------------  COLLECTING SYSTEM DATA  --------------------###
+##
+clear
+
+DIST=$nil
+PSUEDONAME=$nil
+echo -n "DATA COLLECTION..."
+sleep 3
+
+## RHEL
+OS_VERSION=$(GET_OS_VERSION)
+if [ -f "/etc/redhat-release" ]; then 
+	DIST=`cat /etc/redhat-release`
+	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
+	if [[ "$PSUEDONAME" == "Red" ]]; then
+		DISTRO='RedHat'	
+	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
+		DISTRO='CentOS'
+	fi
+echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
+sleep 3
+
+## DEBIAN
+OS_VERSION=$(GET_OS_VERSION)
+elif [ -f /etc/debian_version ] ; then
+	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
+	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
+	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
+		DISTRO='Debian'
+	fi
+echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
+sleep 3
+
+else
+	echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
+	sleep 3
+	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
+	exit 1
+fi
+
 ###--------------------  NETWORK MANAGER (NMCLI) CHECK  --------------------###
 ##
 if command -v nmcli >/dev/null 2>&1; then
@@ -153,42 +193,3 @@ if [[ "$VHOST_ANSWER" == "Y" ]] || [[ "$VHOST_ANSWER" == "y" ]] || [[ "$VHOST_AN
 	    echo
     fi
 
-###--------------------  COLLECTING SYSTEM DATA  --------------------###
-##
-clear
-
-DIST=$nil
-PSUEDONAME=$nil
-echo -n "DATA COLLECTION..."
-sleep 3
-
-## RHEL
-OS_VERSION=$(GET_OS_VERSION)
-if [ -f "/etc/redhat-release" ]; then 
-	DIST=`cat /etc/redhat-release`
-	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
-	if [[ "$PSUEDONAME" == "Red" ]]; then
-		DISTRO='RedHat'	
-	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
-		DISTRO='CentOS'
-	fi
-echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
-sleep 3
-
-## DEBIAN
-OS_VERSION=$(GET_OS_VERSION)
-elif [ -f /etc/debian_version ] ; then
-	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
-	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
-	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
-		DISTRO='Debian'
-	fi
-echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
-sleep 3
-
-else
-	echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
-	sleep 3
-	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
-	exit 1
-fi
