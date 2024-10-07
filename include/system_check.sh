@@ -7,11 +7,12 @@
 
 ###--------------------  QUICK VERSION CHECK  --------------------###
 ##
-echo "GITHUB WGET DATA"
-echo "----------------"
-echo "Script Version:  $SCRIPTVERSION"
-echo "Script Build:  $BUILD"
-echo "Script Date:  $REVDATE"
+echo "Script Version:  $SCRIPTVERSION.$BUILD"
+echo -n "STARTING"; 	sleep 1
+echo -e "\rSTARTING."; 	sleep 2
+echo -e "\rSTARTING.."; 	sleep 3
+echo -e "\rSTARTING..."; 	sleep 4
+
 echo
 COUNTDOWN 5
 

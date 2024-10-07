@@ -77,10 +77,10 @@ do
 
     while true; 
     do
-        read -p "Do you want to start over (yes to restart, no to continue)? " yn
-        case $yn in
-            [Yy]* ) break ;;
-            [Nn]* ) echo "Continuing with the next iteration..." ;;
+        read -p "Is the information gathered correct? (If incorrect this will misconfigure the NIC) " YN
+        case $YN in
+            [Yy]* ) break 2 ;;
+            [Nn]* ) clear; break ;;
             * ) echo "Please answer yes or no." ;;
         esac
     done
