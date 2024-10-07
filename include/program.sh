@@ -11,7 +11,7 @@ clear
 ##
 DETACH_PRO() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 if command -v pro &> /dev/null; then
@@ -48,7 +48,7 @@ echo "Script will now continue..."
 ## 
 PURGE_CLOUD_INIT() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 if dpkg -l | grep -q cloud-init > /dev/null 2>&1; then
@@ -76,16 +76,13 @@ if [ -e "/var/log/cloud-init-output.log" ]; then
     rm -rf /var/log/cloud-init-output.log 2>&1
     echo "Deleted cloud-init files (/var/log/cloud-init-output.log)"
 fi
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  UPDATE DEB HOST  --------------------###
 ##
 UPDATE_DEB_HOST() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -102,16 +99,13 @@ apt-get -o Dpkg::Options::="--force-confdef" \
 apt --purge autoremove -y
 apt autoclean -y
 apt update && apt upgrade -y
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL APACHE AND CONFIGURE DIRECTORY PERMISSIONS  --------------------###
 ##
 INSTALL_APACHE() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -122,16 +116,13 @@ usermod -aG www-data $USER_NAME
 chmod -R 775 /var/www/html
 chmod -R g+w /var/www/html
 chmod g+s /var/www/html
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL IONCUBE LOADER  --------------------###
 ##
 INSTALL_IONCUBE() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
@@ -174,16 +165,13 @@ if [ $? -eq 0 ]; then
 else
     echo "IonCube Loader installation failed."
 fi
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL MYSQL SERVER  --------------------###
 ##
 INSTALL_MYSQL() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -206,16 +194,13 @@ _EOF_
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
 INSTALL_PHPMYADMIN() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -229,16 +214,13 @@ apt-get install -y phpmyadmin >/dev/null 2>&1
 ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 systemctl restart mysql
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL DEPENDENCIES  --------------------###
 ##
 INSTALL_DEPENDENCIES() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -249,16 +231,13 @@ apt install -y rar unrar perl python3 python3-pip >/dev/null 2>&1
 
 systemctl restart apache2
 systemctl restart mysql
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  INSTALL WEBMIN  --------------------###
 ##
 INSTALL_WEBMIN() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -266,9 +245,6 @@ yes | curl -o setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/mas
 yes | sh setup-repos.sh
 apt-get install -y --install-recommends webmin
 apt-get install -y --install-recommends ./webmin-current.deb
-
-clear 
-COUNTDOWN 5
 }
 
 # This command will reset the root password and prevent access using the shell login.
@@ -278,7 +254,7 @@ COUNTDOWN 5
 ##
 INSTALL_VSFTPD(){
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -289,16 +265,13 @@ systemctl start vsftpd
 source ./conf/vsftpd.sh
 
 systemctl restart vsftpd
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  CONFIGURE APACHE VIRTUAL HOST FOR PORT 443  --------------------###
 ##
 SELF_SIGNED_CERT() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -334,16 +307,13 @@ a2enmod ssl
 a2ensite ssl-website.conf
 a2enmod rewrite
 systemctl reload apache2
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  SSH PORT SECURITY | GENERATE PORT NUMBER BETWEEN 1024 and 65535 AND CHANGE  --------------------###
 ##
 GENERATE_SSH_PORT() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -361,16 +331,13 @@ if ufw status | grep -q active; then
   ufw deny 22/tcp
   ufw reload
 fi
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  ENABLE FIREWALL AND CONFIGURE PORTS  --------------------###
 ##
 FIREWALL() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 clear
@@ -403,16 +370,13 @@ echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
 systemctl restart ssh
-
-clear 
-COUNTDOWN 5
 }
 
 ###--------------------  HTML PAGE CREATION  --------------------###
 ##
 DEPLOY_HTML() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 rm -rf /var/www/html/* > /dev/null 2>&1
@@ -428,7 +392,7 @@ source ./conf/html.sh
 ##
 DEPLOY_VHOSTS() {
 clear
-echo "WORKING ON: ${FUNCNAME[0]}"
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
 read -p "Would you like to deploy vHosts? (Yy/Nn): " CONFIRM
