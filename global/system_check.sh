@@ -160,10 +160,10 @@ if [ -n "$IP_DATA" ]; then
     fi
 
     if [[ "$DISTRO" == "Debian" ]]; then
-        source ./deb/conf/static_ip.sh
+        source ./deb/deb_static_ip.sh
 
     elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
-        source ./rpm/conf/static_ip.sh
+        source ./rpm/conf/rpm_static_ip.sh
     else
         echo
         echo "oops - something has gone terribly wrong!"
