@@ -79,7 +79,7 @@ Root/Sudo Check:
 
 Password Generation:
 * Generates random passwords for various services (MySQL root, phpMyAdmin user, etc.) using a random string generator function. 
-* This incorporates all variations of **A-Z a-z 0-9 !@#$%^&*()_+-=[]{}|;:,.<>?'** and for additial security, during setup the passwords are generated at a length of 21 long, injected into the application and deleted form runtime memory.
+* This incorporates all variations of **A-Z a-z 0-9 !@#$%^&*()_+-=[]{}|;:,.<>?** and for additial security, during setup the passwords are generated at a length of 21 long, injected into the application and deleted form runtime memory.
 
 System Data Collection:
 * Detects the operating system (either RedHat/CentOS or Debian/Ubuntu) and collects key host information such as distribution version, hostname, and IP address. If the OS is unsupported, the script exits.
