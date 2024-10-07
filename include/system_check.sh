@@ -5,10 +5,18 @@
 ###################################################
 
 
+###--------------------  QUICK VERSION CHECK  --------------------###
+##
+echo "GITHUB WGET DATA"
+echo "----------------"
+echo "Script Version:  $SCRIPTVERSION"
+echo "Script Build:  $BUILD"
+echo "Script Date:  $REVDATE"
+echo
+COUNTDOWN 5
+
 ###--------------------  SUDO/ROOT CHECK  --------------------###
 ##
-echo "$SCRIPTVERSION.$BUILD"
-echo
 if [ "$(id -u)" -ne 0 ]; then 
 	echo -n "SUDO PERMISSION CHECK..."; 	sleep 5
 	echo -e "\rSUDO PERMISSION CHECK... ${RED}[  ACCESS DENIED  ]${NORMAL}"; sleep 3
@@ -85,7 +93,7 @@ if [ -n "$IP_DATA" ]; then
         echo
         echo -e "${RED}[  WARNING  ]${NORMAL} Continue at your own risk!"
         echo
-        
+
         while true; 
         do
             read -rp "Would you like to configure a static IP address? (y/n)" CONF_STATIC_IP

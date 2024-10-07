@@ -108,6 +108,11 @@ SSL Certificates:
 Firewall Configuration:
 * Configures ufw (Uncomplicated Firewall) to allow necessary ports for Apache, HTTPS, FTP, MySQL, Webmin, and a dynamically generated SSH port (randomly selected to improve security).
 
+User Interation
+* Interaction is minimal with this deployment.  Depending on what the scritps finds during deplyment there will only be yes or no options.
+* There is the possibility you may be asked to enter an IP Address that is static.  Further data will be required, such as Gateway, DNS addresses and CIDR Notation of network.
+* The last interaction will be the vHost demplotment which is mentioned below.
+
 vHosts Deployment
 * There is an option to deploy vHosts and have them auto configured to use HTTP (80) and HTTPS (443).
 * The option to pick how many vHosts you want to deploy.  Each with their own directory and configured in "apache2/sites-available" at the same time.
