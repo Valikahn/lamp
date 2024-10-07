@@ -119,7 +119,8 @@ echo "Visit http://$IP_ADDRESS for all automation completion details."
 echo
 COUNTDOWN 30
 
-echo "Time's up! This script will now delete itself and reboot the system."
+echo "Time's up! This script will now self destruct and reboot the system."
+echo "Thank you for using the lamp script and please leave feedback or ideas to incorporate."
 script_path=$(realpath "$0")
 (sleep 2 && rm -- "$script_name" && reboot) &
 exit 0

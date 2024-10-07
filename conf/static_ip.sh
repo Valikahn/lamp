@@ -6,22 +6,26 @@
 
 
 clear
-if [ "$STATIC_IP_CONFIG" != "1" ]; then
-    ###--------------------  IP ADDRESS ENTRY / CHECK RECALL FUNCTION  --------------------###
-    ##
-    while true;
+
+while true; 
+do
+    if [ "$STATIC_IP_CONFIG" != "1" ]; then
+        ###--------------------  IP ADDRESS ENTRY / CHECK RECALL FUNCTION  --------------------###
+        ##
+
+        while true; do
+            read -p "Please enter the static IP address you wish to set: " STATIC_IP
+            if VALID_IP_ADDRESS $STATIC_IP; then
+                break
+            else
+                echo "Invalid IP address format: $STATIC_IP"
+            fi
+        done
+    fi
+
+    while true; 
     do
-    read -p "Please enter the static IP address you wish to set: " STATIC_IP
-        if VALID_IP_ADDRESS $STATIC_IP; then
-            break
-        else
-            echo "Invalid IP address format: $STATIC_IP"
-        fi
-    done
-fi
-    while true;
-    do
-    read -p "Please enter your default gateway: " GATEWAY
+        read -p "Please enter your default gateway: " GATEWAY
         if VALID_IP_ADDRESS $GATEWAY; then
             break
         else
@@ -29,8 +33,9 @@ fi
         fi
     done
 
-    while true; do
-        read -p "Please rnter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
+    while true; 
+    do
+        read -p "Please enter DNS servers (comma-separated, e.g., 8.8.8.8,8.8.4.4): " DNS
         IFS=',' read -ra DNS_ARRAY <<< "$DNS"
         ALL_VALID_ENTRIES=1
 
@@ -48,12 +53,11 @@ fi
         fi
     done
 
-    read -p "Please rnter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
+    read -p "Please enter the subnet mask in CIDR notation (e.g., 24 for 255.255.255.0): " CIDR
 
     ###--------------------  GATHERED DATA  --------------------###
     ##
     INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -n 1)
-    
 
     echo
     if [ -n "$STATIC_IP" ]; then
@@ -71,7 +75,16 @@ fi
     echo "Network Interface: $INTERFACE"
     echo
 
-    WHILE_TRUE_YES_NO
+    while true; 
+    do
+        read -p "Do you want to start over (yes to restart, no to continue)? " yn
+        case $yn in
+            [Yy]* ) break ;;
+            [Nn]* ) echo "Continuing with the next iteration..." ;;
+            * ) echo "Please answer yes or no." ;;
+        esac
+    done
+done
 
 
 ###################################################
