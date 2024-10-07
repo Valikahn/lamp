@@ -30,7 +30,7 @@ echo "      <h3 align='center'>Apache, MySQL, phpMyAdmin, Webmin and VSFTPD inc 
 echo "      <h3 align='center'>Program Version: $SCRIPTVERSION.$BUILD</h3>" >> /var/www/html/index.html
 echo "      <h3 align='center'>File Name: $FILENAME</h3>" >> /var/www/html/index.html
 echo "      <h3 align='center'>Written by: Neil Jamieson</h3><br>" >> /var/www/html/index.html
-echo "      <h3 align='center'>Please refer to the <a href='https://github.com/Valikahn/lamp' target='_blank'>GitHub README</a> file for specific information about this script.</h3><br>" >> /var/www/html/index.html
+echo "      <h3 align='center'>Please refer to the <a href='https://github.com/Valikahn/lamp/blob/master/README.md' target='_blank'>GitHub README</a> file for specific information about this script.</h3><br>" >> /var/www/html/index.html
 echo "      <h3 align='center'>phpMyAdmin Username: phpMyAdmin | Password: $PSWD</h3>" >> /var/www/html/index.html
 echo "      <h3 align='center'>Webmin Username: $USER_NAME | Password: [SHELL PASSWORD]</h3><br>" >> /var/www/html/index.html
 echo "      <h3 align='center'>FTP IP: $IP_ADDRESS | FTP Port: $FTP_PORT</h3>" >> /var/www/html/index.html
@@ -45,7 +45,7 @@ echo "          <p>Copyright &copy; 2024 <a href='mailto:000705@uhi.ac.uk' style
 echo "          <nav>" >> /var/www/html/index.html
 echo "            <a href='http://$IP_ADDRESS/phpinfo.php' target='_blank' style='color: white; margin-right: 15px;'>PHP Info</a>" >> /var/www/html/index.html
 echo "            <a href='https://github.com/Valikahn/lamp/issues' target='_blank' style='color: white; margin-right: 15px;'>Bugs & Issues</a>" >> /var/www/html/index.html
-echo "            <a href='https://github.com/Valikahn/lamp/blob/master/change_logs/CHANGE_LOG_(230924).md' target='_blank' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
+echo "            <a href='https://github.com/Valikahn/lamp/tree/master/change_logs' target='_blank' style='color: white; margin-right: 15px;'>Change Log</a>" >> /var/www/html/index.html
 echo "            <a href='https://www.gnu.org/licenses/gpl-3.0.en.html' target='_blank' style='color: white; margin-right: 15px;'>GPLv3 Licence</a>" >> /var/www/html/index.html
 echo "            <a href='https://nwh.uhi.ac.uk/en/' target='_blank' style='color: white; margin-right: 15px;'>NWH UHI</a><br><br>" >> /var/www/html/index.html
 echo "            <a style='color: white;'>Program designed, developed, and tested while at university studying Computer Science for module 'Managing a Web Server (MAWS_HP2V48)</a><br>" >> /var/www/html/index.html

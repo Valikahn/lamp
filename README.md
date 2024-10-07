@@ -1,8 +1,11 @@
-<div align="center">
+﻿<div align="center">
     <a href="https://github.com/Valikahn/lamp" target="_blank">
         <img alt="lamp" src="https://github.com/Valikahn/lamp/blob/master/web/img/lamp_img.png">
     </a>
 </div>
+
+## Disclaimer:
+This LAMP Script in this repository are created for educational purposes, and this is going to be deployed in a professional environment proper planning and scoping should be completed.
 
 ## Purpose:
 The script is modular built with many differnt interating files sourced in to complete a task.  This automates the installation, configuration, and setup of a LAMP (Linux, Apache, MySQL, and PHP) stack. It includes additional features like installing phpMyAdmin, Webmin, and VSFTPD for managing web servers and FTP services with SSL support.<br /><br />
@@ -20,15 +23,23 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 * [Install Commands](#install-commands)
 * [Change Log](#change-log)
 * [Bugs & Issues](#bugs--issues)
+* [Directory Structure](#directory-structure)
 * [Licence](#licence)
 * [References](#references)
 
 ## Tested Operating Systems
+### Ubuntu
 * Ubuntu 24.04.x LTS (Noble Numbat) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 * Ubuntu 22.04.x LTS (Jammy Jellyfish) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 * Ubuntu 20.04.x LTS (Focal Fossa) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
-* Ubuntu 18.04.6 LTS (Bionic Beaver) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
- 
+
+### RHEL
+* RHEL-9 (Plow) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
+* RHEL-8 (Ootpa) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
+
+### CentOS
+* CentOS-9 (CentOS Stream) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
+
 ## Installed Software Module Versions
 This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
 
@@ -150,6 +161,51 @@ Please refer to our change log as this will be updated with the changes made and
 ## Bugs & Issues
 Please let me know if there is any bugs or issues with this script.
 * Issues: <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
+
+## Directory Structure
+The structure of our files are on a modular base to facilitate reuse of variables and functions to keep system resources low during deployment.
+
+```
+lamp
+│
+├── change_logs
+│   └── CHANGE_LOG_(xxxxx).md
+├── deb
+│   ├── deb_static_ip.sh
+│   └── program.sh
+├── global
+│   ├── conf
+│   │   ├── html.sh
+│   │   ├── ss_cert.sh
+│   │   └── vsftpd.sh
+│   └── include
+│       ├── cms_deploy.sh
+│       ├── vhosts.sh
+│       ├── functions.sh
+│       ├── system_check.sh
+│       └── variables.sh
+├── rpm
+|
+├── web
+│    ├── conf
+│    │   ├── .htaccess
+│    │   └── php.ini
+│    ├── css
+│    │   └── styles.css
+│    └── img
+│        ├── lamp_img.png
+│        ├── lamp_img_large.png
+│        ├── lamp_img_old.png
+│        ├── test-badge-failing.svg
+│        └── test-badge-passing.svg
+├── index.html
+├── phpinfo.php
+├── .gitattributes
+├── .gitignore
+├── lamp.linux.deb_rpm.sh
+├── LICENSE.txt
+└── README.md
+```
 
 ## Licence
 Licensed under the GPLv3 License.
