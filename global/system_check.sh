@@ -162,11 +162,6 @@ if [ -n "$IP_DATA" ]; then
         done
     fi
 
-    if [ -z "$STATIC_SET" ] || [ -z "$DISTRO" ]; then
-        echo "Error: STATIC_SET or DISTRO is not defined."
-        exit 1
-    fi
-
     if [ "$STATIC_SET" -eq 1 ]; then
         :
     else
@@ -189,21 +184,3 @@ else
     echo "Script cannot continue until the adapter is online with an IP Address assigned."
     exit 1
 fi
-
-###--------------------  VHOST INFORMAION GATHERING  --------------------###
-##
-clear
-read -p "Are you going to be deploying vHosts? (Yy/Nn): " VHOST_ANSWER
-if [[ "$VHOST_ANSWER" == "Y" ]] || [[ "$VHOST_ANSWER" == "y" ]] || [[ "$VHOST_ANSWER" == "YES" ]] || [[ "$VHOST_ANSWER" == "yes" ]] || [[ "$VHOST_ANSWER" == "Yes" ]]; then
-		VHOST_ANSWER=1
-        echo "You will be prompted later for more input for the vHost configuration..."
-        COUNTDOWN 5
-		break
-	elif [[ "$VHOST_ANSWER" == "N" ]] || [[ "$VHOST_ANSWER" == "n" ]] || [[ "$VHOST_ANSWER" == "NO" ]] || [[ "$VHOST_ANSWER" == "no" ]] || [[ "$VHOST_ANSWER" == "No" ]]; then
-        VHOST_ANSWER=0
-	    break
-    else
-	    echo "Invalid choice - try again please. Enter 'Yy' or 'Nn'."
-	    echo
-    fi
-
