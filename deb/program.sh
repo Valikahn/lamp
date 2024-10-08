@@ -33,9 +33,6 @@ else
     echo "This script only runs on Ubuntu 20.04 or 22.04. Detected version: $UBUNTU_VERSION."
 }
 
-clear
-echo "NEEDRESTART PREVENTION COMPLATED"
-OPERATING_SYSTEM
 CONFIRM_YES_NO
 
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
