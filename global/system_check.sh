@@ -36,36 +36,40 @@ fi
 ###--------------------  COLLECTING SYSTEM DATA  --------------------###
 ##
 clear
-
-DIST=$nil
-PSUEDONAME=$nil
 echo -n "DATA COLLECTION..."
 sleep 3
 
-## RHEL
-if [ -f "/etc/redhat-release" ]; then 
-	DIST=`cat /etc/redhat-release`
-	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
-	if [[ "$PSUEDONAME" == "Red" ]]; then
-		DISTRO='RedHat'	
-	elif [[ "$PSUEDONAME" == "CentOS" ]]; then
-		DISTRO='CentOS'
-	fi
-echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
-sleep 3
 
-## DEBIAN
-elif [ -f /etc/debian_version ] ; then
-	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
-	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
-	if [[ "$PSUEDONAME" == "Ubuntu" ]]; then
-		DISTRO='Debian'
-	fi
-echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
-sleep 3
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    ## DEB
+    if [[ "$ID" == "ubuntu" ]]; then
+        VERSION_NUMBER=$(echo "$VERSION" | grep -oP '^\d+\.\d+')
+        DISTRO=$NAME
+        echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
+        sleep 3
+    ## RHEL
+    elif [[ "$ID" == "rhel" || "$ID" == "centos" ]]; then
+        VERSION_NUMBER=$(echo "$VERSION_ID" | grep -oP '^\d+')
+        DISTRO=$NAME
+        echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
+        sleep 3
+    ## WTF
+    else
+        echo "Unsupported distribution."
+        echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
+	    sleep 3
+        exit 1
+    fi
 
+# DEB FALLBACK
+elif [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+    DISTRO=$DISTRIB_ID
+    echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
+    sleep 3
 else
-	echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
+    echo -e "\rDATA COLLECTION... ${BOLD}${RED}[  FAILED!  ]${NORMAL}"
 	sleep 3
 	echo "ERROR: RHEL or DEBIAN release files could not be found! [OPERATING SYSTEM DETECTION]"
 	exit 1

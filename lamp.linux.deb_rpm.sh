@@ -60,6 +60,7 @@ echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
 echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
+echo "Operating System: ${LBLUE}[  $NAME $VERSION  ]${NORMAL}"
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
@@ -91,7 +92,7 @@ CONFIRM_YES_NO
 
 ###--------------------  DEB EXECUTE FUNCTIONS  --------------------###
 ##
-if [[ "$DISTRO" == "Debian" ]]; then
+if [[ "$DISTRO" == "Ubuntu" ]]; then
 	source ./deb/program.sh
 
 	NEED_RESTART

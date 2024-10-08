@@ -5,21 +5,6 @@
 ###################################################
 
 
-
-###--------------------  OPERATING SYSTEM  --------------------###
-##
-OPERATING_SYSTEM() {
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    VERSION_NUMBER=$(echo "$VERSION" | grep -oP '^\d+\.\d+')
-elif [ -f /etc/lsb-release ]; then
-    . /etc/lsb-release
-    VERSION_NUMBER=$(echo "$DISTRIB_RELEASE")
-else
-    echo "Unable to determine Ubuntu version."
-fi
-}
-
 ###--------------------  VALID IP ADDRESS CHECK  --------------------###
 ##
 VALID_IP_ADDRESS() {
