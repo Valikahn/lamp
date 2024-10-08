@@ -14,10 +14,10 @@ clear
 echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
-if [[ "$VERSION_NUMBER" == "20.04" ]] || [[ "$VERSION_NUMBER" == "22.04" ]]; then
+NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
+UBUNTU_VERSION=$(lsb_release -rs)
 
-    NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
-
+if [[ "$UBUNTU_VERSION" == "20.04" || "$UBUNTU_VERSION" == "22.04" ]]; then
     if grep -q '^\$nrconf{restart} = '\''a'\'';' "$NEED_CONF_FILE"; then
         echo "The setting is already set to '\$nrconf{restart} = '\''a'\'';'. No changes made."
     else
@@ -29,7 +29,8 @@ if [[ "$VERSION_NUMBER" == "20.04" ]] || [[ "$VERSION_NUMBER" == "22.04" ]]; the
             echo "No matching line to uncomment and change."
         fi
     fi
-fi
+else
+    echo "This script only runs on Ubuntu 20.04 or 22.04. Detected version: $UBUNTU_VERSION."
 }
 
 clear

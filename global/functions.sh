@@ -12,13 +12,9 @@ OPERATING_SYSTEM() {
 if [ -f /etc/os-release ]; then
     . /etc/os-release
     VERSION_NUMBER=$(echo "$VERSION" | grep -oP '^\d+\.\d+')
-    echo "Ubuntu Version: $NAME $VERSION"
-    echo "Version Number: $VERSION_NUMBER"    
 elif [ -f /etc/lsb-release ]; then
     . /etc/lsb-release
     VERSION_NUMBER=$(echo "$DISTRIB_RELEASE")
-    echo "Ubuntu Version: $DISTRIB_DESCRIPTION"
-    echo "Version Number: $VERSION_NUMBER"
 else
     echo "Unable to determine Ubuntu version."
 fi
