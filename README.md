@@ -169,6 +169,7 @@ lamp
 ├── global
 │   ├── conf
 │   │   ├── html.sh
+|   |   ├── pre_conf.sh
 │   │   ├── ss_cert.sh
 │   │   └── vsftpd.sh
 │   └── include

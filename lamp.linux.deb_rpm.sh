@@ -32,6 +32,7 @@ source ./global/functions.sh
 
 
 source ./global/system_check.sh
+source ./global/conf/pre_conf.sh
 
 
 ###################################################

@@ -7,35 +7,6 @@
 
 clear
 
-###--------------------  NEEDRESTART PREVENTION  --------------------###
-##
-NEED_RESTART() {
-    clear
-    echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
-    COUNTDOWN 5
-
-    NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
-    UBUNTU_VERSION=$(lsb_release -rs)
-
-    if [[ "$UBUNTU_VERSION" == "20.04" || "$UBUNTU_VERSION" == "22.04" ]]; then
-        if grep -q '^\$nrconf{restart} = '\''a'\'';' "$NEED_CONF_FILE"; then
-            echo "The setting is already set to '\$nrconf{restart} = '\''a'\'';'. No changes made."
-        else
-            cp "$NEED_CONF_FILE" "$NEED_CONF_FILE.bak"
-            if grep -q "^#\$nrconf{restart} = 'i';" "$NEED_CONF_FILE"; then
-                sed -i "s/^#\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/" "$NEED_CONF_FILE"
-                echo "Configuration updated: \$nrconf{restart} is now set to 'a'."
-            else
-                echo "No matching line to uncomment and change."
-            fi
-        fi
-    else
-        echo "This script only runs on Ubuntu 20.04 or 22.04. Detected version: $UBUNTU_VERSION."
-    fi
-}
-
-CONFIRM_YES_NO
-
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
 DETACH_PRO() {
