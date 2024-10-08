@@ -31,7 +31,7 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 ### Ubuntu
 * Ubuntu 24.04.x LTS (Noble Numbat) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 * Ubuntu 22.04.x LTS (Jammy Jellyfish) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
-* Ubuntu 20.04.x LTS (Focal Fossa) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
+* Ubuntu 20.04.x LTS (Focal Fossa) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-passing.svg)
 
 ### RHEL
 * RHEL-9 (Plow) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)

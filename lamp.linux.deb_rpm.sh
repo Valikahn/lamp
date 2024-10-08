@@ -61,7 +61,6 @@ echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
 echo "Filename: ${LBLUE}[  $FILENAME  ]${NORMAL}"
-echo "Operating System: ${LBLUE}[  $NAME $VERSION  ]${NORMAL}"
 echo
 echo "###---------------------------------------------------------------------------------------------------###"
 echo
@@ -71,7 +70,7 @@ echo "Script Version: ${LBLUE}[  $SCRIPTVERSION  ]${NORMAL}"
 echo "Build Release: ${LBLUE}[  $BUILD  ]${NORMAL}"
 echo "Last Update: ${LBLUE}[  $REVDATE  ]${NORMAL}"
 echo
-echo "Operating System: ${LBLUE}[  $DIST  ]${NORMAL}"
+echo "Operating System: ${LBLUE}[  $NAME $VERSION  ]${NORMAL}"
 echo "Hostname: ${LBLUE}[  $HST  ]${NORMAL}"
 echo "IP Address / CIDR: ${LBLUE}[  $LIP  ]${NORMAL}"
 if [ -n "$DNS" ]; then
@@ -95,8 +94,7 @@ CONFIRM_YES_NO
 ##
 if [[ "$DISTRO" == "Ubuntu" ]]; then
 	source ./deb/program.sh
-	CONFIRM_YES_NO
-
+	
 	NEED_RESTART
 	DETACH_PRO
 	PURGE_CLOUD_INIT
@@ -127,7 +125,7 @@ fi
 
 ###--------------------  OUTPUT INFORMATION  --------------------###
 ##
-#clear
+clear
 echo "LAMP Stack Server Installed"
 echo "---------------------------"
 echo "This automation script has now completed and will reboot in 30 seconds!"
@@ -137,7 +135,7 @@ COUNTDOWN 30
 
 echo "Time's up! This script will now self destruct and reboot the system."
 echo "Thank you for using the lamp script and please leave feedback or ideas to incorporate."
-#reboot
+reboot
 
 ##
 ###--------------------  END OF LAMP SCRIPT  --------------------###

@@ -15,7 +15,7 @@ if [[ "$DISTRO" == "Ubuntu" ]]; then
 	NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
 	UBUNTU_VERSION=$(lsb_release -rs)
 
-	if [[ "$UBUNTU_VERSION" == "20.04" || "$UBUNTU_VERSION" == "22.04" ]]; then
+	if [[ "$UBUNTU_VERSION" == "22.04" ]]; then
 		if grep -q '^\$nrconf{restart} = '\''a'\'';' "$NEED_CONF_FILE"; then
 			echo "The setting is already set to '\$nrconf{restart} = '\''a'\'';'. No changes made."
 		else

@@ -406,7 +406,5 @@ if [ "$VHOST_ANSWER" == "1" ]; then
     source ./global/include/cms_deploy.sh
     source ./global/include/vhosts.sh
     break
-else 
-    break
 fi
 }

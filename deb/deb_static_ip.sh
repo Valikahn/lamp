@@ -59,6 +59,7 @@ do
     ##
     INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -n 1)
 
+    clear
     echo
     if [ -n "$STATIC_IP" ]; then
         echo "Setting up static IP address:"
@@ -77,7 +78,8 @@ do
 
     while true; 
     do
-        read -p "Is the information gathered correct? (If incorrect this will misconfigure the NIC) " YN
+        echo "Is the information above correct?"
+        read -p "${RED}[  IF THIS INFORMATION IS INCORRECT YOUR NIC WILL BE MISCONFIGURED  ]${NORMAL}" YN
         case $YN in
             [Yy]* ) echo; break 2 ;;
             [Nn]* ) clear; break ;;
