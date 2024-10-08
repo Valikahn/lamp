@@ -161,7 +161,7 @@ if [ -n "$IP_DATA" ]; then
         done
     fi
 
-    if [[ "$DISTRO" == "Debian" ]]; then
+    if [[ "$DISTRO" == "Ubuntu" ]]; then
         source ./deb/deb_static_ip.sh
 
     elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
