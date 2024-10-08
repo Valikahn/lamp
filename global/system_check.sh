@@ -126,6 +126,7 @@ if [ -n "$IP_DATA" ]; then
        grep -q "addresses:" /etc/netplan/* 2>/dev/null; then
         clear
         echo "Static IP is configured for interface $IFACE"
+        STATIC_SET=1
         COUNTDOWN 5
     else
         clear
@@ -161,16 +162,27 @@ if [ -n "$IP_DATA" ]; then
         done
     fi
 
-    if [[ "$DISTRO" == "Ubuntu" ]]; then
-        source ./deb/deb_static_ip.sh
-
-    elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
-        source ./rpm/conf/rpm_static_ip.sh
-    else
-        echo
-        echo "oops - something has gone terribly wrong!"
+    if [ -z "$STATIC_SET" ] || [ -z "$DISTRO" ]; then
+        echo "Error: STATIC_SET or DISTRO is not defined."
         exit 1
     fi
+
+    if [ "$STATIC_SET" -eq 1 ]; then
+        :
+    else
+        if [[ "$DISTRO" == "Ubuntu" ]]; then
+            source ./deb/deb_static_ip.sh
+
+        elif [[ "$DISTRO" == "RedHat" ]] || [[ "$DISTRO" == "CentOS" ]]; then
+            source ./rpm/conf/rpm_static_ip.sh
+
+        else
+            echo
+            echo "Oops - unsupported or unrecognized distribution: $DISTRO"
+            exit 1
+        fi
+    fi
+
 else
     clear
     echo "No IP address is assigned to interface $IFACE"
