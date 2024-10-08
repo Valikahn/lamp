@@ -43,7 +43,6 @@ echo -n "DATA COLLECTION..."
 sleep 3
 
 ## RHEL
-OS_VERSION=$(GET_OS_VERSION)
 if [ -f "/etc/redhat-release" ]; then 
 	DIST=`cat /etc/redhat-release`
 	PSUEDONAME=`cat /etc/redhat-release | sed s/\ release.*// | cut -d " " -f 1`
@@ -56,7 +55,6 @@ echo -e "\rDATA COLLECTION... ${GREEN}[  OK!  ]${NORMAL}"
 sleep 3
 
 ## DEBIAN
-OS_VERSION=$(GET_OS_VERSION)
 elif [ -f /etc/debian_version ] ; then
 	DIST=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_DESCRIPTION' | awk -F=  '{ print $2 }'`
 	PSUEDONAME=`cat /etc/lsb-release | sed 's/"//g' | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`

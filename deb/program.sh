@@ -14,7 +14,7 @@ clear
 echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
 COUNTDOWN 5
 
-if [[ "$OS_VERSION" == "22.04" ]] || [[ "$OS_VERSION" == "20.04" ]]; then
+if [[ "$VERSION_NUMBER" == "20.04" ]] || [[ "$VERSION_NUMBER" == "22.04" ]]; then
 
     NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
 
@@ -31,6 +31,11 @@ if [[ "$OS_VERSION" == "22.04" ]] || [[ "$OS_VERSION" == "20.04" ]]; then
     fi
 fi
 }
+
+clear
+echo "NEEDRESTART PREVENTION COMPLATED"
+OPERATING_SYSTEM
+CONFIRM_YES_NO
 
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
