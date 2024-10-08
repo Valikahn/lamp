@@ -33,35 +33,35 @@ while true;
     case $CMS_CHOICE in
         1)
             clear
-            echo "Setting up Drupal for $VHOST_NAME"
+            echo "Deploying Drupal for $VHOST_NAME"
             COUNTDOWN 5
             DRUPAL_CMS_DEPLOY
             break
             ;;
         2)
             clear
-            echo "Setting up Joomla for $VHOST_NAME"
+            echo "Deploying Joomla for $VHOST_NAME"
             COUNTDOWN 5
             JOOMLA_CMS_DEPLOY
             break
             ;;
         3)
             clear
-            echo "Setting up WordPress for $VHOST_NAME"
+            echo "Deploying WordPress for $VHOST_NAME"
             COUNTDOWN 5
             WORDPRESS_CMS_DEPLOY
             break
             ;;
         4)
             clear
-            echo "Setting up Grav for $VHOST_NAME"
+            echo "Deploying Grav for $VHOST_NAME"
             COUNTDOWN 5
             GRAV_CMS_DEPLOY
             break
             ;;
         5)
             clear
-            echo "Setting up MODX for $VHOST_NAME"
+            echo "Deploying MODX for $VHOST_NAME"
             COUNTDOWN 5
             MODX_CMS_DEPLOY
             break
@@ -104,7 +104,6 @@ cat <<EOL >/etc/apache2/sites-available/$VHOST_NAME.conf
     SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
     SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
     SSLCertificateChainFile /etc/ssl/certs/dhparam.pem
-
 
     <Directory /var/www/public_html/$VHOST_NAME>
         Options -Indexes +FollowSymLinks

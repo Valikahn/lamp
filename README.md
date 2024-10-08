@@ -21,9 +21,9 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 * [Features of Deployment](#features-of-deployment)
 * [Key Advantages](#key-advantages)
 * [Install Commands](#install-commands)
+* [Directory Structure](#directory-structure)
 * [Change Log](#change-log)
 * [Bugs & Issues](#bugs--issues)
-* [Directory Structure](#directory-structure)
 * [Licence](#licence)
 * [References](#references)
 
@@ -41,7 +41,7 @@ Written by:  Neil Jamieson [Licence](#licence)<br />
 * CentOS-9 (CentOS Stream) ![Unit Tests](https://github.com/Valikahn/lamp/blob/master/web/img/test-badge-failing.svg)
 
 ## Installed Software Module Versions
-This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update there software. 
+This deployment is not pulling specific versions but looking for the latest versions available. The versions detailed below are the minimal versions that will be installed; this may vary as applications owners update their software. 
 
 | Auto Install Modules          | Version                       | Optional Installs             | Version                       |
 |-------------------------------|-------------------------------|-------------------------------|-------------------------------|
@@ -150,20 +150,13 @@ Change directory -->  Make shell file executable -->  sudo run the script<br />
 Thats it - there is only one interaction required (y/n)
 ```
 cd lamp
-chmod +x lamp.linux.deb.sh
-sudo ./lamp.linux.deb.sh
+chmod +x lamp.linux.deb_rpm.sh
+sudo ./lamp.linux.deb_rpm.sh
 ```
 
-## Change Log
-Please refer to our change log as this will be updated with the changes made and to what release.
-* Release 24.10.08: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/">Change Log</a>
-
-## Bugs & Issues
-Please let me know if there is any bugs or issues with this script.
-* Issues: <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
-
 ## Directory Structure
-The structure of our files are on a modular base to facilitate reuse of variables and functions to keep system resources low during deployment.
+The structure of downloadable files are on a modular base to facilitate a reuse of variables and functions to keep system resources low during deployment.<br />
+This structure may change without notice as this code is developed and Operating System versions change and features are added.
 
 ```
 lamp
@@ -184,7 +177,8 @@ lamp
 │       ├── functions.sh
 │       ├── system_check.sh
 │       └── variables.sh
-├── rpm
+|
+├── rpm (work-in-progress)
 |
 ├── web
 │    ├── conf
@@ -206,6 +200,14 @@ lamp
 ├── LICENSE.txt
 └── README.md
 ```
+
+## Change Log
+Please refer to our change log as this will be updated with the changes made and to what release.
+* Release 24.10.08: <a href="https://github.com/Valikahn/lamp/blob/master/change_logs/">Change Log</a>
+
+## Bugs & Issues
+Please let me know if there is any bugs or issues with this script.
+* Issues: <a href="https://github.com/Valikahn/lamp/issues">Via GitHub</a>
 
 ## Licence
 Licensed under the GPLv3 License.

@@ -7,6 +7,31 @@
 
 clear
 
+###--------------------  NEEDRESTART PREVENTION  --------------------###
+##
+NEED_RESTART() {
+clear
+echo "WORKING ON: ${RED}[  ${FUNCNAME[0]}  ]${NORMAL}"
+COUNTDOWN 5
+
+if [[ "$OS_VERSION" == "22.04" ]] || [[ "$OS_VERSION" == "20.04" ]]; then
+
+    NEED_CONF_FILE="/etc/needrestart/needrestart.conf"
+
+    if grep -q '^\$nrconf{restart} = '\''a'\'';' "$NEED_CONF_FILE"; then
+        echo "The setting is already set to '\$nrconf{restart} = '\''a'\'';'. No changes made."
+    else
+        cp "$NEED_CONF_FILE" "$NEED_CONF_FILE.bak"
+        if grep -q "^#\$nrconf{restart} = 'i';" "$NEED_CONF_FILE"; then
+            sed -i "s/^#\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/" "$NEED_CONF_FILE"
+            echo "Configuration updated: \$nrconf{restart} is now set to 'a'."
+        else
+            echo "No matching line to uncomment and change."
+        fi
+    fi
+fi
+}
+
 ###--------------------  UNINSTALL DETACH UBUNTU PRO  --------------------###
 ##
 DETACH_PRO() {
@@ -157,11 +182,6 @@ if [ $(systemctl is-active php${PHP_VERSION}-fpm) == "active" ]; then
     sudo systemctl restart php${PHP_VERSION}-fpm
 fi
 
-if [[ "$OS_VERSION" == "22.04" ]] || [[ "$OS_VERSION" == "20.04" ]] || [[ "$OS_VERSION" == "18.04" ]]; then
-    systemctl restart dbus.service NetworkManager.service
-    systemctl restart systemd-manager user@1000.service
-fi
-
 clear
 php -v | grep ionCube
 
@@ -192,14 +212,21 @@ DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
 FLUSH PRIVILEGES;
 
-CREATE USER 'phpMyAdmin'@'localhost' IDENTIFIED BY '$PSWD';
-GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'localhost' WITH GRANT OPTION;
+CREATE USER 'phpMyAdmin'@'%' IDENTIFIED BY '$PSWD';
+GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 _EOF_
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
+
+cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.bak
+sed -i "s/^bind-address\s*=\s*127.0.0.1/bind-address            = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 }
+
+#CREATE USER 'phpMyAdmin'@'localhost' IDENTIFIED BY '$PSWD';
+#GRANT ALL PRIVILEGES ON *.* TO 'phpMyAdmin'@'localhost' WITH GRANT OPTION;
+#FLUSH PRIVILEGES;
 
 ###--------------------  INSTALL PHPMYADMIN  --------------------###
 ##
@@ -355,6 +382,8 @@ ufw allow 10000/tcp # WEBMIN
 ufw allow 3306/tcp # MYSQL
 ufw allow 40000:50000/tcp # SAFETYNET PASSIVE 
 ufw allow 10000:10100/tcp # VSFTPD/FTP PASSIVE
+ufw allow 8000:8000/tcp # PORTAINER SERVER PASSIVE
+ufw allow 9443:9443/tcp # PORTAINER SERVER PASSIVE
 
 ## DENY
 ufw deny 23/tcp # TELNET

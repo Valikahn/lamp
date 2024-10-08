@@ -94,6 +94,7 @@ CONFIRM_YES_NO
 if [[ "$DISTRO" == "Debian" ]]; then
 	source ./deb/program.sh
 
+	NEED_RESTART
 	DETACH_PRO
 	PURGE_CLOUD_INIT
 	UPDATE_DEB_HOST
