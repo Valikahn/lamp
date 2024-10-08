@@ -100,7 +100,7 @@ source /etc/os-release
 CONFIRM_YES_NO () {
 while true;
 	do
-	read -p "Please confirm you're happy to proceed? (Yy/Nn): " CONFIRM
+	read -p "Happy to proceed? (Yy/Nn): " CONFIRM
     echo
     if [[ "$CONFIRM" == "Y" ]] || [[ "$CONFIRM" == "y" ]] || [[ "$CONFIRM" == "YES" ]] || [[ "$CONFIRM" == "yes" ]] || [[ "$CONFIRM" == "Yes" ]]; then
 		break
