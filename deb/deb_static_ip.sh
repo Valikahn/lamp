@@ -78,8 +78,9 @@ do
 
     while true; 
     do
-        echo "Is the information above correct?"
-        read -p "${RED}[  IF THIS INFORMATION IS INCORRECT YOUR NIC WILL BE MISCONFIGURED  ]${NORMAL}" YN
+        echo "${RED}[  IF THIS INFORMATION IS INCORRECT YOUR NIC WILL BE MISCONFIGURED  ]${NORMAL}"
+        echo
+        read -p "Is the information above correct?" YN
         case $YN in
             [Yy]* ) echo; break 2 ;;
             [Nn]* ) clear; break ;;
