@@ -350,15 +350,14 @@ COUNTDOWN 5
 clear
 ## ALLOW
 ufw allow in "Apache Full"
-ufw allow https
 ufw allow 80/tcp # HTTP
 ufw allow 443/tcp # HTTPS
 ufw allow 10000/tcp # WEBMIN
 ufw allow 3306/tcp # MYSQL
 ufw allow 40000:50000/tcp # SAFETYNET PASSIVE 
 ufw allow 10000:10100/tcp # VSFTPD/FTP PASSIVE
-ufw allow 8000:8000/tcp # PORTAINER SERVER PASSIVE
-ufw allow 9443:9443/tcp # PORTAINER SERVER PASSIVE
+ufw allow 8000/tcp # PORTAINER SERVER PASSIVE
+ufw allow 9443/tcp # PORTAINER SERVER PASSIVE
 
 ## DENY
 ufw deny 23/tcp # TELNET

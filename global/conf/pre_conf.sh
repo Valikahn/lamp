@@ -28,7 +28,7 @@ if [[ "$DISTRO" == "Ubuntu" ]]; then
 			fi
 		fi
 	else
-		echo "This script only runs on Ubuntu 20.04 or 22.04. Detected version: $UBUNTU_VERSION."
+		echo "This script only runs on Ubuntu 22.04. Detected version: $UBUNTU_VERSION."
 	fi
 
 ## RPM
@@ -43,8 +43,6 @@ else
 	exit 1
 
 fi
-
-CONFIRM_YES_NO
 
 ###--------------------  VHOST INFORMAION GATHERING  --------------------###
 ##
