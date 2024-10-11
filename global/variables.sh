@@ -7,9 +7,9 @@
 
 ###--------------------  VERSIONING --------------------###
 ##
-SCRIPTVERSION="v24.10.08"
+SCRIPTVERSION="v24.11.04"
 BUILD="002"
-REVDATE="08 October 2024"
+REVDATE="04 November 2024"
 FILENAME="lamp.linux.deb.sh"
 
 ###--------------------  COLORS DECLARE  --------------------###
