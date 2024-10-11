@@ -8,7 +8,7 @@
 ###--------------------  VERSIONING --------------------###
 ##
 SCRIPTVERSION="v24.11.04"
-BUILD="002"
+BUILD="003"
 REVDATE="04 November 2024"
 FILENAME="lamp.linux.deb.sh"
 
