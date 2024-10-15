@@ -86,7 +86,7 @@ fi
 ###--------------------  PASSWORD COLLECTION  --------------------###
 ##
 PSWD=$(PASSGEN)
-ROOT_PASSWORD=$(PASSGEN)
+MYSQL_ROOT_PASSWORD=$(PASSGEN)
 
 ###--------------------  ENS LINK UP OR DOWN  --------------------###
 ##

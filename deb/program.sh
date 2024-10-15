@@ -373,11 +373,11 @@ ufw deny 5060/tcp # SIP
 ufw deny 5061/tcp # SIP
 
 # RELOAD | RESTART | ENABLE
-ufw reload
 echo "y" | ufw enable
 systemctl enable apache2
 systemctl start apache2
 systemctl restart ssh
+ufw reload
 }
 
 ###--------------------  HTML PAGE CREATION  --------------------###
